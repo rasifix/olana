@@ -1,0 +1,11 @@
+  <rect x="0" y="0" {{bind-attr width=width}} {{bind-attr height=height}} fill="#f8f8f8"/>
+	<rect {{bind-attr x=padding.left}} {{bind-attr y=padding.top}} {{bind-attr width=area.width}} {{bind-attr height=area.height}} fill="none" stroke="#aaa"/>
+
+  <g id="grid">
+    <path id="vgrid" {{bind-attr d=vgrid}} stroke="#aaa" class="grid"/>
+    <g id="hgrid"></g>
+  </g>
+
+	<g id="timelines"></g>  
+	
+	<g id="statusline"></g>

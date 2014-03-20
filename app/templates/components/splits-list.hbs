@@ -1,0 +1,7 @@
+<h4>{{runner.fullName}}</h4>
+
+<table class="splits-table">
+{{#each split in runner.splits}}
+ {{splits-entry split=split mouseHover="splitHover"}}
+{{/each}}
+</table>

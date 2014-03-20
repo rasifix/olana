@@ -1,0 +1,10 @@
+ {{#with split}}
+  <td>{{number}}</td>
+  <td>{{#link-to 'event.leg' leg}}{{code}}{{/link-to}}</td>
+  <td>{{time}}</td>
+  <td>({{overallRank}})</td>
+  <td>{{splitTime}}</td>
+  <td class="split-behind">{{splitBehind}} {{#if hasError}}({{timeLoss}}){{/if}}</td>
+  <td>({{splitRank}})</td>
+  <td>{{optimalSplit}}</td>
+ {{/with}}

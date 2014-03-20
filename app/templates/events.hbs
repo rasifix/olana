@@ -1,0 +1,17 @@
+<header><div class="content"><b>OL Resultate</b></div></header>
+
+<div class="content">
+ <div class="grid3"></div>
+ <div class="grid6">
+  <ul class="event-list">
+    {{#each}}
+	  <li {{action 'eventClicked' id}}>
+	    <span class="date">{{date}}</span>
+	    {{#link-to 'event' id}}{{name}}{{/link-to}}
+	    <span class="mute">{{map}}</span>
+    </li>
+    {{/each}}
+  </ul>
+ </div>
+ <div class="grid3"></div>
+</div>

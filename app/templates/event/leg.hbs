@@ -1,0 +1,23 @@
+<header>
+  <div class="content">
+    <div class="breadcrumb">{{#link-to 'events'}}Events{{/link-to}} / {{#link-to 'event'}}Event{{/link-to}} / {{#link-to 'event.leg'}}{{from}} - {{to}}{{/link-to}}</div>
+  </div>
+</header>
+
+<div class="content">
+ <div class="grid12">
+  <table class="ranking-table">
+  {{#each data}}
+    <tr>
+      <td>{{displayPos}}</td>
+      <td>{{#link-to 'event.category.runner' category runnerId}}{{runner}}{{/link-to}}</td>
+      <td>{{yearOfBirth}}</td>
+      <td>{{club}}</td>
+      <td>{{split}}</td>
+      <td>{{behind}}</td>
+      <td>{{#link-to 'event.category' category}}{{category}}{{/link-to}}</td>
+    </tr>
+  {{/each}}
+  </table>
+ </div>
+</div>
