@@ -287,7 +287,7 @@ export default Ember.Route.extend({
   
   model: function(params) {
     var id = params['event_id'];
-    var url = '/event/' + id + '.csv';
+    var url = 'event/' + id + '.csv';
     return $.get(url).then(function(data) {
       var d = parseData(data);
       d.id = id;

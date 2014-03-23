@@ -17,7 +17,6 @@ export default Ember.Route.extend({
     onleghover: function(leg) {
     },
     onlegclick: function(leg) {
-      console.log(leg);
       this.transitionTo('event.leg', leg.leg);
     }
   },

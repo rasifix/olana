@@ -1,7 +1,7 @@
 export default Ember.Route.extend({
   
   model: function() {
-    return $.getJSON("/events.json");
+    return $.getJSON("events.json");
   },
   
   actions: {
