@@ -24,6 +24,7 @@ export default Ember.Route.extend({
                 yearOfBirth: runner.yearOfBirth,
                 runnerId: runner.id,
                 split: runner.splits[idx].splitTime,
+                timeLoss: runner.splits[idx].timeLoss,
                 legidx: idx
               });
             });
@@ -58,6 +59,7 @@ export default Ember.Route.extend({
     return {
       from: from,
       to: to,
+      name: from + '-' + to,
       data: result
     };
   },

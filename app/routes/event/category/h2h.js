@@ -47,12 +47,10 @@ export default Ember.Route.extend({
         if (!diffs[opponent.id]) {
           diffs[opponent.id] = [];
         }
-        diffs[opponent.id].push({ diff: diff, code: split.code });
+        diffs[opponent.id].push({ diff: diff, code: split.code, number: split.number });
       });
     });
-    
-    console.log(diffs);
-    
+        
     return {
       runner: runner,
       opponent: opponent,

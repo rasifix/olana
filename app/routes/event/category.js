@@ -9,15 +9,16 @@ export default Ember.Route.extend({
         return;
       }
     });
+    category.id = params.category_id;
     return category;
   },
   
   actions: {
     onleghover: function(leg) {
-      this.controllerFor('event.category.runner').set('hoverleg', leg);
     },
     onlegclick: function(leg) {
-      console.log("leg clicked");
+      console.log(leg);
+      this.transitionTo('event.leg', leg.leg);
     }
   },
   

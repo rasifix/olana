@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   attributeBindings: ['width', 'height'],
   classNames: [ "split-graph" ],
   
-  width: 960,
+  width: 940,
   height: 600,
   
   padding: {

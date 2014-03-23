@@ -1,11 +1,17 @@
 export default Ember.Component.extend({
+    
+  tagName: 'div',
   
-  classNameBindings: ['error'],
+  classNames: ['split-entry'],
   
-  tagName: 'tr',
+  errorClass: function() {
+    var error = this.get('error');
+    return error ? 'split-entry-span error' : 'split-entry-span';
+  }.property('error'),
   
   error: function() {
-    return this.get('split.hasError');
+    var error = this.get('split.hasError');
+    return error ? true : false;
   }.property('split.hasError'),
   
   mouseEnter: function() {

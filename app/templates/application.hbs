@@ -4,4 +4,30 @@
     </div>
 </div>
 
+<header>
+  <div class="content">
+    <ul class="breadcrumbs">
+    {{#each breadcrumbs}}
+      <li {{bind-attr class="active"}}>
+        {{#if model}}
+          {{#link-to route model.id}}
+            {{name}}
+          {{/link-to}}
+        {{else}}
+          {{#link-to route}}
+            {{name}}
+          {{/link-to}}
+        {{/if}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</header>
+
 {{outlet}}
+
+<footer>
+ <div class="content center">
+  created by Simon R&auml;ss - Apache 2.0 licensed
+ </div>
+</footer>

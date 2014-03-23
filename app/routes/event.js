@@ -23,6 +23,14 @@ function calculateLegs(category) {
   });
   category.legs = legs;
   
+  legs.forEach(function(leg, idx) {
+    if (idx === 0) {
+      leg.leg = 'St-' + leg.code;
+    } else {
+      leg.leg = legs[idx - 1].code + '-' + leg.code;
+    }
+  });
+  
   runners.forEach(function(runner) {
     runner.splits.forEach(function(split, idx) {
       var current = legs[idx];   
@@ -80,21 +88,16 @@ function calculateLegs(category) {
       return l1.loss - l2.loss;
     });
     
-    //if (runner.id == 3) {
     if (weightedLoss[Math.round(weightedLoss.length / 2)]) {
       var medianWeightedLoss = weightedLoss[Math.round(weightedLoss.length / 2)].loss;
-    runner.splits.forEach(function(split, idx) {
-      var splitBehind = parseTime(split.splitBehind.substr(1));
-      var weightedLoss = splitBehind / legs[idx].weight;
-      if (weightedLoss / medianWeightedLoss > 1.2) {
-        split.timeLoss = '+' + formatTime(splitBehind - Math.round(medianWeightedLoss * legs[idx].weight));
-        split.hasError = true;
-      }
-    });
-    } else {
-      console.log("runner");
-      console.log(runner);
-      console.log(weightedLoss);
+      runner.splits.forEach(function(split, idx) {
+        var splitBehind = parseTime(split.splitBehind.substr(1));
+        var weightedLoss = splitBehind / legs[idx].weight;
+        if (weightedLoss / medianWeightedLoss > 1.2) {
+          split.timeLoss = '+' + formatTime(splitBehind - Math.round(medianWeightedLoss * legs[idx].weight));
+          split.hasError = true;
+        }
+      });
     }
   });
 
@@ -136,7 +139,17 @@ function calculateLegs(category) {
       }
       lastTime = runnerLeg.time;
     });
-  });  
+  });
+  
+  legs.forEach(function(leg, idx) {
+    var runnerSplits = extractLegs(idx);
+    var leader = runnerSplits.find(function(runnerSplit) {
+      return runnerSplit.overallRank === 1;
+    });
+    runnerSplits.forEach(function(runnerSplit) {
+      runnerSplit.overallBehind = '+' + formatTime(parseTime(runnerSplit.time) - parseTime(leader.time));
+    });
+  });
 }
 
 function parseData(data) {
@@ -277,6 +290,7 @@ export default Ember.Route.extend({
     var url = '/event/' + id + '.csv';
     return $.get(url).then(function(data) {
       var d = parseData(data);
+      d.id = id;
       return d;
     });
   },

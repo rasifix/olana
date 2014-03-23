@@ -1,7 +1,7 @@
 var Router = Ember.Router.extend(); // ensure we don't share routes between all Router instances
 
 Router.map(function() {
-  this.route('events', { path: '/events' });
+  this.route('events', { path: '/' });
   this.resource('event', { path: '/event/:event_id'}, function() {
     this.resource('event.category', { path: 'category/:category_id' }, function() {
       this.route('runner', { path: 'runner/:runner_id' });

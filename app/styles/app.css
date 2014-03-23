@@ -1,8 +1,346 @@
-/* Put your CSS here */
-html, body {
-    margin: 20px;
+@import url("grid.css");
+@import url("fork.css");
+
+body, td, input {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 15px;
 }
 
-@keyframes domChanged { from { background: yellow; } }
-@-webkit-keyframes domChanged { from { background: yellow; } }
-.ember-view { animation: domChanged 1s; -webkit-animation: domChanged 1s; }
+body {
+  background: url('/images/body.jpg');
+}
+
+table {
+  border-collapse: collapse;
+  border: 0;
+}
+
+.ranking-table {
+  width: 100%;
+}
+
+tr:hover {
+  background-color: rgba(174,167,141,0.5);
+}
+
+a {
+  color: red;
+}
+
+.splits-table {
+  width: 50%;
+}
+
+.splits-table tr {
+  border-top: 1px solid #ffbf80;
+}
+
+.splits-table tr:first-of-type {
+  border-top: none;
+}
+
+.splits-table td {
+  padding: 5px;
+}
+
+.splits-list {
+  margin: 5px;
+  padding: 0px 5px 5px 5px;
+  width: 100%;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+  text-shadow: 1px 1px 1px white;
+}
+
+ul.breadcrumbs {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.breadcrumbs li {
+  list-style: none;
+  display: inline-block;
+}
+
+ul.breadcrumbs li:before {
+  content: "/";
+}
+
+ul.breadcrumbs li:first-of-type:before {
+  display: none;
+}
+
+ul.breadcrumbs li.active a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+h4 {
+  margin-top: 3px;
+  margin-bottom: 15px;
+}
+
+h4 a {
+  font-weight: 300;
+  padding-left: 40px;
+}
+
+.ranking-list {
+  box-sizing: border-box;
+  margin: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+.ranking-list tr.active {
+  background-color: #fdd;
+}
+
+.vgrid {
+  shape-rendering: crispEdges;
+}
+
+.hgrid {
+  shape-rendering: crispEdges;
+}
+
+.grid {
+  shape-rendering: crispEdges;
+}
+
+.crisp {
+  shape-rendering: crispEdges;
+}
+
+text {
+  fill: black;
+  font-size: 10px;
+}
+
+.h2h-graph text {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.split-graph text {
+  text-anchor: end;
+}
+
+text.leg {
+  text-anchor: end;
+}
+
+rect.leg:nth-child(odd) {
+  fill: rgba(174,167,141,0.3);
+}
+
+rect.leg:nth-child(even) {
+  fill: rgba(174,167,141,0.2);
+}
+
+rect.leg:hover {
+  fill: rgba(174,167,141,0.4);
+}
+
+text.statusline {
+  text-anchor: start;
+  font-size: 14px;
+}
+
+text.xaxis {
+  text-anchor: middle;
+}
+
+.split-graph {
+  float: left;
+}
+
+.ranking-list {
+  float: left;
+}
+
+.splits-list {
+  float: left;
+}
+
+rect.hover:hover {
+  fill: orange;
+  opacity: 0.5;
+}
+
+body {
+  margin: 0px;
+}
+
+header {
+  background: url('/images/body.jpg');
+  border-bottom: 1px solid #aaa;
+  line-height: 30px;
+  padding-left: 10px;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  box-shadow: 0px 1px 2px #aaa;
+}
+
+footer {
+  color: #aea78d;
+  font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bodybox {
+  border:1px solid #aea78d; 
+  border-radius: 4px;
+  background-color:white; 
+  margin-top: 10px; 
+  margin-bottom:10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+li.list-header {
+  color: black;
+  font-weight: bold;
+}
+
+.event-list {
+  width: 100%;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  border-radius: 5px;
+  padding: 0px;
+  float: left;
+}
+
+.event-list li:first-of-type {
+  border-top: none;
+}
+
+.event-list li {
+  list-style: none;
+  border-top: 1px solid #aea78d;
+  padding: 10px;
+}
+
+.event-list li:hover a {
+  color:red;
+}
+
+.event-list li:hover {
+  background-color: rgba(174,167,141,0.25);
+}
+
+.event-list a {
+  text-decoration: none;
+  color: #333;
+}
+
+.event-list a:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+span.error {
+  color: #f44;
+}
+
+.ranking-table {
+  width: 100%;
+}
+
+.ranking-table tr {
+  border-top: 1px solid #aea78d;
+}
+
+.ranking-table tr:first-of-type {
+  border-top: none;
+}
+
+.ranking-table td {
+  padding: 5px;
+}
+
+h3.list-header {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #ffbf80;
+}
+
+ul {
+  margin-top: 0px;
+}
+
+span.mute {
+  color: #aea78d;
+  font-size: 75%;
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+  max-width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+span.date {
+  color: #aea78d;
+  font-size: 75%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.split-entry {
+  float: left;
+  width: 440px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.split-entry:hover {
+  background-color: rgba(174,167,141,0.5) !important;
+}
+
+.split-entry-span {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 50px;
+  display: inline-block;
+  text-align: right;
+}
+
+div.split-entry:nth-of-type(4n), div.split-entry:nth-of-type(4n + 3) {
+  background-color: rgba(174,167,141,0.15);
+}
+
+div.split-entry:nth-of-type(4n + 1), div.split-entry:nth-of-type(4n + 2) {
+  background-color: rgba(174,167,141,0.3);
+}
+
+/* beta banner */
+.right-bottom .github-fork-ribbon {
+    background-color: #090;
+}
+
+.right .github-fork-ribbon {
+    background-color: #aea78d;
+}
+
+.left-bottom .github-fork-ribbon {
+    background-color: #333;
+}
