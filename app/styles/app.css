@@ -5,7 +5,7 @@ body, td, input {
 }
 
 body {
-  background: url('/images/body.jpg');
+  background: url('../images/body.jpg');
 }
 
 table {
@@ -179,7 +179,7 @@ body {
 }
 
 header {
-  background: url('/images/body.jpg');
+  background: url('../images/body.jpg');
   border-bottom: 1px solid #aaa;
   line-height: 30px;
   padding-left: 10px;
