@@ -1,5 +1,41 @@
 [
   {
+    "id": "20140406_3_nationaler",
+    "name": "3. Nationaler OL",
+    "map": "Stetten",
+    "date": "2014-04-06"
+  },
+  {
+    "id": "20140330_2_nationaler",
+    "name": "2. Nationaler OL",
+    "map": "Grauholz-Schoebuehl",
+    "date": "2014-03-30"
+  },
+  {
+    "id": "20140329_nom",
+    "name": "NOM",
+    "map": "Grauholz-Schoebuehl",
+    "date": "2014-03-29"
+  },
+  {
+    "id": "20140323_pfaeffiker_ol",
+    "name": "Pfaeffiker OL",
+    "map": "Isikerberg",
+    "date": "2014-03-23"
+  },
+  {
+    "id": "20140321_em_testlauf_langdistanz",
+    "name": "EM-Testlauf Langdistanz",
+    "map": "Buettikofen",
+    "date": "2014-03-21"
+  },
+  {
+    "id": "20140315_wisliger_ol",
+    "name": "Wisliger OL",
+    "map": "Brauiweiher",
+    "date": "2014-03-15"
+  },
+  {
     "id": "2014_norska_nacht_ol",
     "name": "Norska Nacht OL",
     "map": "Belpberg",
