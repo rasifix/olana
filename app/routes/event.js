@@ -152,6 +152,26 @@ function calculateLegs(category) {
   });
 }
 
+function assignRank(runners) {
+  var last = null;
+  runners.map(function(runner, idx, runners) {
+    if (idx === 0) {
+      runner.rank = 1;
+    } else if (parseTime(runner.runTime) - parseTime(last) === 0) {
+      runner.rank = runners[idx - 1].rank;
+    } else {
+      runner.rank = idx + 1;
+    }
+    last = runner.runTime;
+    return runner;
+  });
+}
+
+function calculateCategory(cat) {
+  cat.runners.sort(function(r1, r2) { return parseTime(r1.runTime) - parseTime(r2.runTime); });
+  assignRank(cat.runners);
+}
+
 function parseData(data) {
   var parseCategory = function(row) {
     return {
@@ -225,6 +245,7 @@ function parseData(data) {
           checked: rank < 6, // hardcoded -> make configurable
           rank: rank,
           name: row[1],
+          category: category.name,
           firstName: row[2],
           yearOfBirth: row[3],
           town: row[7],
@@ -258,6 +279,63 @@ function parseData(data) {
       legset[legcode].push(category.name);
     });
   });
+  
+  // try to find identical categories
+  var groupedCategories = { };
+  categories.forEach(function(category) {
+    var controls = category.legs.map(function(e) { return e.code; }).join('-');
+    if (!groupedCategories[controls]) {
+      groupedCategories[controls] = [];
+    }
+    groupedCategories[controls].push(category);
+  });
+  
+  // adding virtual categories!
+  if (groupedCategories.length !== categories.length) {
+    for (var prop in groupedCategories) {
+      if (groupedCategories.hasOwnProperty(prop)) {
+        var cats = groupedCategories[prop];
+        
+        // skipping category
+        if (cats.length === 1) continue;
+        
+        var vcatName = cats.map(function(e) { return e.name; }).join("-");
+        
+        var vcatRunners = [];
+        var vcat = {
+          name: vcatName,
+          virtual: true,
+          ascent: cats[0].ascent,
+          controls: cats[0].controls,
+          distance: cats[0].distance,
+          runners: vcatRunners,
+          legs: cats[0].legs
+        };
+        
+        cats.forEach(function(cat) {
+          cat.runners.forEach(function(runner) {
+            var vrunner = Runner.create({
+               id: runner.id,
+               checked: false, 
+               name: runner.name,
+               category: runner.category,
+               firstName: runner.firstName,
+               yearOfBirth: runner.yearOfBirth,
+               town: runner.town,
+               club: runner.club,
+               runTime: runner.runTime,          
+               splits: runner.splits
+             });
+            vcat.runners.push(vrunner);
+          });
+        });
+        
+        calculateCategory(vcat);
+        
+        categories.push(vcat);
+      }
+    }
+  }
   
   var legs = [];
   for (var key in legset) {

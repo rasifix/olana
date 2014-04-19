@@ -44,11 +44,25 @@ export default Ember.Component.extend({
   refresh: function() {    
     var legs = this.get('legs');
     
+    function linearGradient(defs, id) {
+      var grad = defs.append('linearGradient');
+      grad.attr('id', id);
+      var stop1 = grad.append('stop');
+      stop1.attr('class', id + '-start').attr('offset', '0%');
+      var stop2 = grad.append('stop');
+      stop2.attr('class', id + '-end').attr('offset', '100%');
+    }
+    
+    var svg = d3.select(this.get('element'));
+    var defs = svg.append('defs');
+    linearGradient(defs, 'positive');
+    linearGradient(defs, 'negative');
+    
     var offset = this.get('offset');
     var center = offset + (this.get('width') - offset) / 2;
     var xscale = this.get('xscale');
     var barheight = this.get('barheight');
-    
+        
     var legbg = d3.select(this.get('element')).selectAll("rect.leg").data(legs);
     legbg.enter().append("rect").attr("class", "leg");
     
@@ -59,14 +73,14 @@ export default Ember.Component.extend({
          .attr("height", barheight);
         
     var bars = d3.select(this.get('element')).selectAll("rect.time-bar").data(legs);
-    bars.enter().append("rect").attr("class", "time-bar");
+    bars.enter().append("rect")
 
     bars.transition()
         .attr("x", function(leg) { return leg.diff < 0 ? center : center - xscale(leg.diff); })
         .attr("y", function(leg, idx) { return idx * (barheight + 1); })
         .attr("width", function(leg) { return leg.diff === 0 ? 0 : (leg.diff < 0 ? -xscale(leg.diff) : xscale(leg.diff)); })
         .attr("height", barheight)
-        .attr("fill", function(leg) { return leg.diff < 0 ? '#0A0' : '#A00'; });
+        .attr("class", function(leg) { return leg.diff === 0 ? 'time-bar' : (leg.diff < 0 ? 'time-bar positive' : 'time-bar negative'); });
     
     bars.exit().remove();    
     
@@ -77,7 +91,6 @@ export default Ember.Component.extend({
           .attr("x", function(leg) { return center - xscale(leg.diff) + (leg.diff < 0 ? 5 : -5); })
           .attr("y", function(leg, idx) { return idx * (barheight + 1) + 16; })
           .attr("text-anchor", function(leg) { return leg.diff < 0 ? 'start' : 'end'; })
-          //.attr("opacity", function(leg) { return leg.diff === 0 ? 0 : 1})
           .text(function(leg) { return '+' + formatTime(Math.abs(leg.diff)); });
     
     labels.exit().remove();

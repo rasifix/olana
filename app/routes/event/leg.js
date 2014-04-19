@@ -11,7 +11,7 @@ export default Ember.Route.extend({
     var event = this.modelFor('event');
     
     var result = [];
-    event.categories.forEach(function(cat) {
+    event.categories.filter(function(cat) { return !cat.virtual; }).forEach(function(cat) {
       for (var idx = 0; idx < cat.legs.length; idx++) {
         var leg = cat.legs[idx];
         if (to === leg.code) {

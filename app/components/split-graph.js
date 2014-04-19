@@ -49,8 +49,6 @@ export default Ember.Component.extend({
   },
   
   refresh: function() {
-    console.log("refresh");
-    
     var self = this;
     var grid = d3.select(this.get('element')).select("#grid");
     var legs = this.get('legs');

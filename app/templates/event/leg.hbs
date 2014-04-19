@@ -1,7 +1,8 @@
 <div class="content bodybox">
  <div class="grid12">
   <table class="ranking-table">
-  {{#each data}}
+   <tbody>
+    {{#each data}}
     <tr>
       <td>{{displayPos}}</td>
       <td>{{#link-to 'event.category.runner' category runnerId}}{{runner}}{{/link-to}}</td>
@@ -12,7 +13,8 @@
       <td>{{timeLoss}}</td>
       <td>{{#link-to 'event.category' category}}{{category}}{{/link-to}}</td>
     </tr>
-  {{/each}}
+    {{/each}}
+   </tbody>
   </table>
  </div>
  <div style="clear:both"></div>

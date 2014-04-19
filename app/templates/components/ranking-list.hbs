@@ -1,5 +1,7 @@
 <table class="ranking-table">
-{{#each runner in runners}}
- {{ranking-entry runner=runner action="runnerClicked"}}
-{{/each}}
+ <tbody>
+  {{#each runner in runners}}
+   {{ranking-entry runner=runner action="runnerClicked"}}
+  {{/each}}
+ </tbody>
 </table>
