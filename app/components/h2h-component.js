@@ -1,3 +1,5 @@
+/*global d3 */
+
 var parseTime = function(str) {
   var split = str.split(":");
   return parseInt(split[0]) * 60 + parseInt(split[1]);
@@ -95,10 +97,10 @@ export default Ember.Component.extend({
     
     labels.exit().remove();
     
-    var legs = d3.select(this.get('element')).selectAll("text.leg").data(legs);
-    legs.enter().append("text").attr("class", "leg");
+    var legsText = d3.select(this.get('element')).selectAll("text.leg").data(legs);
+    legsText.enter().append("text").attr("class", "leg");
     
-    legs.transition()
+    legsText.transition()
         .attr("x", "20")
         .attr("y", function(leg, idx) { return idx * (barheight + 1) + 16; })
         .text(function(leg) { return leg.number; });

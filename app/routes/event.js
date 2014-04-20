@@ -215,9 +215,10 @@ function parseData(data) {
       categories.pushObject(category);
     } else {
       var splits = [ ];
+      var split;
       for (var i = header.length; i < row.length; i+= 2) {
         var index = (i - header.length) / 2;
-        var split = { code: row[i], time: row[i + 1], number: index + 1 };
+        split = { code: row[i], time: row[i + 1], number: index + 1 };
         if (i === header.length) {
           split.split = split.time;
         } else {
@@ -228,7 +229,7 @@ function parseData(data) {
         splits.pushObject(split);
       }
       if (totalTime !== -1) {
-        var split = { code: 'Zi', time: formatTime(totalTime) };
+        split = { code: 'Zi', time: formatTime(totalTime) };
         split.split = formatTime(totalTime - parseTime(row[row.length - 1]));
         split.splitTime = split.split;
         split.number = splits.length + 1;
@@ -238,7 +239,7 @@ function parseData(data) {
         splits.pushObject(split);
       }
       var runTime = row[12];
-      if (parseTime(runTime) != -1) {
+      if (parseTime(runTime) !== -1) {
         var rank = row[0];
         var runner = Runner.create({
           id: idx,
@@ -292,6 +293,7 @@ function parseData(data) {
   
   // adding virtual categories!
   if (groupedCategories.length !== categories.length) {
+    var nameAccessor = function(obj) { return obj.name; };
     for (var prop in groupedCategories) {
       if (groupedCategories.hasOwnProperty(prop)) {
         var cats = groupedCategories[prop];
@@ -299,7 +301,7 @@ function parseData(data) {
         // skipping category
         if (cats.length === 1) continue;
         
-        var vcatName = cats.map(function(e) { return e.name; }).join("-");
+        var vcatName = cats.map(nameAccessor).join('-');
         
         var vcatRunners = [];
         var vcat = {

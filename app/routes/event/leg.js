@@ -9,25 +9,26 @@ export default Ember.Route.extend({
     var to = parts[1];
     
     var event = this.modelFor('event');
-    
+        
     var result = [];
     event.categories.filter(function(cat) { return !cat.virtual; }).forEach(function(cat) {
+      var makeEntry = function(runner) {
+        return { 
+          category: cat.name,
+          runner: runner.get('fullName'),
+          club: runner.club,
+          yearOfBirth: runner.yearOfBirth,
+          runnerId: runner.id,
+          split: runner.splits[idx].splitTime,
+          timeLoss: runner.splits[idx].timeLoss
+        };
+      };
       for (var idx = 0; idx < cat.legs.length; idx++) {
         var leg = cat.legs[idx];
         if (to === leg.code) {
           if ((idx === 0 && from === "St") || (idx > 0 && from === cat.legs[idx - 1].code)) {
-            cat.runners.forEach(function(runner) {
-              result.push({ 
-                category: cat.name,
-                runner: runner.get('fullName'),
-                club: runner.club,
-                yearOfBirth: runner.yearOfBirth,
-                runnerId: runner.id,
-                split: runner.splits[idx].splitTime,
-                timeLoss: runner.splits[idx].timeLoss,
-                legidx: idx
-              });
-            });
+            var mapped = cat.runners.map(makeEntry);
+            result = result.concat(mapped);
           }
         }
       }
@@ -65,8 +66,8 @@ export default Ember.Route.extend({
   },
   
   model: function() {
-    var model = this.modelFor('event');
-    return model;
+    // totally irrelevant...
+    return [];
   }
 
 });

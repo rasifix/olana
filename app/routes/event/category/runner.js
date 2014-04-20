@@ -4,7 +4,7 @@ export default Ember.Route.extend({
     var category = this.modelFor('event.category');
     var result = null;
     category.runners.forEach(function(runner) {
-      if (params['runner_id'] == runner.id) {
+      if (parseInt(params['runner_id']) === runner.id) {
         result = runner;
       }
     });

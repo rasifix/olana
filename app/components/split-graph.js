@@ -1,3 +1,5 @@
+/*global d3, Rainbow */
+
 var parseTime = function(str) {
   var split = str.split(":");
   return parseInt(split[0]) * 60 + parseInt(split[1]);
