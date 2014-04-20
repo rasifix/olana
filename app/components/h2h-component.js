@@ -4,7 +4,7 @@ var parseTime = function(str) {
 };
 
 var pad = function(str) {
-  return str.length == 1 ? "0" + str : str;
+  return str.length === 1 ? "0" + str : str;
 };
 
 var formatTime = function(seconds) {
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
          .attr("height", barheight);
         
     var bars = d3.select(this.get('element')).selectAll("rect.time-bar").data(legs);
-    bars.enter().append("rect")
+    bars.enter().append("rect");
 
     bars.transition()
         .attr("x", function(leg) { return leg.diff < 0 ? center : center - xscale(leg.diff); })

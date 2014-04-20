@@ -26,9 +26,7 @@ var findRunner = function(category, runnerId) {
 
 export default Ember.Route.extend({
   
-  deserialize: function(params) {
-    console.log("DESERIALIZE H2H");
-    
+  deserialize: function(params) {    
     var runnerId = parseInt(params["runner_id"]);
     var event = this.modelFor('event');
     
@@ -61,8 +59,6 @@ export default Ember.Route.extend({
   },
   
   model: function(params) {
-    console.log("MODEL HOOK");
-    console.log(params);
     var model = this.modelFor('event');
     return model;
   }

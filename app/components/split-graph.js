@@ -4,7 +4,7 @@ var parseTime = function(str) {
 };
 
 var pad = function(str) {
-  return str.length == 1 ? "0" + str : str;
+  return str.length === 1 ? "0" + str : str;
 };
 
 var formatTime = function(seconds) {
@@ -59,14 +59,14 @@ export default Ember.Component.extend({
     hover.enter()
          .append("rect")
          .classed("hover", true)
-         .attr("x", function(leg, idx) { return idx == 0 ? x(0) : x(legs[idx - 1].position); })
+         .attr("x", function(leg, idx) { return idx === 0 ? x(0) : x(legs[idx - 1].position); })
          .attr("y", padding.top)
          .attr("width", function(leg, idx) { 
-           var start = idx == 0 ? x(0) : x(legs[idx - 1].position);
+           var start = idx === 0 ? x(0) : x(legs[idx - 1].position);
            return x(leg.position) - start;
          })
          .attr("height", this.get('area').height)
-         .attr("fill", function(d, idx) { return idx % 2 == 0 ? "#eee" : "white"; })
+         .attr("fill", function(d, idx) { return idx % 2 === 0 ? "#eee" : "white"; })
          .attr("opacity", 0.5)
          .on("click", function(leg, idx) {
            self.sendAction('legclick', leg);
@@ -79,7 +79,7 @@ export default Ember.Component.extend({
                  .text("Posten " + leg.code + "; schnellste Zeit " + leg.fastest + " von " + leg.runner.firstName + " " + leg.runner.name);
          });
     
-    var labels = grid.selectAll("text.xaxis").data(legs.filter(function(d, idx) { return idx % 2 == 1; }));
+    var labels = grid.selectAll("text.xaxis").data(legs.filter(function(d, idx) { return idx % 2 === 1; }));
     labels.enter()
           .append("text")
           .classed("xaxis", true)

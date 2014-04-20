@@ -119,7 +119,7 @@ function calculateLegs(category) {
     var lastSplit = null;
     runnerLegs.forEach(function(runnerLeg, i) {
       if (lastSplit == null || parseTime(lastSplit) === parseTime(runnerLeg.split)) {
-        runnerLeg.splitRank = pos
+        runnerLeg.splitRank = pos;
       } else {
         runnerLeg.splitRank = ++pos;
       }
