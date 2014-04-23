@@ -175,11 +175,11 @@ rect.hover:hover {
 }
 
 rect.negative {
-  fill: url(#negative);
+  fill: url(#negative) #e00;
 }
 
 rect.positive {
-  fill: url(#positive);
+  fill: url(#positive) #080;
 }
 
 .positive-start {

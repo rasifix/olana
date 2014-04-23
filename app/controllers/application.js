@@ -61,6 +61,10 @@ export default Ember.Controller.extend({
         // Now push it to the crumbs array
         crumbs.pushObject(crumb);
       });
+      
+      if (crumbs.length === 1) {
+        crumbs = [];
+      }
 
       this.set('breadcrumbs', crumbs);
 
