@@ -1,5 +1,23 @@
 [
   {
+    "id": "20140421_huttwiler",
+    "name": "Huttwiler OL",
+    "map": "Chaltenegg",
+    "date": "2014-04-21"
+  },
+  {
+    "id": "20140413_bielseeland",
+    "name": "Biel Seeland OL",
+    "map": "Twannberg",
+    "date": "2014-04-13"
+  },
+  {
+    "id": "20140413_buelacher",
+    "name": "Buelacher OL",
+    "map": "Bueliberg",
+    "date": "2014-04-13"
+  },
+  {
     "id": "20140406_3_nationaler",
     "name": "3. Nationaler OL",
     "map": "Stetten",
