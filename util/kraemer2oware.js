@@ -19,7 +19,6 @@ function parseTime(str) {
   var split = str.split(":");
   var result = parseInt(split[0]) * 3600 + parseInt(split[1]) * 60 + parseInt(split[2]);
   return isNaN(result) ? -1 : result;
-  ;
 };
 
 function formatTime(seconds) {
@@ -86,21 +85,22 @@ rl.on('line', function(cmd) {
     categories[category.name] = category;
   }
   
+  var split = null;
   for (var idx = 60; idx < 60 + parseInt(cols[56]) * 2; idx += 2) {
     if (idx === cols.length - 1) {
       continue;
     }
-    var split = {
+    split = {
       code: cols[idx],
       time: cols[idx + 1]
     };
     if (runner.splits.length === 0) {
       split.leg = 'St-' + split.code;
-      split.splitTime = split.time;
+      split.split = split.time;
     } else {
       var previous = runner.splits[runner.splits.length - 1];
       split.leg = previous.code + '-' + split.code;
-      split.splitTime = formatTime(parseTime(split.time) - parseTime(previous.time));
+      split.split = formatTime(parseTime(split.time) - parseTime(previous.time));
     }
     runner.splits.push(split);
   }
@@ -111,7 +111,7 @@ rl.on('line', function(cmd) {
   line('//Nacht OL SM;Grauholz;2014-03-29;19:30;OLG Bern');
   for (var key in categories) {
     var category = categories[key];
-    reorganizeCategory(category);
+    //reorganizeCategory(category);
     line(category.name);
     category.runners.forEach(function(runner, idx) {
       log((idx + 1) + ';' + runner.name + ';' + runner.firstName + ';' + runner.yearOfBirth + ';' + runner.sex + ';;;' + runner.city + ';' + runner.club + ';;;;' + formatTime_min_s(parseTime(runner.runTime)) + ';' + formatTime_min_s(parseTime(runner.startTime)) + ';' + formatTime_min_s(parseTime(runner.finishTime)));

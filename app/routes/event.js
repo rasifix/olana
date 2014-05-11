@@ -19,7 +19,7 @@ function calculateLegs(category) {
   var runners = category.runners;
   
   var legs = runners[0].splits.map(function(leg, idx) {
-    return { code: leg.code, number: idx + 1 };
+    return { code: leg.code, number: idx + 1, runners: [] };
   });
   category.legs = legs;
   
@@ -33,7 +33,11 @@ function calculateLegs(category) {
   
   runners.forEach(function(runner) {
     runner.splits.forEach(function(split, idx) {
-      var current = legs[idx];   
+      var current = legs[idx];
+      current.runners.push({
+        runner: runner.id,
+        split: split.split
+      });
       split.index = idx;   
       if (split.split !== null) {
         var splitTime = split.split !== '0:00' ? parseTime(split.split) : '99:99';
@@ -47,7 +51,16 @@ function calculateLegs(category) {
       }
     });
   });
-
+  
+  // sort the leg ranking
+  legs.forEach(function(leg) {
+    leg.runners.sort(function(r1, r2) {
+      return parseTime(r1.split) - parseTime(r2.split);
+    });
+    var top25 = leg.runners.slice(0, Math.max(leg.runners.length * 0.25, 1));
+    leg.hundertpct = top25.reduce(function(prev, curr, idx) { return prev + parseTime(curr.split); }, 0) / top25.length;
+  });
+  
   var superman = legs.reduce(function(prev, curr, idx) {
     return prev + parseTime(curr.fastest);
   }, 0);
@@ -76,6 +89,8 @@ function calculateLegs(category) {
       });
       
       var current = legs[idx];
+      leg.perfidx = Math.round(1.0 * current.hundertpct / split * 100);
+      
       if (idx === 0) {
         leg.position = current.weight;
       } else {
@@ -93,12 +108,12 @@ function calculateLegs(category) {
       runner.splits.forEach(function(split, idx) {
         var splitBehind = parseTime(split.splitBehind.substr(1));
         var weightedLoss = splitBehind / legs[idx].weight;
-        if (weightedLoss / medianWeightedLoss > 1.2) {
+        if (weightedLoss / medianWeightedLoss > 1.25) {
           split.timeLoss = '+' + formatTime(splitBehind - Math.round(medianWeightedLoss * legs[idx].weight));
           split.hasError = true;
         }
       });
-    }
+    }    
   });
 
   // extract the runner leg at index idx for each runner
@@ -224,14 +239,12 @@ function parseData(data) {
         } else {
           split.split = formatTime(parseTime(split.time) - parseTime(row[i - 1]));
         }
-        split.splitTime = split.split;
         split.leg = index === 0 ? 'St-' + split.code : splits[splits.length - 1].code + '-' + split.code;
         splits.pushObject(split);
       }
       if (totalTime !== -1) {
         split = { code: 'Zi', time: formatTime(totalTime) };
         split.split = formatTime(totalTime - parseTime(row[row.length - 1]));
-        split.splitTime = split.split;
         split.number = splits.length + 1;
         split.splitBehind = null;
         split.splitRank = null;

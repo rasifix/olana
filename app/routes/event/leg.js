@@ -19,7 +19,7 @@ export default Ember.Route.extend({
           club: runner.club,
           yearOfBirth: runner.yearOfBirth,
           runnerId: runner.id,
-          split: runner.splits[idx].splitTime,
+          split: runner.splits[idx].split,
           timeLoss: runner.splits[idx].timeLoss
         };
       };
