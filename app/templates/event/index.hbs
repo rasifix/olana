@@ -1,26 +1,14 @@
 <div class="content bodybox">
 
-<div class="grid6">
+<div class="grid12">
 <h3 class="list-header">Kategorien</h3>
 <ul class="event-list">
   {{#each categories}}
-  <li {{action 'categoryClicked' name}}>
-    {{#link-to 'event.category' name}}
-    {{name}} 
+  <li {{action 'categoryClicked' id}}>
+    {{#link-to 'event.category' id}}
+    {{id}} 
     {{/link-to}}
-    <span class="mute">{{runners.length}} Teilnehmer</span>
-  </li>
-  {{/each}}
-</ul>
-</div>
-
-<div class="grid6">
-<h3 class="list-header">Strecken</h3>
-<ul class="event-list">
-  {{#each legs}}
-  <li {{action 'legClicked' code}}>
-    {{#link-to 'event.leg' code}}{{code}}{{/link-to}}
-    <span class="mute">{{categories}}</span>
+    <span class="mute">{{runners}} Teilnehmer</span>
   </li>
   {{/each}}
 </ul>

@@ -16,12 +16,7 @@ export default Ember.Route.extend({
   
   deserialize: function(params) {
     var category = this.modelFor('event.category');
-    var result = null;
-    category.runners.forEach(function(runner) {
-      if (parseInt(params['runner_id']) === runner.id) {
-        result = runner;
-      }
-    });
+    var result = category.runners[parseInt(params['runner_id'])];
     
     if (!result.histogram) {
       var groupFct = function(split) { return Math.floor((split.perfidx + 2) / 4); };

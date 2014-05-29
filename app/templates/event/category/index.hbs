@@ -1,3 +1,5 @@
 <div>{{ranking-list runners=runners action="runnerClicked"}}</div>
 
-<div>{{split-graph runners=runners legs=legs leghover="onleghover" legclick="onlegclick"}}</div>
+{{#if checkedRunners}}
+<div>{{split-graph runners=checkedRunners legs=legs legclick="onlegclick"}}</div>
+{{/if}}

@@ -352,6 +352,36 @@ div.split-entry:nth-of-type(4n + 1), div.split-entry:nth-of-type(4n + 2) {
   background-color: rgba(174,167,141,0.2);
 }
 
+
+ul.subnav {
+ list-style: none;
+ list-style-type:none;
+ padding: 0px;
+ margin-top: 5px;
+ margin-bottom: 5px;
+}
+
+ul.subnav li {
+ display: inline;
+ padding: 0px;
+ margin: 0px;
+}
+
+ul.subnav li a {
+  border-bottom: 1px solid red;
+  padding: 5px;
+  margin: 0px;
+  text-decoration:none;
+}
+
+ul.subnav li a.active {
+  border-left: 1px solid red;
+  border-top: 1px solid red;
+  border-right: 1px solid red;
+  border-bottom: 1px solid rgba(0,0,0,0);
+  font-weight: bold;
+}
+
 /* beta banner */
 .right-bottom .github-fork-ribbon {
     background-color: #090;

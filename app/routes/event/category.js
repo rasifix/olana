@@ -149,35 +149,124 @@ function calculateLegs(category) {
   return legs;
 }
 
+function parseData(json) {
+  var result = json;
+  
+  result.legs = result.runners[0].splits.map(function(split, idx) {
+    return {
+      code: split.code,
+      fastest: split.time
+    };
+  });
+  
+  result.runners = result.runners.map(function(runner, idx) {
+    return Runner.create({
+      id: '' + idx,
+      firstName: runner.firstName,
+      name: runner.name,
+      runTime: runner.runTime,
+      yearOfBirth: runner.yearOfBirth,
+      city: runner.city,
+      club: runner.club,
+      splits: runner.splits.map(function(split, idx) {
+        return Split.create({
+          number: idx + 1,
+          code: split.code,
+          time: split.time,
+          split: idx === 0 ? split.time : formatTime(parseTime(split.time) - parseTime(runner.splits[idx - 1].time))
+        });
+      })
+    });
+  });
+
+  // calculate the fastest time on each leg
+  result.runners.forEach(function(runner) {
+    runner.splits.forEach(function(split, idx) {
+      var leg = result.legs[idx];
+      if (parseTime(split.split) < parseTime(leg.fastest)) {
+        leg.fastest = split.split;
+      }
+    });
+  });
+  
+  // calculate the superman time [s]
+  result.superman = result.legs.reduce(function(prev, current) {
+    return prev + parseTime(current.fastest);
+  }, 0);
+  
+  // visualization property - leg.position [0..1), leg.weight[0..1)
+  result.legs.forEach(function(leg, idx) {
+    leg.weight = parseTime(leg.fastest) / result.superman;
+    if (idx === 0) {
+      leg.position = leg.weight;
+    } else {
+      leg.position = result.legs[idx - 1].position + leg.weight;
+    }
+  });
+  
+  // calculate how much time a runner lost on a leg
+  result.runners.forEach(function(runner) {
+    runner.splits.forEach(function(split, idx) {
+      split.splitBehind = formatTime(parseTime(split.split) - parseTime(result.legs[idx].fastest));
+      split.behind = idx === 0 ? split.splitBehind : formatTime(parseTime(runner.splits[idx - 1].behind) + parseTime(split.splitBehind));
+      // visualization property - split.position [0..1)
+      split.position = result.legs[idx].position;
+    });
+  });
+  
+  // calculate the rank
+  result.runners.forEach(function(runner, idx) {
+    if (idx === 0) {
+      runner.set('rank', 1);
+    } else {
+      var prev = result.runners[idx - 1];
+      if (prev.runTime === runner.runTime) {
+        runner.set('rank', prev.rank);
+      } else {
+        runner.set('rank', idx + 1);
+      }
+    }
+  });
+  return result;
+}
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function assignRank(runners) {
+  var last = null;
+  runners.map(function(runner, idx, runners) {
+    if (idx === 0) {
+      runner.rank = 1;
+    } else if (parseTime(runner.runTime) - parseTime(last) === 0) {
+      runner.rank = runners[idx - 1].rank;
+    } else {
+      runner.rank = idx + 1;
+    }
+    last = runner.runTime;
+    return runner;
+  });
+}
+
+function calculateCategory(cat) {
+  cat.runners.sort(function(r1, r2) { return parseTime(r1.runTime) - parseTime(r2.runTime); });
+  assignRank(cat.runners);
+}
+
 export default Ember.Route.extend({
   
   deserialize: function(params) {
-    var event = this.modelFor('event');
-    var category = null;
-    event.categories.forEach(function(cat) {
-      if (cat.name === params.category_id) {
-        category = cat;
-        return;
-      }
+    var eventId = this.modelFor('event').id;
+    var id = params['category_id'];
+    var url = 'http://localhost:5984/olana/_design/olana-couch/_view/category-details?key=' + encodeURIComponent(JSON.stringify([eventId, id]));
+    return $.get(url).then(function(data) { 
+      var json = JSON.parse(data);
+      return parseData(json.rows[0].value);
     });
-    if (category === null) {
-      this.transitionTo('event');
-    }
-    var legs = calculateLegs(category);
-    category.runners.forEach(function(r, idx) {
-      r.set('checked', idx < 5);
-    });
-    return {
-      id: params.category_id,
-      name: params.category_id,
-      legs: legs,
-      runners: category.runners
-    };
   },
   
   actions: {
-    onleghover: function(leg) {
-    },
     onlegclick: function(leg) {
       this.transitionTo('event.leg', leg.leg);
     }

@@ -7,7 +7,15 @@ Router.map(function() {
       this.route('runner', { path: 'runner/:runner_id' });
       this.route('h2h', { path: 'h2h/:runner_id' });
     });
-    this.route('leg', { path: 'leg/:leg_id' });
+    this.route('courses', { path: 'courses' });
+    this.resource('event.course', { path: 'course/:route_id '}, function() {
+      this.route('runner', { path: 'runner/:runner_id' });
+      this.route('h2h', { path: 'h2h/:runner_id '});
+    });
+    this.resource('event.legs', { path: 'legs' }, function() {
+      this.route('index', { path: '/' });
+      this.route('leg', { path: ':leg_id' });      
+    });
   });
   this.resource('runners', function() {
      this.route('runner', { path: ':runner_id'});

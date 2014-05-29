@@ -1,0 +1,18 @@
+<div class="content bodybox">
+ <div class="grid12">
+
+<h3 class="list-header">Bahnen</h3>
+<ul class="event-list">
+{{#each courses}}
+ <li {{action 'courseClicked' id}}>
+  {{#link-to 'event.course' id}}
+  {{id}} 
+  {{/link-to}}
+  <span class="mute">{{runners}} Teilnehmer</span>
+ </li>
+{{/each}}
+</ul>
+
+ </div>
+ <div style="clear:both"></div>
+</div>

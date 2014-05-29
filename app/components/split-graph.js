@@ -57,6 +57,15 @@ export default Ember.Component.extend({
     var x = this.get('xScale');    
     var padding = this.get('padding');
     
+    /*
+     
+     {
+       position:0 <-- [0..1) representation
+       
+     }
+     
+     */
+    
     var hover = grid.selectAll("rect.hover").data(legs);
     hover.enter()
          .append("rect")
@@ -75,10 +84,10 @@ export default Ember.Component.extend({
          })
          .on("mouseover", function(leg, idx) {
            self.sendAction('leghover', leg);
-           var status = d3.select(self.get('element')).select("#statusline");
+           /*var status = d3.select(self.get('element')).select("#statusline");
            status.select("text").remove();
            status.append("text").attr("x", padding.left).attr("y", self.get('height') - 5).classed("statusline", true)
-                 .text("Posten " + leg.code + "; schnellste Zeit " + leg.fastest + " von " + leg.runner.firstName + " " + leg.runner.name);
+                 .text("Posten " + leg.code + "; schnellste Zeit " + leg.fastest + " von " + leg.runner.firstName + " " + leg.runner.name);*/
          });
     
     var labels = grid.selectAll("text.xaxis").data(legs.filter(function(d, idx) { return idx % 2 === 1; }));
@@ -91,7 +100,7 @@ export default Ember.Component.extend({
     
     this.updateSplitLines();
     this.updateHGrid();        
-  }.observes('checkedRunners.[]', 'active'),
+  }.observes('runners.[]', 'active'),
   
   updateSplitLines: function() {
     var padding = this.get('padding');
@@ -122,7 +131,7 @@ export default Ember.Component.extend({
         .attr("opacity", 1)
         .duration(500);
         
-    path.exit().transition().duration(500).attr("opacity", 0).remove();
+    path.exit().transition().attr("opacity", 0).remove();
   },
   
   updateHGrid: function() {
@@ -171,7 +180,7 @@ export default Ember.Component.extend({
   },
   
   timelines: function() {
-    var runners = this.get('checkedRunners');
+    var runners = this.get('runners');
     var x = this.get('xScale');
     var y = this.yScale();
     
@@ -220,7 +229,7 @@ export default Ember.Component.extend({
   },
 
   yScale: function() {
-    var runners = this.get('checkedRunners');
+    var runners = this.get('runners');
     
     var maxbehind = d3.max(runners, function(runner) {
       return d3.max(runner.splits, function(split) {
@@ -232,11 +241,6 @@ export default Ember.Component.extend({
     });
     
     return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain([0, maxbehind]);
-  },
-  
-  checkedRunners: function() {
-    var runners = this.get('runners');
-    return runners.filter(function(d) { return d.checked; });
-  }.property('runners.@each.checked')
+  }
 
 });
