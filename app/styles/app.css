@@ -234,6 +234,10 @@ footer {
   padding-bottom: 10px;
 }
 
+.clear {
+  clear:both;
+}
+
 li.list-header {
   color: black;
   font-weight: bold;
@@ -365,6 +369,7 @@ ul.subnav li {
  display: inline;
  padding: 0px;
  margin: 0px;
+ float: left;
 }
 
 ul.subnav li a {

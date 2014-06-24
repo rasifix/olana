@@ -5,7 +5,7 @@
 <ul class="event-list">
   {{#each categories}}
   <li {{action 'categoryClicked' id}}>
-    {{#link-to 'event.category' id}}
+    {{#link-to 'event.categories' id}}
     {{id}} 
     {{/link-to}}
     <span class="mute">{{runners}} Teilnehmer</span>
