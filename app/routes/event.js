@@ -124,7 +124,6 @@ function calculateLegs(category) {
     });
     return result;
   };
-
   legs.forEach(function(leg, idx) {
     var runnerLegs = extractLegs(idx);
     runnerLegs.sort(function(l1, l2) {
@@ -133,6 +132,9 @@ function calculateLegs(category) {
     var pos = 1;
     var lastSplit = null;
     runnerLegs.forEach(function(runnerLeg, i) {
+      if (!runnerLeg) {
+        return;
+      }
       if (lastSplit == null || parseTime(lastSplit) === parseTime(runnerLeg.split)) {
         runnerLeg.splitRank = pos;
       } else {
