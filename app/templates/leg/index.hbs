@@ -1,0 +1,16 @@
+  <table class="ranking-table">
+   <tbody>
+    {{#each data}}
+    <tr>
+      <td>{{rank}}.</td>
+      <td>{{#link-to 'category.runner' category ecard}}{{runner}}{{/link-to}}</td>
+      <td>{{yearOfBirth}}</td>
+      <td>{{club}}</td>
+      <td>{{split}}</td>
+      <td>{{behind}}</td>
+      <td>{{timeLoss}}</td>
+      <td>{{#link-to 'category' category}}{{category}}{{/link-to}}</td>
+    </tr>
+    {{/each}}
+   </tbody>
+  </table>

@@ -1,0 +1,5 @@
+<div>{{ranking-list runners=runners runnerRoute='category.runner' action="runnerClicked"}}</div>
+
+{{#if checkedRunners}}
+<div>{{split-graph runners=checkedRunners legs=legs legclick="onlegclick"}}</div>
+{{/if}}

@@ -1,10 +1,8 @@
-<tr>
- <td width="20">{{view Ember.Checkbox checkedBinding="runner.checked"}}</td>
- <td width="20" align="right">{{runner.rank}}.</td>
- <td>{{#link-to 'event.category.runner' runner}}{{runner.fullName}}{{/link-to}}</td>
- <td>{{runner.yearOfBirth}}</td>
- <td>{{runner.city}}</td>
- <td>{{runner.club}}</td>
- <td>{{runner.runTime}}</td>
- <td>{{runner.category}}</td>
-</tr>
+<td width="20">{{#if runner.valid}}{{view Ember.Checkbox checkedBinding="runner.checked"}}{{/if}}</td>
+<td width="20" align="right">{{#if runner.rank}}{{runner.rank}}.{{/if}}</td>
+<td>{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</td>
+<td>{{runner.yearOfBirth}}</td>
+<td>{{runner.city}}</td>
+<td>{{runner.club}}</td>
+<td>{{runner.time}}</td>
+<td>{{runner.category}}</td>

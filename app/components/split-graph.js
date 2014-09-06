@@ -1,20 +1,11 @@
 /*global d3, Rainbow */
 
-var parseTime = function(str) {
-  var split = str.split(":");
-  return parseInt(split[0]) * 60 + parseInt(split[1]);
-};
+import Ember from 'ember';
+import { parseTime } from 'olana/utils/time';
+import { Rainbow } from 'olana/utils/rainbow';
 
 var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
-};
-
-var formatTime = function(seconds) {
-  if (seconds >= 0) {
-    return Math.floor(seconds / 60) + ":" + pad("" + seconds % 60);
-  } else {
-    return "-" + Math.floor(-seconds / 60) + ":" + pad("" + -seconds % 60);
-  }
 };
 
 var lineFunction = d3.svg.line().x(function(d) { return d.x; })
@@ -28,7 +19,7 @@ export default Ember.Component.extend({
   attributeBindings: ['width', 'height'],
   classNames: [ "split-graph" ],
   
-  width: 940,
+  width: 758,
   height: 600,
   
   padding: {
@@ -57,15 +48,6 @@ export default Ember.Component.extend({
     var x = this.get('xScale');    
     var padding = this.get('padding');
     
-    /*
-     
-     {
-       position:0 <-- [0..1) representation
-       
-     }
-     
-     */
-    
     var hover = grid.selectAll("rect.hover").data(legs);
     hover.enter()
          .append("rect")
@@ -74,20 +56,17 @@ export default Ember.Component.extend({
          .attr("y", padding.top)
          .attr("width", function(leg, idx) { 
            var start = idx === 0 ? x(0) : x(legs[idx - 1].position);
-           return x(leg.position) - start;
+           var w = x(leg.position) - start;
+           return w;
          })
          .attr("height", this.get('area').height)
          .attr("fill", function(d, idx) { return idx % 2 === 0 ? "#eee" : "white"; })
          .attr("opacity", 0.5)
-         .on("click", function(leg, idx) {
+         .on("click", function(leg) {
            self.sendAction('legclick', leg);
          })
-         .on("mouseover", function(leg, idx) {
+         .on("mouseover", function(leg) {
            self.sendAction('leghover', leg);
-           /*var status = d3.select(self.get('element')).select("#statusline");
-           status.select("text").remove();
-           status.append("text").attr("x", padding.left).attr("y", self.get('height') - 5).classed("statusline", true)
-                 .text("Posten " + leg.code + "; schnellste Zeit " + leg.fastest + " von " + leg.runner.firstName + " " + leg.runner.name);*/
          });
     
     var labels = grid.selectAll("text.xaxis").data(legs.filter(function(d, idx) { return idx % 2 === 1; }));
@@ -103,8 +82,6 @@ export default Ember.Component.extend({
   }.observes('runners.[]', 'active'),
   
   updateSplitLines: function() {
-    var padding = this.get('padding');
-    
     var svg = d3.select(this.get('element'));
     
     var lines = this.timelines();
@@ -189,7 +166,7 @@ export default Ember.Component.extend({
       var points = [ { x: x(0), y: y(0) }];
       points.key = runner.get('fullName');
       runner.get('splits').forEach(function(split) {
-        points.push({ x: x(split.position), y: y(parseTime(split.behind) * 1000) });
+        points.push({ x: x(split.position), y: y(parseTime(split.supermanBehind) * 1000) });
       });
       timelines.addObject(points);
     });
@@ -233,8 +210,8 @@ export default Ember.Component.extend({
     
     var maxbehind = d3.max(runners, function(runner) {
       return d3.max(runner.splits, function(split) {
-        if (split.behind) {
-          return parseTime(split.behind) * 1000;
+        if (split.supermanBehind) {
+          return parseTime(split.supermanBehind) * 1000;
         }
         return 0;
       });

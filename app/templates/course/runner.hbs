@@ -1,0 +1,19 @@
+<h4>{{fullName}} {{#link-to 'course.h2h' id}}Direktvergleich{{/link-to}}</h4>
+
+<p>Laufzeit: {{time}} / Fehler: {{errorTime}}</p>
+
+<div style="clear:both"></div>
+
+{{splits-list runner=model hover=controller.hoverleg splitHover="onleghover"}}
+
+<dl>
+ <dt>Spalte 1</dt><dd>Posten</dd>
+ <dt>Spalte 2</dt><dd>Kontrolnummer</dd>
+ <dt>Spalte 3</dt><dd>Laufzeit</dd>
+ <dt>Spalte 4</dt><dd>R&uuml;ckstand auf F&uuml;hrenden</dd>
+ <dt>Spalte 5</dt><dd>Gesamtrang</dd>
+ <dt>Spalte 6</dt><dd>Streckenzeit</dd>
+ <dt>Spalte 7</dt><dd>Zeitverlust auf Strecke (rot = Fehler, Tooltip zeigt errechnete Fehlerzeit)</dd>
+ <dt>Spalte 8</dt><dd>Streckenrang</dd>
+ <dt>Spalte 9</dt><dd>Performance Index - 100% = Durchschnittszeit der Top 25%</dd>
+</dl>

@@ -1,27 +1,9 @@
-<div class="github-fork-ribbon-wrapper right">
-    <div class="github-fork-ribbon">
-        <a href="https://github.com/rasifix/olana">Fork me on Github</a>
-    </div>
-</div>
-
 <header>
-  <div class="content">
-    <ul class="breadcrumbs">
-    {{#each breadcrumbs}}
-      <li {{bind-attr class="active"}}>
-        {{#if model}}
-          {{#link-to route model.id}}
-            {{name}}
-          {{/link-to}}
-        {{else}}
-          {{#link-to route}}
-            {{name}}
-          {{/link-to}}
-        {{/if}}
-      </li>
-    {{/each}}
-    </ul>
-  </div>
+ <nav>
+ 	<h3>{{page-title}}</h3>
+  <span class="leftnav">{{back-button}}</span>
+  <span class="rightnav">{{outlet test}}</span>
+ </nav>
 </header>
 
 {{outlet}}
