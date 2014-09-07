@@ -4,6 +4,10 @@ import Ember from 'ember';
 import { parseKraemer } from 'olana/utils/kraemer';
 import { parseOWare } from 'olana/utils/oware';
 
+function reverse(s) {
+  return s.split("").reverse().join("");
+}
+
 export default Ember.ObjectController.extend({
   title: 'Unknown Event',
   map: 'Unknown Map',
@@ -60,16 +64,24 @@ export default Ember.ObjectController.extend({
     return '';
   }.property('content'),
   
+  
+  generateId: function(event) {
+    var now = new Date().getTime();
+    return Math.abs(parseInt(reverse(now.toString())) ^ parseInt(reverse(event.date.replace(/-/g, '')))).toString(16);
+  },
+  
   actions: {
-    'submit': function() {
+    submit: function() {
       var content = this.get('parsedContent');
+      var id = this.generateId(content);
+      var that = this;
       $.ajax({
         type: 'PUT',
-        url: 'http://localhost:8080/api/event/1',
+        url: 'http://localhost:8080/api/event/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
         success: function (data) {
-          alert('ok');
+          that.transitionToRoute('event.index', id);
         },
         error: function(err) {
           console.log('ERROR')

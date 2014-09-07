@@ -292,7 +292,11 @@ footer {
   color: #aea78d;
   font-size: 10px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  padding: 8px;
+  height: 40px;
+  border-top: 1px solid #aaa;
+  background: -webkit-linear-gradient(bottom, rgba(255,255,255,1) 0%, #eee);
 }
 
 .content {
