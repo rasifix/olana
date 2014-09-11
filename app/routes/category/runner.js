@@ -8,8 +8,6 @@ export default Ember.Route.extend({
     var runner = runners.find(function(runner) { return runner.id === params['runner_id']; });
 
     if (!runner) {
-      console.log(runners);
-      console.log(runner);
       this.transitionTo('category');
     }
     

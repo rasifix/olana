@@ -1,11 +1,11 @@
-/* global $ */
+/* global $, ENV */
 
 import Ember from 'ember';
 
 export default Ember.Route.extend({
   
   model: function() {
-    return $.get('http://localhost:8080/api/event').then(function(data) { 
+    return $.get(ENV.APP.API_HOST + 'api/events').then(function(data) { 
       return data.events;
     });
   },

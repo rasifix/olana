@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     var legId = params['leg_id'];
     var from = legId.split('-')[0];
     var to = legId.split('-')[1];
-    var url = 'http://localhost:8080/api/event/' + eventId + '/leg/' + legId;
+    var url = ENV.APP.API_HOST + 'api/events/' + eventId + '/legs/' + legId;
     var parseData = this.parseData;
     return $.get(url).then(function(data) { 
       return parseData(from, to, data.filter(function(e) { return e.split !== '-'; }));

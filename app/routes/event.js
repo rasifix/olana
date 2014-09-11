@@ -6,7 +6,7 @@ export default Ember.Route.extend({
   
   model: function(params) {
     var id = params['event_id'];
-    return $.get('http://localhost:8080/api/event/' + id);
+    return $.get(ENV.APP.API_HOST + 'api/events/' + id);
   },
   
   actions: {

@@ -11,4 +11,5 @@ var App = Ember.Application.extend({
 
 loadInitializers(App, 'olana');
 
+window.App = App;
 export default App;

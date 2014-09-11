@@ -8,7 +8,7 @@ export default Ember.Route.extend({
   model: function(params) {
     var eventId = this.modelFor('event').id;
     var id = params['course_id'];
-    var url = 'http://localhost:8080/api/event/' + eventId + '/course/' + id;
+    var url = ENV.APP.API_HOST + 'api/events/' + eventId + '/courses/' + id;
     return $.get(url).then(function(data) { 
       return parseRanking(data);
     }, function(error) {
