@@ -9,7 +9,12 @@ export function parseTime(str) {
     return null;
   }
   var split = str.split(":");
-  var result = parseInt(split[0]) * 60 + parseInt(split[1]);
+  var result = null;
+  if (split.length === 2) {
+    result = parseInt(split[0]) * 60 + parseInt(split[1]);
+  } else if (split.length === 3) {
+    result = parseInt(split[0]) * 3600 + parseInt(split[1]) * 60 + parseInt(split[2]);
+  }
   return isNaN(result) ? null : result;
 }
 

@@ -1,3 +1,5 @@
+import { parseTime, formatTime } from 'olana/utils/time';
+
 function strip(str) {
   if (!str) {
     return '';
@@ -29,18 +31,17 @@ export function parseKraemer(lines, event, map, date, startTime) {
   indices['Start'] = header.indexOf('Start');
   indices['Ziel'] = header.indexOf('Ziel');
   indices['Zeit'] = header.indexOf('Zeit');
-  indices['Katnr'] = header.indexOf('Katnr');
+  indices['Katnr'] = header.indexOf('Kurz');
   indices['Wertung'] = header.indexOf('Wertung');
   indices['Posten'] = header.indexOf('Bahn Posten');
   indices['km'] = header.indexOf('km');
   indices['hm'] = header.indexOf('Hm');
+  firstTimeIdx = header.indexOf('Posten1');
   
   if (header[0] === 'OE0014') {
     indices['Chip'] = header.indexOf('Chipnr');
-    firstTimeIdx = 56;
   } else {
     indices['Chip'] = header.indexOf('Chip');
-    firstTimeIdx = 46;
   }
   
   lines = lines.slice(1);
@@ -65,18 +66,17 @@ export function parseKraemer(lines, event, map, date, startTime) {
     }
     
     var runner = {
+      fednr: strip(lineObj['Datenbank Id']) || '',
       name: strip(lineObj['Nachname']),
       firstName: strip(lineObj['Vorname']),
-      ecard: strip(lineObj['Chip']),
-      fednr: strip(lineObj['Datenbank Id']) || '',
       yearOfBirth: lineObj['Jg'],
       sex: strip(lineObj['G']),
       club: (strip(lineObj['Abk']) + ' ' + strip(lineObj['Club'])).trim(),
       city: strip(lineObj['Ort']),
       nation: strip(lineObj['Nat']),
+      time: lineObj['Zeit'],
       startTime: lineObj['Start'],
-      finishTime: lineObj['Ziel'],
-      runTime: lineObj['Zeit'],
+      ecard: strip(lineObj['Chip']),
       splits: []
     };
 
@@ -92,17 +92,12 @@ export function parseKraemer(lines, event, map, date, startTime) {
       categories[category.name] = category;
     }
 
-    var split = null;
     var times = cols.slice(firstTimeIdx);
     for (var idx = 0; idx < parseInt(lineObj['Posten']) * 2; idx += 2) {
       if (idx === times.length - 1) {
         continue;
       }
-      split = {
-        code: times[idx],
-        time: times[idx + 1]
-      };
-      runner.splits.push(split);
+      runner.splits.push([times[idx], formatTime(parseTime(times[idx + 1]))]);
     }
 
     category.runners.push(runner);
@@ -113,6 +108,8 @@ export function parseKraemer(lines, event, map, date, startTime) {
     map: map,
     date: date,
     startTime: startTime,
-    categories: categories
+    categories: Object.keys(categories).map(function(category) {
+      return categories[category];
+    })
   }; 
 }

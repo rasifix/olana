@@ -65,7 +65,6 @@ export default Ember.ObjectController.extend({
   }.property('content'),
   
   submitDisabled: function() {
-    console.log(this.get('parsedContent'));
     return this.get('parsedContent') === null;
   }.property('parsedContent'),
   
@@ -79,12 +78,17 @@ export default Ember.ObjectController.extend({
       var content = this.get('parsedContent');
       var id = this.generateId(content);
       var that = this;
+      console.log('sumbmit');
+      console.log(content);
+      console.log(id);
       $.ajax({
         type: 'PUT',
         url: ENV.APP.API_HOST + 'api/events/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
-        success: function (data) {
+        success: function(data) {
+          console.log('success');
+          console.log(data);
           that.transitionToRoute('event.index', id);
         },
         error: function(err) {

@@ -49,13 +49,13 @@ export default Ember.Component.extend({
     }).attr('opacity', 0)  
       .attr("fill", function(point) { return point.sex === 'M' ? 'dodgerblue' : 'darkorchid'; });
 
-    dots.transition().duration(250)
+    dots.transition().duration(10)
         .attr("cx", function(point) { return xscale(parseTime(point.startTime)); })
         .attr("cy", function(point) { return height - yscale(parseInt(point.rank)); })
-        .attr("opacity", function(point) { return point.category === self.get('hover.category') ? '1.0' : '0.5' })
-        .attr('r', function(point) { return point === self.get('hover') ? 4 : 3 });
+        .attr("opacity", function(point) { return point.category === self.get('hover.category') ? '1.0' : '0.3' })
+        .attr('r', function(point) { return point.category === self.get('hover.category') ? 4 : 2 });
     
-    dots.exit().remove().transition().duration(250).attr('opacity', 0).attr('r', 0);
+    dots.exit().remove().transition().duration(10).attr('opacity', 0).attr('r', 0);
   }.observes('data', 'hover'),
   
   xscale: function() {

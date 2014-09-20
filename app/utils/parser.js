@@ -31,7 +31,7 @@ export function parseRanking(json) {
       runners: []
     };
   });
-    
+      
   result.runners = result.runners.map(function(runner, idx) {
     return Runner.create({
       id: runner.ecard,
@@ -45,7 +45,7 @@ export function parseRanking(json) {
       splits: runner.splits.map(function(split, idx) {
         var splitTime = null;
         if (idx === 0) {
-          splitTime = split.time;
+          splitTime = formatTime(parseTime(split.time));
         } else {
           if (parseTime(split.time) === null || parseTime(runner.splits[idx - 1].time) === null) {
             splitTime = '-';
@@ -86,9 +86,6 @@ export function parseRanking(json) {
     var top25 = leg.runners.slice(0, Math.max(leg.runners.length * 0.25, 1));
     leg.hundertpct = Math.round(top25.reduce(function(prev, curr) { return prev + parseTime(curr.split); }, 0) / top25.length);
     leg.fastest = leg.runners[0].split;
-    if (leg.fastest === '0:00') {
-      console.log(leg.runners[0]);
-    }
   });
   
   // calculate the superman time [s]
