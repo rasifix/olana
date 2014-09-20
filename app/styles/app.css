@@ -220,14 +220,15 @@ header h3 {
   left: 50%;
   top: 12px;
   line-height: 1em;
-  margin: 2px 0 0 -150px;
+  margin: 2px 0 0 -200px;
   font-size: 18px;
   text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 0;
   text-align: center;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
   color: #666;
-  width: 300px;
+  width: 400px;
 }
 
 nav {
@@ -499,7 +500,7 @@ ul.subnav li a.active {
 
 .row textarea {
   width: 550px;
-  height: 50px;
+  height: 100px;
   white-space: nowrap
 }
 

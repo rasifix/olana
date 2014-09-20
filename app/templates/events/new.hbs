@@ -28,9 +28,9 @@
   </div>
   <div class="row">
     <label>Inhalt:</label>
-    {{textarea readonly="readonly" value=parsedContent}}
+    {{textarea readonly="readonly" value=content}}
   </div>
   <div class="row">
     <label></label>
-    <input type="button" {{action "submit"}} value="Speichern"></input>
+    <input type="button" {{action "submit"}} value="Speichern" {{bind-attr disabled=submitDisabled}}></input>
   </div>

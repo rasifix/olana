@@ -2,13 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-  tagName: "ul",
-  classNames: ["breadcrumbs"],
+  tagName: "span",
 
   router: null,
   applicationController: null,
-  
-  layout: Ember.Handlebars.compile('{{title}}'),
 
   handlerInfos: function() {
     return this.get('router').router.currentHandlerInfos;

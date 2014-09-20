@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AppKit Tests</title>
+    <title>Olana Tests</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{BASE_TAG}}
 
     <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/app-kit.css">
+    <link rel="stylesheet" href="assets/olana.css">
     <link rel="stylesheet" href="assets/test-support.css">
     <style>
       #ember-testing-container {
@@ -34,15 +34,15 @@
     <div id="qunit-fixture"></div>
 
     <script>
-      window.AppKitENV = {{ENV}};
-      window.EmberENV = window.AppKitENV.EmberENV;
+      window.OlanaENV = {{ENV}};
+      window.EmberENV = window.OlanaENV.EmberENV;
     </script>
-    <script src="assets/test-support.js"></script>
     <script src="assets/vendor.js"></script>
-    <script src="assets/app-kit.js"></script>
+    <script src="assets/test-support.js"></script>
+    <script src="assets/olana.js"></script>
     <script src="testem.js"></script>
     <script>
-      require('app-kit/tests/test-helper');
+      require('olana/tests/test-helper');
     </script>
     <script src="assets/test-loader.js"></script>
   </body>

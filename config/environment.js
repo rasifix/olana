@@ -32,7 +32,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.APP.API_HOST = 'http://localhost/';
+    ENV.APP.API_HOST = 'http://ol.zimaa.ch/';
   }
 
   return ENV;

@@ -15,6 +15,15 @@ function parseRunner(row) {
 	for (var i = headerLength; i < row.length; i += 2) {
 		splits.push([row[i], row[i + 1]]);
 	}
+	
+	// split cleanup - detect two following splits with identical time
+	// --> control not working properly; set 's' as split time (substitute)
+	// going from back to front to catch several not working controls
+	for (var i = splits.length - 1;  i > 0; i--) {
+	  if (splits[i][1] === splits[i - 1][1] && splits[i][1] !== '-') {
+	    splits[i][1] = 's';
+	  }
+	}
 			
 	return {
 	  fednr: row[5] ? row[5] : null,

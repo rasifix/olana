@@ -20,7 +20,7 @@ export default Ember.Component.extend({
   classNames: [ "h2h-graph" ],
   
   // total width of component
-  width: 940,
+  width: 758,
   
   // height of individual bar
   barheight: 24,

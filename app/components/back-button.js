@@ -6,8 +6,6 @@ export default Ember.Component.extend({
 
   router: null,
   applicationController: null,
-  
-  layout: Ember.Handlebars.compile('{{#if backRoute}}{{#link-to backRoute}}&lt; back{{/link-to}}{{/if}}'),
 
   handlerInfos: function() {
     return this.get('router').router.currentHandlerInfos;

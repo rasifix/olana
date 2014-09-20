@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, ENV */
 
 import Ember from 'ember';
 import { parseKraemer } from 'olana/utils/kraemer';
@@ -61,9 +61,13 @@ export default Ember.ObjectController.extend({
         return event;
       }
     } 
-    return '';
+    return null;
   }.property('content'),
   
+  submitDisabled: function() {
+    console.log(this.get('parsedContent'));
+    return this.get('parsedContent') === null;
+  }.property('parsedContent'),
   
   generateId: function(event) {
     var now = new Date().getTime();
@@ -77,7 +81,7 @@ export default Ember.ObjectController.extend({
       var that = this;
       $.ajax({
         type: 'PUT',
-        url: 'http://localhost:8080/api/event/' + id,
+        url: ENV.APP.API_HOST + 'api/events/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
         success: function (data) {

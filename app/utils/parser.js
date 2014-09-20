@@ -2,6 +2,10 @@ import Runner from 'olana/models/runner';
 import Split from 'olana/models/split';
 import { parseTime, formatTime } from 'olana/utils/time';
 
+function invalidTime(time) {
+  return time === '-' || time === 's';
+}
+
 export function parseRanking(json) {
   // transform data structure from wire-optimal to code-optimal
   json.runners.forEach(function(runner) {
@@ -37,6 +41,7 @@ export function parseRanking(json) {
       yearOfBirth: runner.yearOfBirth,
       city: runner.city,
       club: runner.club,
+      category: runner.category,
       splits: runner.splits.map(function(split, idx) {
         var splitTime = null;
         if (idx === 0) {
@@ -206,7 +211,7 @@ export function parseRanking(json) {
   result.runners.forEach(function(runner) {
     // calculate overall time behind leader
     runner.splits.forEach(function(split, splitIdx) {
-      if (split.time !== '-') {
+      if (!invalidTime(split.time)) {
         var leaderTime = result.runners.map(function(runner) {
           return {
             time: runner.splits[splitIdx].time,
