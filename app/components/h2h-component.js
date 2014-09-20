@@ -1,9 +1,6 @@
-/*global d3 */
+/* global d3 */
 
-var parseTime = function(str) {
-  var split = str.split(":");
-  return parseInt(split[0]) * 60 + parseInt(split[1]);
-};
+import Ember from 'ember';
 
 var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
@@ -23,7 +20,7 @@ export default Ember.Component.extend({
   classNames: [ "h2h-graph" ],
   
   // total width of component
-  width: 940,
+  width: 758,
   
   // height of individual bar
   barheight: 24,

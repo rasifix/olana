@@ -1,5 +1,8 @@
+import Ember from 'ember';
+
 export default Ember.Component.extend({
-  classNames: [ "ranking-list" ],
+  classNames: [ 'ranking-table' ],
+  tagName: 'table',
   
   actions: {
     runnerClicked: function(runner) {

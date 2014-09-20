@@ -1,0 +1,19 @@
+ <div class="grid12">
+
+<ul class="event-list">
+{{#each courses}}
+ <li {{action 'courseClicked' id}}>
+  {{#link-to 'course' id}}
+  {{id}} 
+  {{/link-to}}
+  <div class="pull-right">
+    <span class="mute">{{distance}}m</span>
+    <span class="mute">{{ascent}}m</span>
+    <span class="mute">{{controls}} Posten</span>
+  	<span class="badge">{{runners}}</span> 
+  </div>
+ </li>
+{{/each}}
+</ul>
+
+ </div>

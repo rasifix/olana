@@ -1,11 +1,13 @@
 body, td, input {
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Lucida Grande', Arial, sans-serif;
   font-weight: 300;
   font-size: 15px;
 }
 
 body {
-  background: url('../images/body.jpg');
+  background-color: white;
+  padding: 0;
+  margin: 0;
 }
 
 table {
@@ -22,7 +24,7 @@ tr:hover {
 }
 
 a {
-  color: red;
+  color: darkorange;
 }
 
 .splits-table {
@@ -203,35 +205,117 @@ body {
 }
 
 header {
-  background: url('../images/body.jpg');
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, #eee);
+  height: 45px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  border-bottom: 1px solid #aaa;
+}
+
+header h3 {
+
+  text-shadow: 1px 1px 0px white;
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  line-height: 1em;
+  margin: 2px 0 0 -200px;
+  font-size: 18px;
+  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #666;
+  width: 400px;
+}
+
+nav {
+  width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.leftnav {
+  position: absolute;
+  overflow: hidden;
+  left: 6px;
+  right: auto;
+  top: 8px;
   line-height: 30px;
-  padding-top: 8px;
-  padding-left: 10px;
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
+  padding: 0 3px;
+  width: auto;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: darkorange
+}
+
+.leftnav a {
+  text-decoration: none;
+  text-shadow: 1px 1px 0px white;
+}
+
+.leftnav a:hover {
+  text-decoration: none;
+  color: orange;
+}
+
+.rightnav {
+  position: absolute;
+  overflow: hidden;
+  top: 8px;
+  right: 6px;
+  margin: 0;
+  border-width: 0 5px;
+  padding: 0 3px;
+  width: auto;
+  height: 30px;
+  line-height: 30px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: darkorange;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+}
+
+.pull-right {
+  display: inline-block;
+  float: right;
 }
 
 footer {
   color: #aea78d;
   font-size: 10px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  padding: 8px;
+  height: 40px;
+  border-top: 1px solid #aaa;
+  background: -webkit-linear-gradient(bottom, rgba(255,255,255,1) 0%, #eee);
 }
 
 .content {
-  width: 960px;
+  width: 768px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .bodybox {
-  border:1px solid #aea78d; 
-  border-radius: 4px;
   background-color:white; 
   margin-top: 10px; 
   margin-bottom:10px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.clear {
+  clear:both;
 }
 
 li.list-header {
@@ -243,7 +327,6 @@ li.list-header {
   width: 100%;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  border-radius: 5px;
   padding: 0px;
   float: left;
 }
@@ -259,7 +342,7 @@ li.list-header {
 }
 
 .event-list li:hover a {
-  color:red;
+  color:darkorange;
 }
 
 .event-list li:hover {
@@ -273,7 +356,7 @@ li.list-header {
 
 .event-list a:hover {
   text-decoration: underline;
-  color: red;
+  color: darkorange;
 }
 
 span.error {
@@ -311,7 +394,6 @@ span.mute {
   color: #aea78d;
   font-size: 75%;
   display: inline-block;
-  float: right;
   margin-left: 10px;
   max-width: 300px;
   text-overflow: ellipsis;
@@ -327,7 +409,7 @@ span.date {
 
 .split-entry {
   float: left;
-  width: 440px;
+  width: 100%;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -339,30 +421,87 @@ span.date {
 .split-entry-span {
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 40px;
+  width: 65px;
   display: inline-block;
   text-align: right;
 }
 
-div.split-entry:nth-of-type(4n), div.split-entry:nth-of-type(4n + 3) {
+div.split-entry:nth-of-type(even) {
   background-color: rgba(174,167,141,0);
 }
 
-div.split-entry:nth-of-type(4n + 1), div.split-entry:nth-of-type(4n + 2) {
+div.split-entry:nth-of-type(odd) {
   background-color: rgba(174,167,141,0.2);
 }
 
-/* beta banner */
-.right-bottom .github-fork-ribbon {
-    background-color: #090;
+.badge {
+  border-radius: 8px;
+  background-color: #aaa;
+  color: white;
+  font-size: 75%;
+  padding: 3px 5px 3px 5px;
+  margin-left: 30px;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
 }
 
-.right .github-fork-ribbon {
-    background-color: #aea78d;
+ul.subnav {
+ list-style: none;
+ list-style-type:none;
+ padding: 0px;
+ margin-top: 10px;
+ margin-bottom: 5px;
 }
 
-.left-bottom .github-fork-ribbon {
-    background-color: #333;
+ul.subnav li {
+ display: inline;
+ padding: 0px;
+ margin: 0px;
+ float: left;
+}
+
+ul.subnav li a {
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 2px;
+  margin: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-decoration:none;
+  border-radius: 3px;
+  border: 1px solid #eee;
+}
+
+ul.subnav li a.active {
+  font-weight: thin;
+  border: 1px solid darkorange;
+  background-color: darkorange;
+  color: white;
+}
+
+.row {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.row label {
+  display: inline-block;
+  margin-right: 10px;
+  width: 150px;
+  text-align: right;
+}
+
+.row input {
+  width: 550px;
+}
+
+.row textarea {
+  width: 550px;
+  height: 100px;
+  white-space: nowrap
 }
 
 dl {
@@ -375,222 +514,84 @@ dt {
 
 .grid1 {
   float: left;
-  width: 60px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 54px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid2 {
   float: left;
-  width: 140px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 118px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid3 {
   float: left;
-  width: 220px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 182px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid4 {
   float: left;
-  width: 300px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 246px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid5 {
   float: left;
-  width: 380px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 310px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid6 {
   float: left;
-  width: 460px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 374px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid7 {
   float: left;
-  width: 540px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 438px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid8 {
   float: left;
-  width: 620px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 502px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid9 {
   float: left;
-  width: 700px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 566px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid10 {
   float: left;
-  width: 780px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 630px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid11 {
   float: left;
-  width: 860px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 694px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .grid12 {
   float: left;
-  width: 940px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-
-
-/* Left will inherit from right (so we don't need to duplicate code) */
-.github-fork-ribbon {
-  /* The right and left classes determine the side we attach our banner to */
-  position: absolute;
-
-  /* Add a bit of padding to give some substance outside the "stitching" */
-  padding: 2px 0;
-
-  /* Set the base colour */
-  background-color: #a00;
-
-  /* Set a gradient: transparent black at the top to almost-transparent black at the bottom */
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
-
-  /* Add a drop shadow */
-  -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
-
-  z-index: 9999;
-  pointer-events: auto;
-}
-
-.github-fork-ribbon a,
-.github-fork-ribbon a:hover {
-  /* Set the font */
-  font: 700 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #fff;
-
-  /* Set the text properties */
-  text-decoration: none;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
-  text-align: center;
-
-  /* Set the geometry. If you fiddle with these you'll also need
-     to tweak the top and right values in .github-fork-ribbon. */
-  width: 200px;
-  line-height: 20px;
-
-  /* Set the layout properties */
-  display: inline-block;
-  padding: 2px 0;
-
-  /* Add "stitching" effect */
-  border-width: 1px 0;
-  border-style: dotted;
-  border-color: #fff;
-  border-color: rgba(255, 255, 255, 0.7);
-}
-
-.github-fork-ribbon-wrapper {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  overflow: hidden;
-  top: 0;
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.github-fork-ribbon-wrapper.fixed {
-  position: fixed;
-}
-
-.github-fork-ribbon-wrapper.left {
-  left: 0;
-}
-
-.github-fork-ribbon-wrapper.right {
-  right: 0;
-}
-
-.github-fork-ribbon-wrapper.left-bottom {
-  position: fixed;
-  top: inherit;
-  bottom: 0;
-  left: 0;
-}
-
-.github-fork-ribbon-wrapper.right-bottom {
-  position: fixed;
-  top: inherit;
-  bottom: 0;
-  right: 0;
-}
-
-.github-fork-ribbon-wrapper.right .github-fork-ribbon {
-  top: 42px;
-  right: -43px;
-
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.github-fork-ribbon-wrapper.left .github-fork-ribbon {
-  top: 42px;
-  left: -43px;
-
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-
-.github-fork-ribbon-wrapper.left-bottom .github-fork-ribbon {
-  top: 80px;
-  left: -43px;
-
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.github-fork-ribbon-wrapper.right-bottom .github-fork-ribbon {
-  top: 80px;
-  right: -43px;
-
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
+  width: 754px;
+  margin-left: 5px;
+  margin-right: 5px;
 }

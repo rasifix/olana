@@ -1,5 +1,5 @@
-import Application from 'appkit/app';
-import Router from 'appkit/router';
+import Application from 'olana/app';
+import Router from 'olana/router';
 
 function startApp(attrs) {
   var App;

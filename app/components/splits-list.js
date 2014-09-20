@@ -1,9 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Component.extend({
-  classNames: [ "splits-list" ],
-  
-  actions: {
-    splitHover: function(split) {
-      this.sendAction('splitHover', split);
-    }
-  }  
+  classNames: [ "splits-list" ]
 });

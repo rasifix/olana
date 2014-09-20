@@ -1,0 +1,11 @@
+<div class="content bodybox">
+  <div class="grid12">
+  	<div style="line-height: 30px; height: 30px">{{hoverRunner.rank}}. {{hoverRunner.firstName}} {{hoverRunner.name}} {{hoverRunner.time}} {{hoverRunner.category}}</div>
+    {{starttimerank-graph data=selectedData xdomain=xdomain ydomain=ydomain runnerClicked="runnerClicked" runnerOver="runnerOver"}}	
+		
+		{{#each categories}}
+      {{view Ember.Checkbox checkedBinding="checked"}} {{name}}
+		{{/each}}
+  </div>
+	<div style="clear:both"></div>
+</div>

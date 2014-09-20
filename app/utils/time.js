@@ -4,11 +4,13 @@ var pad = function(str) {
 
 export function parseTime(str) {
   if (!str) {
-    return -1;
+    return null;
+  } else if (str === 'Po.fal' || str === 'P.fehl' || str === 'aufgeg.') {
+    return null;
   }
   var split = str.split(":");
   var result = parseInt(split[0]) * 60 + parseInt(split[1]);
-  return isNaN(result) ? -1 : result;
+  return isNaN(result) ? null : result;
 }
 
 export function formatTime(seconds) {

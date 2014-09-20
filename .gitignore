@@ -2,17 +2,18 @@
 
 # compiled output
 /dist
+/dist-prod
 /tmp
 
 # dependencies
 /node_modules
-/vendor/*
-!/vendor/loader.js
+/bower_components/*
 
 # misc
 /.sass-cache
 /connect.lock
-/libpeerconnection.log
-.DS_Store
-Thumbs.db
 /coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+.DS_Store

@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Component.extend({
     
   tagName: 'div',
@@ -10,7 +12,7 @@ export default Ember.Component.extend({
   }.property('error'),
   
   error: function() {
-    var error = this.get('split.hasError');
+    var error = this.get('split.timeLoss');
     return error ? true : false;
   }.property('split.hasError'),
   

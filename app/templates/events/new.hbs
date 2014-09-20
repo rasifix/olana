@@ -1,0 +1,36 @@
+  <div class="row">
+    <label>Wettkampf:</label>
+    {{input type="text" value=title}}
+  </div>
+  <div class="row">
+    <label>Karte:</label>
+    {{input type="text" value=map}}
+  </div>
+  <div class="row">
+    <label>Datum:</label>
+    <input type="date" {{bind-attr value=date}}/>
+  </div>
+  <div class="row">
+    <label>Startzeit:</label>
+    {{input type="text" value=startTime}}
+  </div>
+  <div class="row">
+    <label>Encoding:</label>
+	  {{view Ember.Select
+	         content=encodings
+	         value=selectedEncoding
+	         optionValuePath="content.value"
+	         optionLabelPath="content.label"}}
+  </div>
+  <div class="row">
+    <label>Datei:</label>
+    {{view "file-upload" name="file" encoding=encoding content=content}}
+  </div>
+  <div class="row">
+    <label>Inhalt:</label>
+    {{textarea readonly="readonly" value=content}}
+  </div>
+  <div class="row">
+    <label></label>
+    <input type="button" {{action "submit"}} value="Speichern" {{bind-attr disabled=submitDisabled}}></input>
+  </div>

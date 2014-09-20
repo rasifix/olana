@@ -1,6 +1,4 @@
-/*global d3 */
-
-import { parseTime, formatTime } from 'appkit/utils/time';
+import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'svg',
@@ -8,7 +6,7 @@ export default Ember.Component.extend({
   classNames: [ "perfindex-graph" ],
   
   // total width of component
-  width: 940,
+  width: 756,
   
   // total height of component
   height: 400,
@@ -49,7 +47,7 @@ export default Ember.Component.extend({
   
   xscale: function() {
     var padding = this.get('padding.left');
-    return d3.scale.linear().range([padding, this.get('width') - padding]).domain([20, 140]);
+    return d3.scale.linear().range([padding, this.get('width') - padding]).domain([20, 160]);
   }.property('data'),
   
   yscale: function() {
