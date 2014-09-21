@@ -48,7 +48,7 @@ export default Ember.ObjectController.extend({
   parsedContent: function() {
     var content = this.get('content');
     if (content && content.length > 8) {
-      var lines = content.split(/\r?\n/);
+      var lines = content.trim().split(/\r?\n/);
       if (content.substring(0, 6) === 'OE0014') {
         return parseKraemer(lines, this.get('title'), this.get('map'), this.get('date'), this.get('startTime'));
         
@@ -78,17 +78,13 @@ export default Ember.ObjectController.extend({
       var content = this.get('parsedContent');
       var id = this.generateId(content);
       var that = this;
-      console.log('sumbmit');
-      console.log(content);
-      console.log(id);
+      console.log(JSON.stringify(content));
       $.ajax({
         type: 'PUT',
         url: ENV.APP.API_HOST + 'api/events/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
         success: function(data) {
-          console.log('success');
-          console.log(data);
           that.transitionToRoute('event.index', id);
         },
         error: function(err) {
