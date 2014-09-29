@@ -1,11 +1,15 @@
 <div class="content bodybox">
   <div class="grid12">
-  	<div style="line-height: 30px; height: 30px">{{hoverRunner.rank}}. {{hoverRunner.firstName}} {{hoverRunner.name}} {{hoverRunner.time}} {{hoverRunner.category}}</div>
+  	<div style="line-height: 30px; height: 30px">{{#if hoverRunner}}{{hoverRunner.rank}}. {{hoverRunner.firstName}} {{hoverRunner.name}} {{hoverRunner.time}} {{hoverRunner.category}} - {{hoverRunner.startTime}} - {{hoverRunner.perfidxLabel}}{{/if}}</div>
     {{starttimerank-graph data=selectedData xdomain=xdomain ydomain=ydomain runnerClicked="runnerClicked" runnerOver="runnerOver"}}	
 		
-		{{#each categories}}
-      {{view Ember.Checkbox checkedBinding="checked"}} {{name}}
+		{{#each availableCategories}}
+      <span style="display:inline-block; width: 60px">{{view Ember.Checkbox checkedBinding="checked"}} {{name}}</span>
 		{{/each}}
+		
+		<br />
+		<a href="javascript:return false;" {{action 'selectAll'}}>alle</a>
+		<a href="javascript:return false;" {{action 'selectNone'}}>keine</a>
   </div>
 	<div style="clear:both"></div>
 </div>

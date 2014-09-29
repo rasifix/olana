@@ -1,9 +1,9 @@
 function parseCategory(row) {
 	return {
 		name: row[0],
-		distance: parseInt(row[1]),
-		ascent: parseInt(row[2]),
-		controls: parseInt(row[3]),
+		distance: parseInt(row[1], 10),
+		ascent: parseInt(row[2], 10),
+		controls: parseInt(row[3], 10),
 		runners: []
 	};
 }

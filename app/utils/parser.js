@@ -162,16 +162,17 @@ export function parseRanking(json) {
     });
     
     // assign split rank
-    var pos = 1;
     var lastSplit = null;
-    runnerLegs.forEach(function(runnerLeg) {
-      var currentRunner = result.runners.find(function(runner) { return runner.id === runnerLeg.id; });;
-      if (lastSplit == null || parseTime(lastSplit) === parseTime(runnerLeg.split)) {
-        currentRunner.splits[idx].splitRank = pos;
+    var lastRunner = null;
+    runnerLegs.forEach(function(runnerLeg, pos) {
+      var currentRunner = result.runners.find(function(runner) { return runner.id === runnerLeg.id; });
+      if (lastSplit != null && parseTime(lastSplit) === parseTime(runnerLeg.split)) {
+        currentRunner.splits[idx].splitRank = lastRunner.splits[idx].splitRank;
       } else {
-        currentRunner.splits[idx].splitRank = ++pos;
+        currentRunner.splits[idx].splitRank = pos + 1;
       }
       lastSplit = runnerLeg.split;
+      lastRunner = currentRunner;
     });
     
     // resort by run time
@@ -180,7 +181,7 @@ export function parseRanking(json) {
     });
     
     // assign overall rank
-    pos = 1;
+    var pos = 1;
     var lastTime = null;
     var leaderTime;
     runnerLegs.forEach(function(runnerLeg) {
@@ -246,31 +247,3 @@ export function parseRanking(json) {
   return result;
 }
 
-
-/*
-function groupBy(array, f) {
-  var groups = { };
-  array.forEach(function(o) {
-    var group = JSON.stringify(f(o));
-    groups[group] = groups[group] || [];
-    groups[group].push(o);  
-  });
-  return Object.keys(groups).map(function(group) {
-    return groups[group]; 
-  });
-}
-*/
-
-/*
-var groupFct = function(split) { return Math.floor((split.perfidx + 2) / 4); };
-result.histogram = groupBy(result.splits, groupFct).map(function(splits) {
-  return splits.reduce(function(prev, curr, idx) {
-    if (!prev) {
-      return { key: groupFct(curr) * 4, value: parseTime(curr.split) };
-    } else {
-      prev.value += parseTime(curr.split);
-      return prev;
-    }
-  }, null);
-});
-*/

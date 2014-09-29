@@ -74,8 +74,8 @@ export function parseKraemer(lines, event, map, date, startTime) {
       club: (strip(lineObj['Abk']) + ' ' + strip(lineObj['Club'])).trim(),
       city: strip(lineObj['Ort']),
       nation: strip(lineObj['Nat']),
-      time: lineObj['Zeit'],
-      startTime: lineObj['Start'],
+      time: formatTime(parseTime(lineObj['Zeit'])),
+      startTime: formatTime(parseTime(lineObj['Start'])),
       ecard: strip(lineObj['Chip']),
       splits: []
     };
@@ -84,7 +84,7 @@ export function parseKraemer(lines, event, map, date, startTime) {
     if (typeof category === 'undefined') {
       category = {
         name: strip(lineObj['Katnr']),
-        distance: parseInt(strip(lineObj['km'])) * 1000,
+        distance: parseInt(strip(lineObj['km']), 10) * 1000,
         ascent: strip(lineObj['hm']),
         controls: strip(lineObj['Posten']),
         runners: []
@@ -93,7 +93,7 @@ export function parseKraemer(lines, event, map, date, startTime) {
     }
 
     var times = cols.slice(firstTimeIdx);
-    for (var idx = 0; idx < parseInt(lineObj['Posten']) * 2; idx += 2) {
+    for (var idx = 0; idx < parseInt(lineObj['Posten'], 10) * 2; idx += 2) {
       if (idx === times.length - 1) {
         continue;
       }

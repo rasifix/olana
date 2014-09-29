@@ -78,7 +78,12 @@ export default Ember.ObjectController.extend({
       var content = this.get('parsedContent');
       var id = this.generateId(content);
       var that = this;
-      console.log(JSON.stringify(content));
+      
+      content.name = this.get('title');
+      content.map = this.get('map');
+      content.date = this.get('date');
+      content.startTime = this.get('startTime');
+      
       $.ajax({
         type: 'PUT',
         url: ENV.APP.API_HOST + 'api/events/' + id,

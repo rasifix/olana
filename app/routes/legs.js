@@ -18,11 +18,11 @@ export default Ember.Route.extend({
       } else if (sp1[0] === sp2[0] && sp1[1] === sp2[1]) {
         return 0;
       } else {
-        var d = parseInt(sp1[0]) - parseInt(sp2[0]);
+        var d = parseInt(sp1[0], 10) - parseInt(sp2[0], 10);
         if (d !== 0) {
           return d;
         }
-        d = parseInt(sp1[1]) - parseInt(sp2[1]);
+        d = parseInt(sp1[1], 10) - parseInt(sp2[1], 10);
         return d;
       }
     });

@@ -17,7 +17,7 @@ var colors = new Rainbow();
 export default Ember.Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
-  classNames: [ "split-graph" ],
+  classNames: [ 'split-graph' ],
   
   width: 758,
   height: 600,
@@ -114,7 +114,7 @@ export default Ember.Component.extend({
   updateHGrid: function() {
     var svg = d3.select(this.get('element'));
     var x = this.get('xScale');
-    var y = this.yScale();
+    var y = this.get('yScale');
         
     var hline = svg.select("g#hgrid").selectAll("line").data(y.ticks(), function(d) { return d.getTime(); });
     
@@ -156,10 +156,11 @@ export default Ember.Component.extend({
     htext.exit().transition().duration(500).attr("opacity", 0).remove();
   },
   
+  // TODO: make timelines dependent on active mode
   timelines: function() {
     var runners = this.get('runners');
     var x = this.get('xScale');
-    var y = this.yScale();
+    var y = this.get('yScale');
     
     var timelines = [];
     runners.forEach(function(runner) {
@@ -193,7 +194,7 @@ export default Ember.Component.extend({
   }.property(),
   
   hgrid: function() {    
-    var y = this.yScale();
+    var y = this.get('yScale');
     var path = ['M0,0'];
             
     var ticks = y.ticks();
@@ -205,6 +206,7 @@ export default Ember.Component.extend({
     return path.join('');    
   },
 
+  // TODO: make yScale dependent on active mode
   yScale: function() {
     var runners = this.get('runners');
     
@@ -218,6 +220,6 @@ export default Ember.Component.extend({
     });
     
     return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain([0, maxbehind]);
-  }
+  }.property()
 
 });

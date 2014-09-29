@@ -1,12 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  
-  hoverRunner: null,
-  
+    
   model: function(params) {
     var id = this.modelFor('event').id;
-    return $.get(ENV.APP.API_HOST + 'api/events/' + id + '/starttime-to-rank/all');
+    return $.get(ENV.APP.API_HOST + 'api/events/' + id + '/starttime-to-rank');
   },
   
   actions: {

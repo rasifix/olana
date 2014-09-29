@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { parseTime } from 'olana/utils/time';
+import { parseTime, formatTime } from 'olana/utils/time';
+import { groupBy, median } from 'olana/utils/statistics';
 
 export default Ember.ObjectController.extend({
   
@@ -15,15 +16,30 @@ export default Ember.ObjectController.extend({
   }.property('checkedCategories', 'datapoints'),
   
   checkedCategories: function() {
-    return this.get('categories').filter(function(category) {
+    return this.get('availableCategories').filter(function(category) {
       return category.checked;
     }).map(function(category) {
       return category.name;
     });
-  }.property('categories.@each.checked'),
+  }.property('availableCategories.@each.checked'),
   
-  categories: function() {
+  datapoints: function() {
+    var result = [];
+    var categories = this.get('categories');
+    categories.forEach(function(category) {
+      var idealtime = d3.quantile(category.runners.map(function(runner) { return parseTime(runner.time); }), 0.2);
+      category.runners.forEach(function(runner) {
+        runner.perfidx = idealtime / parseTime(runner.time);
+        runner.perfidxLabel = (runner.perfidx * 100).toFixed(1) + '%';
+        result.push(runner);
+      });
+    });
+    return result;
+  }.property('categories'),
+  
+  availableCategories: function() {
     var datapoints = this.get('datapoints');
+        
     var categories = new Ember.Set();
     datapoints.forEach(function(point) {
       categories.add(point.category);
@@ -42,10 +58,20 @@ export default Ember.ObjectController.extend({
   }.property('datapoints'),
   
   ydomain: function() {
-    var max = d3.max(this.get('datapoints'), function(point) {
-      return parseInt(point.rank);
-    });
-    return [0, max];
-  }.property('datapoints')
+    return d3.extent(this.get('datapoints').map(function(datapoint) { return datapoint.perfidx * 100; }));
+  }.property('datapoints'),
+  
+  actions: {
+    selectAll: function() {
+      this.get('availableCategories').forEach(function(cat) {
+        Ember.set(cat, 'checked', true);
+      });
+    },
+    selectNone: function() {
+      this.get('availableCategories').forEach(function(cat) {
+        Ember.set(cat, 'checked', false);
+      });
+    }
+  }
   
 });
