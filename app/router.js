@@ -9,7 +9,7 @@ Router.map(function() {
     this.route('new', { path: '/events/new' });
   });
   this.resource('event', { path: '/event/:event_id'}, function() {
-    this.route('starttime-to-rank');
+    this.route('starttime-analysis');
     this.resource('categories', function() {
       this.resource('category', { path: ':category_id' }, function() {
         this.route('runner', { path: 'runner/:runner_id' });
