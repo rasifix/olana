@@ -11,7 +11,9 @@ export function parseTime(str) {
   var split = str.split(":");
   var result = null;
   if (split.length === 2) {
-    result = parseInt(split[0], 10) * 60 + parseInt(split[1], 10);
+    var negative = split[0][0] === '-';
+    var minutes = parseInt(split[0], 10);
+    result = (negative ? -1 : 1) * (Math.abs(minutes) * 60 + parseInt(split[1], 10));
   } else if (split.length === 3) {
     result = parseInt(split[0], 10) * 3600 + parseInt(split[1], 10) * 60 + parseInt(split[2], 10);
   }

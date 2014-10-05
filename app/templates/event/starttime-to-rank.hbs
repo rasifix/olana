@@ -1,7 +1,13 @@
 <div class="content bodybox">
   <div class="grid12">
   	<div style="line-height: 30px; height: 30px">{{#if hoverRunner}}{{hoverRunner.rank}}. {{hoverRunner.firstName}} {{hoverRunner.name}} {{hoverRunner.time}} {{hoverRunner.category}} - {{hoverRunner.startTime}} - {{hoverRunner.perfidxLabel}}{{/if}}</div>
-    {{starttimerank-graph data=selectedData xdomain=xdomain ydomain=ydomain runnerClicked="runnerClicked" runnerOver="runnerOver"}}	
+		
+    {{starttimerank-graph data=selectedData xdomain=xdomain ydomain=ydomain runnerClicked="runnerClicked" runnerOver="runnerOver" trendlinePercentile=trendlinePercentile groupBy=groupBy}}	
+
+    <div style="margin-bottom: 20px">
+		<span style="display:inline-block; width:270px">Percentile: {{input type="range" min="10" max="90" step="1" value=trendlinePercentile}} {{trendlinePercentile}}%</span>
+		<span style="display:inline-block">Gruppierung: {{input type="range" min="1" max="60" step="1" value=groupBy}} {{groupBy}} Minuten</span>
+		</div>
 		
 		{{#each availableCategories}}
       <span style="display:inline-block; width: 60px">{{view Ember.Checkbox checkedBinding="checked"}} {{name}}</span>

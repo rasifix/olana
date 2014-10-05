@@ -6,6 +6,10 @@ function invalidTime(time) {
   return time === '-' || time === 's';
 }
 
+function sum(a1, a2) {
+  return a1 + a2;
+}
+
 export function parseRanking(json) {
   // transform data structure from wire-optimal to code-optimal
   json.runners.forEach(function(runner) {
@@ -83,19 +87,19 @@ export function parseRanking(json) {
       return parseTime(r1.split) - parseTime(r2.split);
     });
     
-    var top25 = leg.runners.slice(0, Math.max(leg.runners.length * 0.25, 1));
-    leg.hundertpct = Math.round(top25.reduce(function(prev, curr) { return prev + parseTime(curr.split); }, 0) / top25.length);
-    leg.fastest = leg.runners[0].split;
+    // calculate the ideal time
+    var selected = leg.runners.slice(0, Math.min(leg.runners.length, 5)).map(function(runner) { return parseTime(runner.split); });
+    
+    leg.idealSplit = Math.round(selected.reduce(sum) / selected.length);
+    leg.fastestSplit = parseTime(leg.runners[0].split);
   });
-  
-  // calculate the superman time [s]
-  result.superman = result.legs.reduce(function(prev, current) {
-    return prev + parseTime(current.fastest);
-  }, 0);
+
+  // calculate the ideal time [s]
+  result.idealTime = result.legs.map(function(leg) { return leg.idealSplit; }).reduce(sum);
   
   // visualization property - leg.position [0..1), leg.weight[0..1)
   result.legs.forEach(function(leg, idx) {
-    leg.weight = parseTime(leg.fastest) / result.superman;
+    leg.weight = leg.idealSplit / result.idealTime;
     if (idx === 0) {
       leg.position = leg.weight;
     } else {
@@ -106,11 +110,11 @@ export function parseRanking(json) {
   // calculate how much time a runner lost on a leg
   result.runners.forEach(function(runner) {
     runner.splits.forEach(function(split, idx) {
-      split.splitBehind = split.split === '-' ? '-' : formatTime(parseTime(split.split) - parseTime(result.legs[idx].fastest));
+      split.splitBehind = split.split === '-' || split.split === 's' ? '-' : formatTime(parseTime(split.split) - result.legs[idx].fastestSplit);
       
       // performance index for runner leg
-      if (split.split !== '-') {
-        split.perfidx = Math.round(1.0 * result.legs[idx].hundertpct / parseTime(split.split) * 100);
+      if (split.split !== '-' && split.split !== 's') {
+        split.perfidx = Math.round(1.0 * result.legs[idx].idealSplit / parseTime(split.split) * 100);
       }
       
       // leg id
@@ -200,9 +204,11 @@ export function parseRanking(json) {
   
   result.legs.forEach(function(leg, idx) {
     if (idx === 0) {
-      leg.superman = leg.fastest;
+      leg.fastestTime = formatTime(leg.fastestSplit);
+      leg.idealTime = formatTime(leg.idealSplit);
     } else {
-      leg.superman = formatTime(parseTime(result.legs[idx - 1].superman) + parseTime(leg.fastest));
+      leg.fastestTime = formatTime(parseTime(result.legs[idx - 1].fastestTime) + leg.fastestSplit);
+      leg.idealTime = formatTime(parseTime(result.legs[idx - 1].idealTime) + leg.idealSplit);
     }
   });
   
@@ -219,7 +225,8 @@ export function parseRanking(json) {
           return split.rank === 1;
         }).time;
         split.overallBehind = formatTime(parseTime(split.time) - parseTime(leaderTime));
-        split.supermanBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].superman));
+        split.fastestBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].fastestTime));
+        split.idealBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].idealTime));
       }
     });
     
@@ -243,6 +250,8 @@ export function parseRanking(json) {
     });
     runner.errorTime = formatTime(runner.errorTime);
   });
+  
+  console.log(result.legs[1]);
   
   return result;
 }

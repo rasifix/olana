@@ -4,14 +4,16 @@ import Ember from 'ember';
 import { parseTime, formatTime } from 'olana/utils/time';
 import { groupBy } from 'olana/utils/statistics';
 
-var lineFunction = d3.svg.line().x(function(d) { return d.x; })
-                                .y(function(d) { return d.y; })
-                                .interpolate("linear");
+
+var crisp = function(value) {
+  return Math.round(value - 0.5) + 0.5;
+};
 
 export default Ember.Component.extend({
   tagName: 'svg',
-  attributeBindings: ['width', 'height'],
-  classNames: [ "perfindex-graph" ],
+  attributeBindings: ['width', 'height', 'xmlns'],
+  classNames: [ "startimerank-graph" ],
+  xmlns: 'http://www.w3.org/2000/svg',
   
   // total width of component
   width: 756,
@@ -19,18 +21,34 @@ export default Ember.Component.extend({
   // total height of component
   height: 400,
   
+  // trendline percentile
+  trendlinePercentile: 0.25,
+  
+  // grouping of start times
+  groupBy: 15,
+  
   // paddings for graph area
   padding: {
     left: 20,
     top: 5,
-    right: 5,
+    right: 0,
     bottom: 15
   },
+  
+  area: function() {
+    return {
+      x: this.get('padding.left'),
+      y: this.get('padding.top'),
+      width: this.get('width') - this.get('padding.left') - this.get('padding.right'),
+      height: this.get('height') - this.get('padding.top') - this.get('padding.bottom')
+    };
+  }.property('width', 'height'),
   
   hover: null,
   
   didInsertElement: function() {
     var svg = d3.select(this.get('element'));
+    
     var height = this.get('height');
     svg.append('text').attr('x', this.get('width') / 2).attr('y', height - 5).attr('text-anchor', 'middle').attr('font-size', '16px').text('Startzeit');
     
@@ -44,13 +62,34 @@ export default Ember.Component.extend({
     var height = this.get('height');
     var xscale = this.get('xscale');
     var yscale = this.get('yscale');
+    var groupFactor = this.get('groupFactor');
     
     var self = this;
     
+    this.updateVGrid(svg);    
     this.updateHGrid(svg);
     
-    var trendline = this.get('trendline');
-    var path = svg.selectAll("path.trendline").data([trendline]);
+    var trendlines = [ this.get('trendline') ];
+    var path = svg.selectAll("path.trendline").data(trendlines);
+    
+    var halfGroup = Math.abs(xscale(0 + groupFactor / 2)) - Math.abs(xscale(0));
+    var interpolator = function(points) {
+      var path = "";
+      for (var i = 0; i < points.length - 1; i++) {
+        var x = points[i][0];
+        var y = points[i][1];
+        if (i > 0) {
+          path += 'M' + crisp(x - halfGroup) + ',' + y;
+        } else {
+          path += crisp(x - halfGroup) + ',' + y;
+        }
+        path += 'L' + crisp(x + halfGroup) + ',' + y;
+      }
+      return path;
+    };
+    var lineFunction = d3.svg.line().x(function(d) { return d.x; })
+                                    .y(function(d) { return d.y; })
+                                    .interpolate('linear');
     
     path.enter()
         .append("path")
@@ -58,15 +97,13 @@ export default Ember.Component.extend({
         .attr("d", function(line) { return lineFunction(line); })
         .attr("stroke", 'red')
         .attr("stroke-width", '2')
-        .attr("opacity", 0)
         .attr("fill", "none");
     
     // update the existing line
     path.transition()
         .attr("d", function(line) { return lineFunction(line); })
-        .attr("stroke", 'black')
-        .attr("stroke-width", '2')
-        .attr("opacity", 1/3)
+        .attr("stroke", '#aaa')
+        .attr("stroke-width", '1')
         .duration(500);
       
     var dots = svg.selectAll('circle').data(data, function(value) { return value.id; });
@@ -88,18 +125,33 @@ export default Ember.Component.extend({
     
     dots.exit().remove().transition().duration(10).attr('opacity', 0).attr('r', 0);
         
-  }.observes('data', 'hover'),
+  }.observes('data', 'hover', 'trendlinePercentile', 'groupFactor'),
+  
+  updateVGrid: function(svg) {
+    var xscale = this.get('xscale');
+    var yscale = this.get('yscale');
+
+    var lines = svg.selectAll('line.vgrid').data(this.get('groups'));
+    lines.enter().append('line')
+         .attr('x1', function(d) { return xscale(d); })
+         .attr('x2', function(d) { return xscale(d); })
+         .attr('y1', yscale(this.get('ydomain')[0]))
+         .attr('y2', yscale(this.get('ydomain')[1]))
+         .attr('class', 'vgrid')
+         .attr('stroke', '#aaa')
+         .attr('opacity', 0.25);
+    lines.transition().duration(500)
+        .attr("x1", function(d) { return crisp(xscale(d)); })
+        .attr("x2", function(d) { return crisp(xscale(d)); });
+    lines.exit().remove();
+  },
   
   updateHGrid: function(svg) {
     var x = this.get('xscale');
     var y = this.get('yscale');
             
     var hline = svg.selectAll("line.hgrid").data(y.ticks());
-    
-    var crisp = function(value) {
-      return Math.round(value - 0.5) + 0.5;
-    };
-    
+        
     hline.enter()
        .append("line")
        .attr("class", "hgrid")
@@ -132,8 +184,12 @@ export default Ember.Component.extend({
   trendline: function() {
     var datapoints = this.get('data');
     
+    var groupFactor = this.get('groupFactor');
+    var zeroTime = this.get('xdomain')[0];
+    
     var grouping = function(datapoint) {
-      return Math.floor(parseTime(datapoint.startTime) / 60 / 15);
+      var time = parseTime(datapoint.startTime);
+      return Math.floor((time - zeroTime) / groupFactor);
     };
     
     var grouped = groupBy(datapoints, grouping);
@@ -143,19 +199,20 @@ export default Ember.Component.extend({
         
     var x = this.get('xscale');
     var y = this.get('yscale');
-
+    var trendlinePercentile = this.get('trendlinePercentile') / 100;
+    
     var trendline = [];
         
     grouped.forEach(function(group) {
       var gid = grouping(group[0]);
       group.sort(function(g1, g2) { return g2.perfidx - g1.perfidx; });
-      var median = d3.quantile(group.map(function(p) { return p.perfidx; }), 0.2);
-      var bucket = gid * 60 * 15 + 7.5 * 60;
-      trendline.push({ x: x(bucket), y: y(median * 100) });
+      var percentile = d3.quantile(group.map(function(p) { return p.perfidx; }), trendlinePercentile);
+      var bucket = zeroTime + gid * groupFactor + groupFactor / 2;
+      trendline.push({ x: x(bucket), y: y(percentile * 100) });
     });
         
     return trendline;
-  }.property('data'),
+  }.property('data', 'trendlinePercentile', 'groupFactor'),
   
   xscale: function() {
     var padding = this.get('padding.left') + 2;
@@ -165,7 +222,31 @@ export default Ember.Component.extend({
   yscale: function() {
     var padding = this.get('padding.top') + this.get('padding.bottom');
     return d3.scale.linear().range([this.get('height') - padding, padding]).domain(this.get('ydomain'));
-  }.property('ydomain')
+  }.property('ydomain'),
+  
+  groupFactor: function() {
+    var groupBy = this.get('groupBy');
+    return groupBy * 60;
+  }.property('groupBy'),
+  
+  groups: function() {
+    var domain = this.get('xdomain');
+    var s = domain[0];
+    var e = domain[1];
+    var groupFactor = this.get('groupFactor');
+    
+    var first = s;
+    var last = s + Math.ceil((e - s) / groupFactor) * groupFactor;
+        
+    var result = [];
+    for (var i = first; i <= last; i += groupFactor) {
+      if (this.get('xscale')(i) > this.get('padding.left')) {
+        result.push(i);
+      }
+    }
+    
+    return result;
+  }.property('xdomain', 'groupFactor')
   
   
 });

@@ -1,12 +1,16 @@
+/* global d3 */
+
 import Ember from 'ember';
 import { parseTime, formatTime } from 'olana/utils/time';
-import { groupBy, median } from 'olana/utils/statistics';
+import { median } from 'olana/utils/statistics';
 
 export default Ember.ObjectController.extend({
   
-  backRoute: 'categories',
+  backRoute: 'event',
   
-  name: 'Startzeit / Rang',
+  trendlinePercentile: 25,
+  
+  groupBy: 30,
   
   selectedData: function() {
     var categories = new Ember.Set(this.get('checkedCategories'));

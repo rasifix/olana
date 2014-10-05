@@ -8,6 +8,10 @@ var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
 };
 
+var flatten = function(arr) {
+  return [].concat.apply([], arr);
+};
+
 var lineFunction = d3.svg.line().x(function(d) { return d.x; })
                                 .y(function(d) { return d.y; })
                                 .interpolate("linear");
@@ -60,7 +64,7 @@ export default Ember.Component.extend({
            return w;
          })
          .attr("height", this.get('area').height)
-         .attr("fill", function(d, idx) { return idx % 2 === 0 ? "#eee" : "white"; })
+         .attr("fill", "white")
          .attr("opacity", 0.5)
          .on("click", function(leg) {
            self.sendAction('legclick', leg);
@@ -146,9 +150,9 @@ export default Ember.Component.extend({
        .attr("y", function(d) { return y(d) + 3; })
        .attr("opacity", 0)
        .text(function(d) { 
-         var seconds = d.getTime() / 1000;
+         var seconds = Math.abs(d.getTime()) / 1000;
          var minutes = Math.floor(seconds / 60);
-         return "+" + minutes + ":" + pad("" + seconds % 60); 
+         return (d.getTime() < 0 ? '-' : '+') + minutes + ":" + pad("" + seconds % 60); 
        });
     
     htext.transition().duration(500).attr("y", function(d) { return y(d) + 3; }).attr("opacity", 1);
@@ -167,7 +171,7 @@ export default Ember.Component.extend({
       var points = [ { x: x(0), y: y(0) }];
       points.key = runner.get('fullName');
       runner.get('splits').forEach(function(split) {
-        points.push({ x: x(split.position), y: y(parseTime(split.supermanBehind) * 1000) });
+        points.push({ x: x(split.position), y: y(parseTime(split.idealBehind) * 1000) });
       });
       timelines.addObject(points);
     });
@@ -210,16 +214,16 @@ export default Ember.Component.extend({
   yScale: function() {
     var runners = this.get('runners');
     
-    var maxbehind = d3.max(runners, function(runner) {
-      return d3.max(runner.splits, function(split) {
-        if (split.supermanBehind) {
-          return parseTime(split.supermanBehind) * 1000;
+    var times = flatten(runners.map(function(runner) {
+      return runner.splits.map(function(split) {
+        if (split.idealBehind) {
+          return parseTime(split.idealBehind) * 1000;
         }
-        return 0;
+        return 0;        
       });
-    });
+    }));
     
-    return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain([0, maxbehind]);
-  }.property()
+    return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain(d3.extent(times));
+  }.property('runners')
 
 });

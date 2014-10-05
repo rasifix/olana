@@ -27,22 +27,6 @@ a {
   color: darkorange;
 }
 
-.splits-table {
-  width: 50%;
-}
-
-.splits-table tr {
-  border-top: 1px solid #ffbf80;
-}
-
-.splits-table tr:first-of-type {
-  border-top: none;
-}
-
-.splits-table td {
-  padding: 5px;
-}
-
 .splits-list {
   margin: 5px;
   padding: 0px 5px 5px 5px;
@@ -410,8 +394,9 @@ span.date {
 .split-entry {
   float: left;
   width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-bottom: 1px solid #aea78d;
 }
 
 .split-entry:hover {
@@ -421,17 +406,9 @@ span.date {
 .split-entry-span {
   padding-top: 10px;
   padding-bottom: 10px;
-  width: 65px;
+  width: 75px;
   display: inline-block;
   text-align: right;
-}
-
-div.split-entry:nth-of-type(even) {
-  background-color: rgba(174,167,141,0);
-}
-
-div.split-entry:nth-of-type(odd) {
-  background-color: rgba(174,167,141,0.2);
 }
 
 .badge {
