@@ -1,0 +1,11 @@
+<div class="content bodybox">
+  <div class="grid12">
+    <h2>{{runner.fullName}} ({{runner.yearOfBirth}})</h2>
+    <ul class="event-list">
+      {{#each events}}
+      <li><span class="mute">{{date}}</span> {{#link-to 'category.runner' id category runner.ecard}}{{name}}{{/link-to}} - {{#link-to 'category' id category}}{{category}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+<div style="clear:both"/>

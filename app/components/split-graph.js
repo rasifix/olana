@@ -210,7 +210,6 @@ export default Ember.Component.extend({
     return path.join('');    
   },
 
-  // TODO: make yScale dependent on active mode
   yScale: function() {
     var runners = this.get('runners');
     
@@ -222,6 +221,9 @@ export default Ember.Component.extend({
         return 0;        
       });
     }));
+    
+    // everything starts at zero (no handicap ;) ).
+    times.push(0);
     
     return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain(d3.extent(times));
   }.property('runners')

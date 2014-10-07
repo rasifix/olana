@@ -8,6 +8,7 @@ Router.map(function() {
   this.resource('events', { path: '/' }, function() {
     this.route('new', { path: '/events/new' });
   });
+  this.route('runner', { path: '/runners/:id' });
   this.resource('event', { path: '/event/:event_id'}, function() {
     this.route('starttime-analysis');
     this.resource('categories', function() {

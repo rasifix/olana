@@ -42,30 +42,6 @@ a {
   text-shadow: 1px 1px 1px white;
 }
 
-ul.breadcrumbs {
-  margin: 0px;
-  padding: 0px;
-}
-
-ul.breadcrumbs li {
-  list-style: none;
-  display: inline-block;
-}
-
-ul.breadcrumbs li:before {
-  content: "/";
-}
-
-ul.breadcrumbs li:first-of-type:before {
-  display: none;
-}
-
-ul.breadcrumbs li.active a {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
-}
-
 h4 {
   margin-top: 3px;
   margin-bottom: 15px;
