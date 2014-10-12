@@ -49,7 +49,7 @@ export default Ember.ObjectController.extend({
     var content = this.get('content');
     if (content && content.length > 8) {
       var lines = content.trim().split(/\r?\n/);
-      if (content.substring(0, 6) === 'OE0014') {
+      if (content.substring(0, 6) === 'OE0014' || content.substring(0, 23) === 'Stnr;Chip;Datenbank Id;') {
         return parseKraemer(lines, this.get('title'), this.get('map'), this.get('date'), this.get('startTime'));
         
       } else if (content.substring(0, 8) === '//Format') {

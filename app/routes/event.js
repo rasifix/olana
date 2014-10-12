@@ -15,9 +15,19 @@ var order = [ 'HE',
 
 export default Ember.Route.extend({
   
+  event: null,
+  
   model: function(params) {
     var id = params['event_id'];
+    console.log('event.model');
+    if (this.event && this.event.id === id) {
+      console.log('cache hit event');
+      return this.event;
+    }
+    
+    var that = this;
     return $.get(ENV.APP.API_HOST + 'api/events/' + id).then(function(data) {
+      // correct sort order of categories (so sort order is always the same)
       data.categories = data.categories.sort(function(c1, c2) {
         var idx1 = order.indexOf(c1.name);
         var idx2 = order.indexOf(c2.name);
@@ -32,6 +42,8 @@ export default Ember.Route.extend({
           return idx1 - idx2;
         }
       });
+      that.event = data;
+      console.log(data.id);
       return data;
     });
   },

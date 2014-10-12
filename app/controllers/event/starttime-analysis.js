@@ -31,7 +31,8 @@ export default Ember.ObjectController.extend({
     var result = [];
     var categories = this.get('categories');
     categories.forEach(function(category) {
-      var idealtime = d3.quantile(category.runners.map(function(runner) { return parseTime(runner.time); }), 0.2);
+      var times = category.runners.slice(0, Math.min(category.runners.length, 5)).map(function(runner) { return parseTime(runner.time); });
+      var idealtime = d3.sum(times) / times.length;
       category.runners.forEach(function(runner) {
         runner.perfidx = idealtime / parseTime(runner.time);
         runner.perfidxLabel = (runner.perfidx * 100).toFixed(1) + '%';
