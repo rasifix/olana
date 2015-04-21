@@ -1,14 +1,14 @@
 <div class="grid12">
 
 <ul class="event-list">
-{{#each legs}}
- <li {{action 'legClicked' id}}>
-  {{#link-to 'leg' id}}
-  {{id}} 
+{{#each leg in legs}}
+ <li {{action 'legClicked' leg.id}}>
+  {{#link-to 'leg' leg.id}}
+  {{leg.id}} 
   {{/link-to}}
   <div class="pull-right">
-    <span class="mute">{{categories}}</span>
-    <span class="badge">{{runners}}</span> 
+    <span class="mute">{{leg.categories}}</span>
+    <span class="badge">{{leg.runners.length}}</span> 
   </div>
  </li>
 {{/each}}

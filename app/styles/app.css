@@ -262,6 +262,7 @@ footer {
 
 .content {
   width: 768px;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -299,6 +300,7 @@ li.list-header {
   list-style: none;
   border-top: 1px solid #aea78d;
   padding: 10px;
+  position: relative;
 }
 
 .event-list li:hover a {

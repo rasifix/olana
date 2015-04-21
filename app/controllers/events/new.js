@@ -1,8 +1,11 @@
-/* global $, ENV */
+/* global $ */
 
 import Ember from 'ember';
+import config from '../../config/environment';
+
 import { parseKraemer } from 'olana/utils/kraemer';
 import { parseOWare } from 'olana/utils/oware';
+import { formatTime, parseTime } from 'olana/utils/time';
 
 function reverse(s) {
   return s.split("").reverse().join("");
@@ -45,15 +48,74 @@ export default Ember.ObjectController.extend({
     { value:"x-mac-roman", label:"Mac Roman" }
   ],
   
+  cleanContent: function() {
+    var parsed = this.get('parsedContent');
+    if (!parsed) {
+      return '';
+    }
+    return JSON.stringify(parsed, null, '  ');
+  }.property('parsedContent'),
+  
+  reorganize: function(event) {
+    this.set('reorganized', false);
+    var that = this;
+    event.categories.filter(function(category) { return category.runners.length > 0; }).forEach(function(category) {
+      var course = category.runners[0].course;
+      var controls = course.split(',');
+      category.runners.slice(1).forEach(function(runner) {
+        if (runner.course !== course && parseTime(runner.time) !== null) {
+          that.set('reorganized', true);
+          var splits = runner.splits;
+          
+          if (controls[0] !== splits[0][0]) {
+            console.log('invalid');
+            return;
+          }
+          
+          var nsplits = [ ];
+          
+          controls.forEach(function(control, idx) {
+            var leg = idx === 0 ? null : controls[idx - 1] + '-' + control;
+            
+            var nsplit = splits.find(function(split, splitIdx) {
+              if (splitIdx > 0) {
+                return splits[splitIdx - 1][0] + '-' + split[0] === leg;
+              } else if (idx === 0) {
+                return true;
+              }
+            });
+            
+            if (!nsplit) {
+              console.log('invalid split');
+              return;
+            }
+            
+            var currentIdx = splits.indexOf(nsplit);
+            if (currentIdx === 0) {
+              nsplits.push(nsplit);
+            } else {
+              var prev = splits[currentIdx - 1];
+              var time = nsplits[idx - 1][1];
+              nsplits.push([nsplit[0], formatTime(parseTime(time) + parseTime(nsplit[1]) - parseTime(prev[1]))]);
+            }            
+          });
+          
+          runner.splits = nsplits;
+        }
+      });
+    });
+    return event;
+  },
+  
   parsedContent: function() {
-    var content = this.get('content');
-    if (content && content.length > 8) {
-      var lines = content.trim().split(/\r?\n/);
-      if (content.substring(0, 6) === 'OE0014' || content.substring(0, 23) === 'Stnr;Chip;Datenbank Id;') {
+    var text = this.get('text');
+    if (text && text.length > 8) {
+      var lines = text.trim().split(/\r?\n/);
+      if (text.substring(0, 6) === 'OE0014' || text.substring(0, 23) === 'Stnr;Chip;Datenbank Id;') {
         return parseKraemer(lines, this.get('title'), this.get('map'), this.get('date'), this.get('startTime'));
         
-      } else if (content.substring(0, 8) === '//Format') {
-        var event = parseOWare(lines);
+      } else if (text.substring(0, 8) === '//Format') {
+        var event = this.reorganize(parseOWare(lines));
         this.set('title', event.name);
         this.set('map', event.map);
         this.set('date', event.date);
@@ -62,8 +124,13 @@ export default Ember.ObjectController.extend({
       }
     } 
     return null;
-  }.property('content'),
+  }.property('text'),
   
+  categories: function() {
+    var parsed = this.get('parsedContent');
+    return parsed ? parsed.categories : [];
+  }.property('parsedContent'),
+   
   submitDisabled: function() {
     return this.get('parsedContent') === null;
   }.property('parsedContent'),
@@ -86,11 +153,11 @@ export default Ember.ObjectController.extend({
       
       $.ajax({
         type: 'PUT',
-        url: ENV.APP.API_HOST + 'api/events/' + id,
+        url: config.APP.API_HOST + 'api/events/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
         success: function(data) {
-          that.transitionToRoute('event.index', id);
+          that.transitionToRoute('event.index', 'zimaa', id);
         },
         error: function(err) {
           console.log('ERROR')

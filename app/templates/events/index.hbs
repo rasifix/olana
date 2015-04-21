@@ -1,15 +1,14 @@
  <div class="grid12">
   <ul class="event-list">
-    {{#each}}
-	  <li {{action 'eventClicked' id}}>
-	    <span class="date">{{date}}</span>
-	    {{#link-to 'event' id}}{{name}}{{/link-to}}
+    {{#each event in model}}
+	  <li {{action 'eventClicked' event.source event.id}}>
+	    <span class="date">{{event.date}}</span>
+	    {{#link-to 'event' event.source event.id}}{{event.name}}{{/link-to}}
 	    <div class="pull-right">
-  	    <span class="mute">{{map}}</span>
-        <span class="badge">{{runners}}</span>
+  	    <span class="mute">{{event.map}}</span>
       </div>
     </li>
     {{/each}}
   </ul>
  </div>
- <div style="clear:both"></div>
+ <div class="clear"></div>

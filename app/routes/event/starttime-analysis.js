@@ -1,10 +1,58 @@
+/* global d3 */
+
 import Ember from 'ember';
+import config from '../../config/environment';
+import { parseTime, formatTime } from 'olana/utils/time';
 
 export default Ember.Route.extend({
+  
+  parseData: function(event) {
+    var parseTimeHM = function(str) {
+      if (!str) {
+        return null;
+      }
+      var split = str.split(":");
+      return parseInt(split[0], 10) * 3600 + parseInt(split[1], 10) * 60;
+    };
+
+    var result = { categories: [ ] };
+    var start = parseTimeHM(event.startTime);
+
+    event.categories.forEach(function(category) {
+      var cat = { name: category.name, runners: [] };
+      result.categories.push(cat);
+
+      var last = null;
+      var pos = 1;
+      var filtered = category.runners.filter(function(runner) { return parseTime(runner.time) !== null; });
+      filtered.forEach(function(runner, idx) {
+        if (last != null) {
+          if (parseTime(runner.time) > last) {
+            pos = idx + 1;
+          }
+        }
+        var point = {
+          id: runner.id,
+          //startTime: formatTime(/*start + */parseTime(runner.startTime)),
+          startTime: runner.startTime,
+          time: runner.time,
+          rank: pos,
+          firstName: runner.firstName,
+          name: runner.name,
+          sex: runner.sex,          
+          category: category.name
+        };
+        cat.runners.push(point);
+        last = parseTime(runner.time);
+      });
+    });
     
+    return result;
+  }, 
+  
   model: function(params) {
-    var id = this.modelFor('event').id;
-    return $.get(ENV.APP.API_HOST + 'api/events/' + id + '/starttime-to-rank');
+    var event = this.modelFor('event');
+    return this.parseData(event);
   },
   
   actions: {

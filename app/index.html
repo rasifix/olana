@@ -3,26 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="R7OXxwIQ6A4lkkb8y0Glwzkc4dTAjOlUx0oxiCZE75w" />
-    <title>OL Ranglisten</title>
+    <title>Olana</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{BASE_TAG}}
+    {{content-for 'head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/olana.css">
+
+    {{content-for 'head-footer'}}
   </head>
   <body>
-    <script>
-      window.ENV = {{ENV}};
-      window.AppKitENV = {{ENV}};
-      window.EmberENV = window.AppKitENV.EmberENV;
-    </script>
+    {{content-for 'body'}}
+
     <script src="assets/vendor.js"></script>
     <script src="assets/olana.js"></script>
-    <script>
-      window.AppKit = require('olana/app')['default'].create(AppKitENV.APP);
-    </script>
+
+    {{content-for 'body-footer'}}
   </body>
 </html>

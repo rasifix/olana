@@ -1,24 +1,21 @@
-/* global $, ENV */
-
 import Ember from 'ember';
+
 import { parseRanking } from 'olana/utils/parser';
 
 export default Ember.Route.extend({
   
   model: function(params) {
-    var eventId = this.modelFor('event').id;
+    var event = this.modelFor('event');
     var id = params['category_id'];
-    var url = ENV.APP.API_HOST + 'api/events/' + eventId + '/classes/' + id;
-    return $.get(url).then(function(data) { 
-      return parseRanking(data);
+    var category = event.categories.find(function(category) {
+      if (category.name === id) {
+        return category;
+      }
     });
+    return parseRanking(category);
   },
   
   actions: {
-    error: function(error) {
-      console.log(error);
-      this.transitionTo('categories');
-    },
     onlegclick: function(leg) {
       this.transitionTo('leg', leg.leg);
     }

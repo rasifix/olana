@@ -1,15 +1,15 @@
 import Ember from 'ember';
+import config from './config/environment';
 
 var Router = Ember.Router.extend({
-  location: AppKitENV.locationType
+  location: config.locationType
 });
 
 Router.map(function() {
   this.resource('events', { path: '/' }, function() {
     this.route('new', { path: '/events/new' });
   });
-  this.route('runner', { path: '/runners/:id' });
-  this.resource('event', { path: '/event/:event_id'}, function() {
+  this.resource('event', { path: '/event/:source/:event_id'}, function() {
     this.route('starttime-analysis');
     this.resource('categories', function() {
       this.resource('category', { path: ':category_id' }, function() {
@@ -27,6 +27,11 @@ Router.map(function() {
       this.resource('leg', { path: ':leg_id' }, function() {
 
       });     
+    });
+    this.resource('controls', function() {
+      this.resource('control', { path: ':control_id' }, function() {
+        
+      });
     });
   });
 });

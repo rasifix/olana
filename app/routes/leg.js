@@ -1,20 +1,21 @@
-/* global $ */
-
 import Ember from 'ember';
+
 import { parseTime, formatTime } from 'olana/utils/time';
 
 export default Ember.Route.extend({
   
   model: function(params) {
-    var eventId = this.modelFor('event').id;
+    var event = this.modelFor('event');
     var legId = params['leg_id'];
     var from = legId.split('-')[0];
     var to = legId.split('-')[1];
-    var url = ENV.APP.API_HOST + 'api/events/' + eventId + '/legs/' + legId;
-    var parseData = this.parseData;
-    return $.get(url).then(function(data) { 
-      return parseData(from, to, data.filter(function(e) { return e.split !== '-'; }));
+    var leg = event.legs.find(function(leg) {
+      if (leg.id === legId) {
+        return leg;
+      }
     });
+    console.log(leg);
+    return this.parseData(from, to, leg.runners);
   },
   
   parseData: function(from, to, ranking) {

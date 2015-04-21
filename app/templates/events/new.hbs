@@ -1,22 +1,22 @@
   <div class="row" style="border-bottom:1px solid #aaa; margin-bottom: 20px">
     <h3>Resultate hochladen</h3>
     <p>Zuerst sollte die Datei ausgew&auml;hlt werden. Unterst&uuml;tzte Formate sind Kraemer CSV (Datei beginnt mit OE2014)
-       und OWare. Das ist die gleiche Datei, die an SOLV geschickt wird. </p>
+       und ORware. Das ist die gleiche Datei, die an SOLV geschickt wird. </p>
 
-    <h4>OWare</h4>
-    <p>Im OWare Format sind der Wettkampfname, die Karte,
+    <h4>ORware</h4>
+    <p>Im ORware Format sind der Wettkampfname, die Karte,
        das Datum und die Nullzeit fix eingetragen und werden in die weiteren Formularfelder eingef&uuml;gt. Sie k&ouml;nnen
        auch angepasst werden. Es bleibt nur noch den "Speichern" Knopf zu dr&uuml;cken. Sollte der Knopf deaktiviert
        sein, ist etwas schief gelaufen. Schick ein Mail mit der Datei an
        <a href="mailto:raess.simon@gmail.com">mich</a> und ich schaue das Problem so rasch als m&ouml;glich an.</p>
 
     <h4>Kraemer</h4>
-    <p>Die Kraemer Datei enth&auml;llt keinen Wettkampfnamen, keine Karte, kein Datum und auch kein Nullzeitpunkt. Diese Daten
+    <p>Die Kraemer Datei enth&auml;lt keinen Wettkampfnamen, keine Karte, kein Datum und auch kein Nullzeitpunkt. Diese Daten
        m&uuml;ssen eingegeben werden. Sobald das gemacht ist, "Speichern" klicken.</p>
   </div>
   <div class="row">
     <label>Datei:</label>
-    {{view "file-upload" name="file" encoding=encoding content=content}}
+    {{view "file-upload" name="file" encoding=encoding text=text}}
   </div>
   <div class="row">
     <label>Wettkampf:</label>
@@ -43,10 +43,29 @@
 	         optionLabelPath="content.label"}}
   </div>
   <div class="row">
+    <label>Umorganisiert:</label>
+    {{input type="checkbox" readonly="readonly" checked=reorganized}}
+  </div>
+  <div class="row">
     <label>Inhalt:</label>
-    {{textarea readonly="readonly" value=content}}
+    {{textarea readonly="readonly" value=cleanContent}}
+  </div>
+  <div class="row">
+    <label>Kategorien:</label>
+    <ul style="display:inline-block; list-style:none">
+    {{#each category in categories}}
+      <li>
+        <div>{{category.name}}</div>
+        <ul style="list-style:none">
+          {{#each runner in category.runners}}
+          <li>{{runner.firstName}} {{runner.name}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+    </ul>
   </div>
   <div class="row">
     <label></label>
-    <input type="button" {{action "submit"}} value="Speichern" {{bind-attr disabled=submitDisabled}}></input>
+    <input type="button" {{action "submit"}} value="Speichern" {{bind-attr disabled=submitDisabled}}>
   </div>

@@ -1,23 +1,17 @@
 import Ember from 'ember';
 import { parseTime } from 'olana/utils/time';
 
-var findRunner = function(course, runnerId) {
-  var result = null;
-  course.runners.forEach(function(runner) {
-    if (runner.id === runnerId) {
-      result = runner;
-      return;
-    }
-  });
-  return result;
-};
-
 export default Ember.Route.extend({
   
   model: function(params) {
-    var runnerId = params["runner_id"];
+    var id = parseInt(params['runner_id'], 10);
     var course = this.modelFor('course');
-    var runner = findRunner(course, runnerId);
+    var runner = course.runners.find(function(runner) { return runner.id === id; });
+    
+    if (!runner) {
+      console.warn('no runner found with id ' + params['runner_id']);
+      this.transitionTo('category');
+    }
     
     // select box values (all except the current runner)
     var opponents = course.runners.map(function(r) { return r; }).removeObject(runner);

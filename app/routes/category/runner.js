@@ -4,10 +4,12 @@ export default Ember.Route.extend({
   
   model: function(params) {
     var category = this.modelFor('category');
+    var id = parseInt(params['runner_id'], 10);
     var runners = category.runners;
-    var runner = runners.find(function(runner) { return runner.id === params['runner_id']; });
+    var runner = runners.find(function(runner) { return runner.id === id; });
 
     if (!runner) {
+      console.warn('no runner found with id ' + params['runner_id']);
       this.transitionTo('category');
     }
     

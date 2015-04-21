@@ -1,5 +1,4 @@
 /*global d3, Rainbow */
-
 import Ember from 'ember';
 import { parseTime } from 'olana/utils/time';
 import { Rainbow } from 'olana/utils/rainbow';

@@ -5,10 +5,10 @@ export default Ember.Route.extend({
   model: function(params) {
     var course = this.modelFor('course');    
     var runners = course.runners;
-    var runner = runners.find(function(runner) { return runner.id === params['runner_id']; });
+    var runner = runners[parseInt(params['runner_id'], 10)];
     
     if (!runner) {
-      this.transitionTo('category');
+      this.transitionTo('course');
     }
 
     return {

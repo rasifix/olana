@@ -27,20 +27,25 @@ export function parseRanking(json) {
     });
   });
   
-  var result = json;
-
-  result.legs = result.runners[0].splits.map(function(split) {
+  var result = {
+    name: json.name,
+    distance: json.distance,
+    ascent: json.ascent,
+    controls: json.controls
+  };
+  
+  // define the legs
+  result.legs = json.runners[0].splits.map(function(split) {
     return {
       code: split.code,
       runners: []
     };
   });
       
-  result.runners = result.runners.map(function(runner, idx) {
+  result.runners = json.runners.map(function(runner, idx) {
     return Runner.create({
-      id: runner.ecard,
-      firstName: runner.firstName,
-      name: runner.name,
+      id: runner.id,
+      fullName: runner.fullName,
       time: runner.time,
       yearOfBirth: runner.yearOfBirth,
       city: runner.city,
@@ -48,7 +53,9 @@ export function parseRanking(json) {
       category: runner.category,
       splits: runner.splits.map(function(split, idx) {
         var splitTime = null;
-        if (idx === 0) {
+        if (split.time === '-') {
+          splitTime = '-';
+        } else if (idx === 0) {
           splitTime = formatTime(parseTime(split.time));
         } else {
           if (parseTime(split.time) === null || parseTime(runner.splits[idx - 1].time) === null) {
@@ -90,33 +97,42 @@ export function parseRanking(json) {
     // calculate the ideal time
     var selected = leg.runners.slice(0, Math.min(leg.runners.length, 5)).map(function(runner) { return parseTime(runner.split); });
     
-    leg.idealSplit = Math.round(selected.reduce(sum) / selected.length);
-    leg.fastestSplit = parseTime(leg.runners[0].split);
+    // only if there are valid splits for this leg
+    if (selected.length > 0) {
+      leg.idealSplit = Math.round(selected.reduce(sum) / selected.length);
+    }
+    
+    // only if there are valid splits for this leg
+    if (leg.runners.length > 0) {
+      leg.fastestSplit = parseTime(leg.runners[0].split);
+    }
   });
 
   // calculate the ideal time [s]
-  result.idealTime = result.legs.map(function(leg) { return leg.idealSplit; }).reduce(sum);
+  if (result.legs.length > 0) {
+    result.idealTime = result.legs.map(function(leg) { return leg.idealSplit; }).reduce(sum);
   
-  // visualization property - leg.position [0..1), leg.weight[0..1)
-  result.legs.forEach(function(leg, idx) {
-    leg.weight = leg.idealSplit / result.idealTime;
-    if (idx === 0) {
-      leg.position = leg.weight;
-    } else {
-      leg.position = result.legs[idx - 1].position + leg.weight;
-    }
-  });
+    // visualization property - leg.position [0..1), leg.weight[0..1)
+    result.legs.forEach(function(leg, idx) {
+      leg.weight = leg.idealSplit / result.idealTime;
+      if (idx === 0) {
+        leg.position = leg.weight;
+      } else {
+        leg.position = result.legs[idx - 1].position + leg.weight;
+      }
+    });
+  }
   
   // calculate how much time a runner lost on a leg
   result.runners.forEach(function(runner) {
     runner.splits.forEach(function(split, idx) {
       split.splitBehind = split.split === '-' || split.split === 's' ? '-' : formatTime(parseTime(split.split) - result.legs[idx].fastestSplit);
-      
+            
       // performance index for runner leg
-      if (split.split !== '-' && split.split !== 's') {
+      if (split.split !== '-' && split.split !== 's' && split.split !== '0:00') {
         split.perfidx = Math.round(1.0 * result.legs[idx].idealSplit / parseTime(split.split) * 100);
       }
-      
+            
       // leg id
       split.leg = (idx > 0 ? runner.splits[idx - 1].code : 'St') + '-' + runner.splits[idx].code;
       
@@ -187,13 +203,10 @@ export function parseRanking(json) {
     // assign overall rank
     var pos = 1;
     var lastTime = null;
-    var leaderTime;
+    
     runnerLegs.forEach(function(runnerLeg) {
       var currentRunner = result.runners.find(function(runner) { return runner.id === runnerLeg.id; });
       if (lastTime == null || parseTime(lastTime) === parseTime(runnerLeg.time)) {
-        if (pos === 1) {
-          leaderTime = runnerLeg.time;
-        }
         currentRunner.splits[idx].overallRank = pos;
       } else {
         currentRunner.splits[idx].overallRank = ++pos;
@@ -216,17 +229,22 @@ export function parseRanking(json) {
     // calculate overall time behind leader
     runner.splits.forEach(function(split, splitIdx) {
       if (!invalidTime(split.time)) {
-        var leaderTime = result.runners.map(function(runner) {
+        var leader = result.runners.map(function(runner) {
           return {
             time: runner.splits[splitIdx].time,
             rank: runner.splits[splitIdx].overallRank
           };
         }).find(function(split) {
           return split.rank === 1;
-        }).time;
-        split.overallBehind = formatTime(parseTime(split.time) - parseTime(leaderTime));
-        split.fastestBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].fastestTime));
-        split.idealBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].idealTime));
+        });
+
+        // no leader for this leg?!
+        if (leader) {
+          var leaderTime = leader.time;
+          split.overallBehind = formatTime(parseTime(split.time) - parseTime(leaderTime));
+          split.fastestBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].fastestTime));
+          split.idealBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].idealTime));
+        }
       }
     });
     
@@ -250,8 +268,6 @@ export function parseRanking(json) {
     });
     runner.errorTime = formatTime(runner.errorTime);
   });
-  
-  console.log(result.legs[1]);
   
   return result;
 }

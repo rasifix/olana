@@ -1,15 +1,15 @@
   <table class="ranking-table">
    <tbody>
-    {{#each data}}
+    {{#each runner in data}}
     <tr>
-      <td>{{rank}}.</td>
-      <td>{{#link-to 'category.runner' category ecard}}{{runner}}{{/link-to}}</td>
-      <td>{{yearOfBirth}}</td>
-      <td>{{club}}</td>
-      <td>{{split}}</td>
-      <td>{{behind}}</td>
-      <td>{{timeLoss}}</td>
-      <td>{{#link-to 'category' category}}{{category}}{{/link-to}}</td>
+      <td>{{runner.rank}}.</td>
+      <td>{{#link-to 'category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>
+      <td>{{runner.yearOfBirth}}</td>
+      <td>{{runner.club}}</td>
+      <td>{{runner.split}}</td>
+      <td>{{runner.behind}}</td>
+      <td>{{runner.timeLoss}}</td>
+      <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
     </tr>
     {{/each}}
    </tbody>

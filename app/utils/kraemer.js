@@ -66,7 +66,6 @@ export function parseKraemer(lines, event, map, date, startTime) {
     }
     
     var runner = {
-      fednr: strip(lineObj['Datenbank Id']) || '',
       name: strip(lineObj['Nachname']),
       firstName: strip(lineObj['Vorname']),
       yearOfBirth: lineObj['Jg'],
@@ -99,6 +98,7 @@ export function parseKraemer(lines, event, map, date, startTime) {
       }
       runner.splits.push([times[idx], formatTime(parseTime(times[idx + 1]))]);
     }
+    runner.course = runner.splits.map(function(split) { return split[0]; }).join(',');
 
     category.runners.push(runner);
   });

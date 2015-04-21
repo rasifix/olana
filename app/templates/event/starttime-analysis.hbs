@@ -9,13 +9,13 @@
 		<span style="display:inline-block">Gruppierung: {{input type="range" min="1" max="60" step="1" value=groupBy}} {{groupBy}} Minuten</span>
 		</div>
 		
-		{{#each availableCategories}}
-      <span style="display:inline-block; width: 60px">{{view Ember.Checkbox checkedBinding="checked"}} {{name}}</span>
+		{{#each category in availableCategories}}
+      <span style="display:inline-block; width: 60px">{{input type="checkbox" checkedBinding="category.checked"}} {{category.name}}</span>
 		{{/each}}
 		
 		<br />
 		<a href="javascript:return false;" {{action 'selectAll'}}>alle</a>
 		<a href="javascript:return false;" {{action 'selectNone'}}>keine</a>
   </div>
-	<div style="clear:both"></div>
+	<div class="clear"></div>
 </div>

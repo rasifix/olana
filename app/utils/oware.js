@@ -26,7 +26,6 @@ function parseRunner(row) {
 	}
 			
 	return {
-	  fednr: row[5] ? row[5] : null,
 		name: row[1],
 		firstName: row[2],
 		yearOfBirth: row[3],
@@ -37,7 +36,8 @@ function parseRunner(row) {
 		time: row[12],
 		startTime: row[13],
 		ecard: row[11],
-		splits: splits
+		splits: splits,
+		course: splits.map(function(split) { return split[0]; }).join(',')
 	};
 }
 
