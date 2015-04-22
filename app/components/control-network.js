@@ -1,15 +1,7 @@
-/*global d3, Rainbow */
+/*global d3 */
 
 import Ember from 'ember';
-import { parseTime } from 'olana/utils/time';
-import { Rainbow } from 'olana/utils/rainbow';
 
-var lineFunction = d3.svg.line().x(function(d) { return d.x; })
-                                .y(function(d) { return d.y; })
-                                .interpolate("linear");
-
-var colors = new Rainbow();
-    
 export default Ember.Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
@@ -27,9 +19,6 @@ export default Ember.Component.extend({
   refresh: function() {
     var svg = d3.select(this.get('element'));
     
-    var cx = this.get('width') / 2;
-    var cy = this.get('height') / 2;
-    var dx = this.get('width') / 4;
     var width = this.get('width');
     var height = this.get('height');
     
@@ -65,7 +54,7 @@ export default Ember.Component.extend({
         .attr('y2', function(d) { return d.target.y; })
         .attr('stroke', 'magenta');
 
-    function tick(e) {
+    function tick() {
       lines.attr('x1', function(d) { return d.source.x; })
            .attr('y1', function(d) { return d.source.y; })
            .attr('x2', function(d) { return d.target.x; })
@@ -119,12 +108,10 @@ export default Ember.Component.extend({
     });
     
     incoming.forEach(function(code, idx) {
-      var control = controls.find(function(control) { return control.code === code; });
       result.push({ xpos:0, ypos:(1 + idx)/(incoming.length + 1), code:code });
     });
     
     outgoing.forEach(function(code, idx) {
-      var control = controls.find(function(control) { return control.code === code; });
       result.push({ xpos:2, ypos:(1 + idx)/(outgoing.length + 1), code:code });
     });
     

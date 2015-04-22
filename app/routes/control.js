@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { parseRanking } from 'olana/utils/parser';
 
 export default Ember.Route.extend({
   

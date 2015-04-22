@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 export default {
   name: 'my-back-button',
   initialize: function(container, app) {

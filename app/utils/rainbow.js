@@ -101,9 +101,9 @@ function ColourGradient()
 
 	this.colourAt = function (number)
 	{
-		return calcHex(number, startColour.substring(0,2), endColour.substring(0,2)) 
-			+ calcHex(number, startColour.substring(2,4), endColour.substring(2,4)) 
-			+ calcHex(number, startColour.substring(4,6), endColour.substring(4,6));
+		return calcHex(number, startColour.substring(0,2), endColour.substring(0,2)) + 
+		    calcHex(number, startColour.substring(2,4), endColour.substring(2,4)) + 
+		    calcHex(number, startColour.substring(4,6), endColour.substring(4,6));
 	};
 	
 	function calcHex(number, channelStart_Base16, channelEnd_Base16)
@@ -121,7 +121,7 @@ function ColourGradient()
 		var cPerUnit = (cEnd_Base10 - cStart_Base10)/numRange;
 		var c_Base10 = Math.round(cPerUnit * (num - minNum) + cStart_Base10);
 		return formatHex(c_Base10.toString(16));
-	};
+	}
 
 	var formatHex = function (hex) 
 	{

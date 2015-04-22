@@ -1,8 +1,7 @@
 /* global d3 */
 
 import Ember from 'ember';
-import { parseTime, formatTime } from 'olana/utils/time';
-import { median } from 'olana/utils/statistics';
+import { parseTime } from 'olana/utils/time';
 
 export default Ember.ObjectController.extend({
   
@@ -53,7 +52,7 @@ export default Ember.ObjectController.extend({
       return {
         name: category,
         checked: true
-      }
+      };
     });
   }.property('datapoints'),
   

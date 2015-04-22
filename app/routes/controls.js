@@ -1,8 +1,6 @@
 import Ember from 'ember';
-import config from '../config/environment';
 
 import { parseTime, formatTime } from 'olana/utils/time';
-import { median } from 'olana/utils/statistics';
 import { parseRanking } from 'olana/utils/parser';
 import { Rainbow } from 'olana/utils/rainbow';
 
@@ -15,7 +13,6 @@ export default Ember.Route.extend({
 
     categories.filter(function(cat) { return cat.runners.length > 0; }).forEach(function(cat) {
       var category = parseRanking(cat);
-      var controls = category.runners[0].splits.map(function(split) { return { code: split.code } });
       
       category.runners[0].splits.forEach(function(split, idx) {
         if (idx === 0) {
@@ -48,7 +45,7 @@ export default Ember.Route.extend({
               from: idx === 0 ? 'St' : runner.splits[idx - 1].code,
               to: idx === runner.splits.length - 1 ? 'Zi' : runner.splits[idx + 1].code,
               runners: [ ]
-            }
+            };
           }
           
           var cat = control.categories[category.name];
@@ -108,7 +105,7 @@ export default Ember.Route.extend({
     return result;
   },
   
-  model: function(params) {
+  model: function() {
     var event = this.modelFor('event');
     if (!event.controls) {
       event.controls = this.parseData(event);

@@ -10,16 +10,17 @@ function parseCategory(row) {
 
 function parseRunner(row) {
 	var headerLength = 15;
+	var i;
 	
 	var splits = [];
-	for (var i = headerLength; i < row.length; i += 2) {
+	for (i = headerLength; i < row.length; i += 2) {
 		splits.push([row[i], row[i + 1]]);
 	}
 	
 	// split cleanup - detect two following splits with identical time
 	// --> control not working properly; set 's' as split time (substitute)
 	// going from back to front to catch several not working controls
-	for (var i = splits.length - 1;  i > 0; i--) {
+	for (i = splits.length - 1;  i > 0; i--) {
 	  if (splits[i][1] === splits[i - 1][1] && splits[i][1] !== '-') {
 	    splits[i][1] = 's';
 	  }

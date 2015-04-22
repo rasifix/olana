@@ -1,7 +1,7 @@
 /* global d3 */
 
 import Ember from 'ember';
-import { parseTime, formatTime } from 'olana/utils/time';
+import { parseTime } from 'olana/utils/time';
 import { groupBy } from 'olana/utils/statistics';
 
 
@@ -59,10 +59,8 @@ export default Ember.Component.extend({
     var data = this.get('data');    
     var svg = d3.select(this.get('element'));
 
-    var height = this.get('height');
     var xscale = this.get('xscale');
     var yscale = this.get('yscale');
-    var groupFactor = this.get('groupFactor');
     
     var self = this;
     
@@ -72,21 +70,6 @@ export default Ember.Component.extend({
     var trendlines = [ this.get('trendline') ];
     var path = svg.selectAll("path.trendline").data(trendlines);
     
-    var halfGroup = Math.abs(xscale(0 + groupFactor / 2)) - Math.abs(xscale(0));
-    var interpolator = function(points) {
-      var path = "";
-      for (var i = 0; i < points.length - 1; i++) {
-        var x = points[i][0];
-        var y = points[i][1];
-        if (i > 0) {
-          path += 'M' + crisp(x - halfGroup) + ',' + y;
-        } else {
-          path += crisp(x - halfGroup) + ',' + y;
-        }
-        path += 'L' + crisp(x + halfGroup) + ',' + y;
-      }
-      return path;
-    };
     var lineFunction = d3.svg.line().x(function(d) { return d.x; })
                                     .y(function(d) { return d.y; })
                                     .interpolate('linear');
@@ -112,7 +95,7 @@ export default Ember.Component.extend({
     }).on('mouseover', function(point) {
       self.set('hover', point);
       self.sendAction('runnerOver', point);
-    }).on('mouseout', function(point) {
+    }).on('mouseout', function(/*point*/) {
       self.set('hover', null);
     }).attr('opacity', 0)  
       .attr("fill", function(point) { return point.sex === 'M' ? 'dodgerblue' : 'darkorchid'; });
@@ -147,7 +130,6 @@ export default Ember.Component.extend({
   },
   
   updateHGrid: function(svg) {
-    var x = this.get('xscale');
     var y = this.get('yscale');
             
     var hline = svg.selectAll("line.hgrid").data(y.ticks());

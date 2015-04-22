@@ -42,7 +42,7 @@ export function parseRanking(json) {
     };
   });
       
-  result.runners = json.runners.map(function(runner, idx) {
+  result.runners = json.runners.map(function(runner) {
     return Runner.create({
       id: runner.id,
       fullName: runner.fullName,

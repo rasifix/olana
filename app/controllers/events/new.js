@@ -156,11 +156,11 @@ export default Ember.ObjectController.extend({
         url: config.APP.API_HOST + 'api/events/' + id,
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(content),
-        success: function(data) {
+        success: function() {
           that.transitionToRoute('event.index', 'zimaa', id);
         },
         error: function(err) {
-          console.log('ERROR')
+          console.log('ERROR');
           console.log(err);
         }
       });

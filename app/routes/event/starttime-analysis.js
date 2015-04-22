@@ -1,22 +1,10 @@
-/* global d3 */
-
 import Ember from 'ember';
-import config from '../../config/environment';
-import { parseTime, formatTime } from 'olana/utils/time';
+import { parseTime } from 'olana/utils/time';
 
 export default Ember.Route.extend({
   
   parseData: function(event) {
-    var parseTimeHM = function(str) {
-      if (!str) {
-        return null;
-      }
-      var split = str.split(":");
-      return parseInt(split[0], 10) * 3600 + parseInt(split[1], 10) * 60;
-    };
-
     var result = { categories: [ ] };
-    var start = parseTimeHM(event.startTime);
 
     event.categories.forEach(function(category) {
       var cat = { name: category.name, runners: [] };
@@ -50,7 +38,7 @@ export default Ember.Route.extend({
     return result;
   }, 
   
-  model: function(params) {
+  model: function() {
     var event = this.modelFor('event');
     return this.parseData(event);
   },

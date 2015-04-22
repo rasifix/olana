@@ -25,7 +25,6 @@ export default Ember.Component.extend({
 
   title: function() {
     var controllers = this.get('controllers');
-    var defaultPaths = this.get('pathNames');
 
     for (var idx = controllers.length - 1; idx >= 0; idx--) {
       var title = controllers[idx].get('name');
