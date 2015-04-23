@@ -11,7 +11,7 @@ function reverse(s) {
   return s.split("").reverse().join("");
 }
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   title: 'Unknown Event',
   map: 'Unknown Map',
   date: '2014-09-09',

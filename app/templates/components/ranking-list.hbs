@@ -1,5 +1,5 @@
 <tbody>
- {{#each runner in runners}}
+ {{#each runners as |runner|}}
   {{ranking-entry runner=runner runnerRoute=runnerRoute action="runnerClicked"}}
  {{/each}}
 </tbody>

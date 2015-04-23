@@ -9,8 +9,8 @@
 		<span style="display:inline-block">Gruppierung: {{input type="range" min="1" max="60" step="1" value=groupBy}} {{groupBy}} Minuten</span>
 		</div>
 		
-		{{#each category in availableCategories}}
-      <span style="display:inline-block; width: 60px">{{input type="checkbox" checkedBinding="category.checked"}} {{category.name}}</span>
+		{{#each availableCategories as |category|}}
+      <span style="display:inline-block; width: 60px">{{input type="checkbox" checked=category.checked}} {{category.name}}</span>
 		{{/each}}
 		
 		<br />

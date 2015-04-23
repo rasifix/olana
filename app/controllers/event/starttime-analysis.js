@@ -3,7 +3,7 @@
 import Ember from 'ember';
 import { parseTime } from 'olana/utils/time';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   
   backRoute: 'event',
   
@@ -28,7 +28,7 @@ export default Ember.ObjectController.extend({
   
   datapoints: function() {
     var result = [];
-    var categories = this.get('categories');
+    var categories = this.get('model.categories');
     categories.forEach(function(category) {
       var times = category.runners.slice(0, Math.min(category.runners.length, 5)).map(function(runner) { return parseTime(runner.time); });
       var idealtime = d3.sum(times) / times.length;

@@ -3,7 +3,7 @@
  <p>Diese Seite zeigt alle Posten an und sortiert sie aufgrund der Fehlerh&auml;ufigkeit. Damit ist erkennbar, welche
     Posten grosse Probleme gemacht haben und welche eher einfacher waren.</p>
  <ul class="event-list">
-  {{#each control in controls}}
+  {{#each model.controls as |control|}}
     <li {{action 'controlClicked' control.code}}>{{#link-to 'control' control.code}}{{control.code}}{{/link-to}}<div style="position:absolute; left:45px; top:11px"><div {{bind-attr style=control.style}}>&nbsp;</div><span class="mute">{{control.errorFrequency}}%</span></div><span class="pull-right mute">{{control.cats}}</span></li>
   {{/each}}
  </ul>

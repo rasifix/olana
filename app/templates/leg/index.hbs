@@ -1,6 +1,6 @@
   <table class="ranking-table">
    <tbody>
-    {{#each runner in data}}
+    {{#each model.data as |runner|}}
     <tr>
       <td>{{runner.rank}}.</td>
       <td>{{#link-to 'category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>

@@ -5,7 +5,6 @@ export default Ember.Route.extend({
   model: function(params) {
     var source = params['source'];
     var id = params['event_id'];
-    console.log('getting event ' + id + ' from ' + source);
     var repository = this.get('repository');
     return repository.getEvent(source, id);
   },

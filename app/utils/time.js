@@ -5,7 +5,11 @@ var pad = function(str) {
 export function parseTime(str) {
   if (!str) {
     return null;
-  } else if (str === 'Po.fal' || str === 'P.fehl' || str === 'aufgeg.') {
+  } else if (str === 'Po.fal' || str === 'P.fehl' || str === 'aufgeg.' || str === 'fehl') {
+    return null;
+  }
+  if (!str.split) {
+    console.error("WTF no string split?!");
     return null;
   }
   var split = str.split(":");

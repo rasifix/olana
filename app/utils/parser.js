@@ -19,7 +19,6 @@ export function parseRanking(json) {
         time: split[1]
       };
     });
-    
     // add split time to finish
     runner.splits.push({
       code: 'Zi',
@@ -111,7 +110,7 @@ export function parseRanking(json) {
   // calculate the ideal time [s]
   if (result.legs.length > 0) {
     result.idealTime = result.legs.map(function(leg) { return leg.idealSplit; }).reduce(sum);
-  
+    
     // visualization property - leg.position [0..1), leg.weight[0..1)
     result.legs.forEach(function(leg, idx) {
       leg.weight = leg.idealSplit / result.idealTime;
@@ -170,7 +169,7 @@ export function parseRanking(json) {
       }
     });
     return arr;
-  };
+  };  
   
   result.legs.forEach(function(leg, idx) {
     // get all the splits for the current leg
@@ -229,15 +228,15 @@ export function parseRanking(json) {
     // calculate overall time behind leader
     runner.splits.forEach(function(split, splitIdx) {
       if (!invalidTime(split.time)) {
-        var leader = result.runners.map(function(runner) {
+        var leader = result.runners.map(function(r) {
           return {
-            time: runner.splits[splitIdx].time,
-            rank: runner.splits[splitIdx].overallRank
+            time: r.splits[splitIdx].time,
+            rank: r.splits[splitIdx].overallRank
           };
         }).find(function(split) {
           return split.rank === 1;
         });
-
+        
         // no leader for this leg?!
         if (leader) {
           var leaderTime = leader.time;

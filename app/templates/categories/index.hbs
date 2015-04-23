@@ -1,6 +1,6 @@
 <div class="grid12">
 <ul class="event-list">
-  {{#each category in categories}}
+  {{#each model.categories as |category|}}
   <li {{action 'categoryClicked' category.name}}>
     {{#link-to 'category' category.name}}
     {{category.name}}

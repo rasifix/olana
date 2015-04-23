@@ -1,6 +1,6 @@
  <div class="grid12">
   <ul class="event-list">
-    {{#each event in model}}
+    {{#each model as |event|}}
 	  <li {{action 'eventClicked' event.source event.id}}>
 	    <span class="date">{{event.date}}</span>
 	    {{#link-to 'event' event.source event.id}}{{event.name}}{{/link-to}}

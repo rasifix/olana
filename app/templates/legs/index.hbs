@@ -1,7 +1,7 @@
 <div class="grid12">
 
 <ul class="event-list">
-{{#each leg in legs}}
+{{#each model.legs as |leg|}}
  <li {{action 'legClicked' leg.id}}>
   {{#link-to 'leg' leg.id}}
   {{leg.id}} 

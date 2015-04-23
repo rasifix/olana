@@ -50,13 +50,13 @@ function defineCourses(categories) {
   var courses = [];
   Object.keys(groupedCategories).forEach(function(grouped) {
     var cats = groupedCategories[grouped];
+    var idx = 0;
     courses.push({ 
       id: cats.map(function(cat) { return cat.name; }).sort().join('-'),
       distance: cats[0].distance,
       ascent: cats[0].ascent,
       controls: cats[0].controls,
       runners: cats.reduce(function(prev, cat) { 
-        var idx = 0;
         return prev.concat(cat.runners.map(function(runner) {
           return {
             id: idx++,

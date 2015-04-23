@@ -92,6 +92,7 @@ export default Ember.Route.extend({
       colors.setSpectrum('green', 'yellow', 'orange', 'red');
       if (control.errorFrequency) {
         control.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(control.errorFrequency) + '; color:white; text-align:right; width:' + control.errorFrequency * 4 + 'px';
+        control.style = control.style.htmlSafe();
       } else {
         console.log('no error frequency for control ' + code);
       }

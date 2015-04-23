@@ -1,4 +1,4 @@
-<td width="20">{{#if runner.valid}}{{input type="checkbox" checkedBinding="runner.checked"}}{{/if}}</td>
+<td width="20">{{#if runner.valid}}{{input type="checkbox" checked=runner.checked}}{{/if}}</td>
 <td width="20" align="right">{{#if runner.rank}}{{runner.rank}}.{{/if}}</td>
 <td>{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</td>
 <td>{{runner.yearOfBirth}}</td>

@@ -190,7 +190,7 @@ export default Ember.Component.extend({
       path.push('M', xpos, ',', this.get('padding').top, 'V', this.get('height') - this.get('padding').bottom);
     }
     return path.join('');
-  }.property("legs").cacheable(),
+  }.property("legs"),
   
   xScale: function() {
     return d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right]);

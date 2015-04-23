@@ -1,22 +1,22 @@
-<h3>Posten {{code}}</h3>
+<h3>Posten {{model.code}}</h3>
 
 <h4>Kategorien</h4>
 <ul class="event-list">
-{{#each category in categories}}
+{{#each model.categories as |category|}}
   <li>{{#link-to 'category' category.name}}{{category.name}}{{/link-to}} <span class="badge pull-right">{{category.runners.length}}</span></li>
 {{/each}}
 </ul>
 
 <h4>Eingehende Strecken</h4>
 <ul class="event-list">
-{{#each from in fromControls}}
+{{#each controller.fromControls as |from|}}
   <li>{{#link-to 'leg' from.leg}}{{from.leg}}{{/link-to}} / {{#link-to 'control' from.from}}{{from.from}}{{/link-to}}</li>
 {{/each}}
 </ul>
 
 <h4>Ausgehende Strecken</h4>
 <ul class="event-list">
-{{#each to in toControls}}
+{{#each controller.toControls as |to|}}
   <li>{{#link-to 'leg' to.leg}}{{to.leg}}{{/link-to}} / {{#link-to 'control' to.to}}{{to.to}}{{/link-to}}</li>
 {{/each}}
 </ul>

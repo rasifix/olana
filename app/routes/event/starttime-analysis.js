@@ -21,7 +21,6 @@ export default Ember.Route.extend({
         }
         var point = {
           id: runner.id,
-          //startTime: formatTime(/*start + */parseTime(runner.startTime)),
           startTime: runner.startTime,
           time: runner.time,
           rank: pos,

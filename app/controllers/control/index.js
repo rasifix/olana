@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   
   fromControls: function() {
-    var categories = this.get('categories');
-    var code = this.get('code');
+    var categories = this.get('model.categories');
+    var code = this.get('model.code');
     var result = { };
     categories.forEach(function(category) {
       if (!result[category.from]) {
@@ -12,11 +12,11 @@ export default Ember.ObjectController.extend({
       }
     });
     return Object.keys(result).map(function(key) { return result[key]; });
-  }.property('categories.[]'),
+  }.property('model.categories.[]'),
   
   toControls: function() {
-    var categories = this.get('categories');
-    var code = this.get('code');
+    var categories = this.get('model.categories');
+    var code = this.get('model.code');
     var result = { };
     categories.forEach(function(category) {
       if (!result[category.to]) {
@@ -24,6 +24,6 @@ export default Ember.ObjectController.extend({
       }
     });
     return Object.keys(result).map(function(key) { return result[key]; });
-  }.property('categories.[]')
+  }.property('model.categories.[]')
   
 });
