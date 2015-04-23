@@ -1,7 +1,7 @@
 {
   "name": "olana",
   "version": "0.0.0",
-  "description": "Small description for olana goes here",
+  "description": "OL Split Analyzer",
   "private": true,
   "directories": {
     "doc": "doc",
