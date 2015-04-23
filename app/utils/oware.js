@@ -27,8 +27,7 @@ function parseRunner(row) {
 	}
 			
 	return {
-		name: row[1],
-		firstName: row[2],
+    fullName: row[2] + ' ' + row[1],
 		yearOfBirth: row[3],
 		sex: row[4],
 		club: row[8],
