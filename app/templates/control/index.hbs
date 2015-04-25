@@ -10,13 +10,13 @@
 <h4>Eingehende Strecken</h4>
 <ul class="event-list">
 {{#each controller.fromControls as |from|}}
-  <li>{{#link-to 'leg' from.leg}}{{from.leg}}{{/link-to}} / {{#link-to 'control' from.from}}{{from.from}}{{/link-to}}</li>
+  <li>{{#link-to 'leg' from.leg}}{{from.leg}}{{/link-to}} (von Posten {{#link-to 'control' from.from}}{{from.from}}{{/link-to}})</li>
 {{/each}}
 </ul>
 
 <h4>Ausgehende Strecken</h4>
 <ul class="event-list">
 {{#each controller.toControls as |to|}}
-  <li>{{#link-to 'leg' to.leg}}{{to.leg}}{{/link-to}} / {{#link-to 'control' to.to}}{{to.to}}{{/link-to}}</li>
+  <li>{{#link-to 'leg' to.leg}}{{to.leg}}{{/link-to}} (zu Posten {{#link-to 'control' to.to}}{{to.to}}{{/link-to}})</li>
 {{/each}}
 </ul>

@@ -1,19 +1,21 @@
- <div class="grid12">
+<div class="grid12">
+ <h3>Bahnen</h3>
+ <p>Diese Seite zeigt alle Bahnen an. Dies erlaubt den Vergleich mit Läufern von anderen Kategorien mit der gleichen Bahn.</p>
 
-<ul class="event-list">
-{{#each model.courses as |course|}}
- <li {{action 'courseClicked' course.id}}>
-  {{#link-to 'course' course.id}}
-  {{course.id}} 
-  {{/link-to}}
-  <div class="pull-right">
-    <span class="mute">{{course.distance}}m</span>
-    <span class="mute">{{course.ascent}}m</span>
-    <span class="mute">{{course.controls}} Posten</span>
-  	<span class="badge">{{course.runners.length}}</span> 
-  </div>
- </li>
-{{/each}}
-</ul>
+ <ul class="event-list">
+ {{#each model.courses as |course|}}
+  <li {{action 'courseClicked' course.id}}>
+   {{#link-to 'course' course.id}}
+   {{course.id}} 
+   {{/link-to}}
+   <div class="pull-right">
+     <span class="mute">{{course.distance}}m</span>
+     <span class="mute">{{course.ascent}}m</span>
+     <span class="mute">{{course.controls}} Posten</span>
+   	 <span class="badge">{{course.runners.length}}</span> 
+   </div>
+  </li>
+ {{/each}}
+ </ul>
 
- </div>
+</div>

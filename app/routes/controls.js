@@ -12,7 +12,7 @@ export default Ember.Route.extend({
     var all = { };
 
     categories.filter(function(cat) { return cat.runners.length > 0; }).forEach(function(cat) {
-      var category = parseRanking(cat);
+      var category = parseRanking(JSON.parse(JSON.stringify(cat)));
       
       category.runners[0].splits.forEach(function(split, idx) {
         if (idx === 0) {
@@ -99,7 +99,7 @@ export default Ember.Route.extend({
       control.cats = control.categories.map(function(cat) { return cat.name; }).join(',');
       result.push(control);
     });
-    result.sort(function(c1, c2) {
+    result = result.filter(function(c) { return c.errorFrequency > 0; }).sort(function(c1, c2) {
       return c2.errorFrequency - c1.errorFrequency;
     });
     

@@ -11,21 +11,6 @@ function sum(a1, a2) {
 }
 
 export function parseRanking(json) {
-  // transform data structure from wire-optimal to code-optimal
-  json.runners.forEach(function(runner) {
-    runner.splits = runner.splits.map(function(split) {
-      return {
-        code: split[0],
-        time: split[1]
-      };
-    });
-    // add split time to finish
-    runner.splits.push({
-      code: 'Zi',
-      time: runner.time
-    });
-  });
-  
   var result = {
     name: json.name,
     distance: json.distance,

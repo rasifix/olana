@@ -51,8 +51,10 @@ function defineCourses(categories) {
   Object.keys(groupedCategories).forEach(function(grouped) {
     var cats = groupedCategories[grouped];
     var idx = 0;
+    var id = cats.map(function(cat) { return cat.name; }).sort().join('-');
     courses.push({ 
-      id: cats.map(function(cat) { return cat.name; }).sort().join('-'),
+      id: id,
+      name: id,
       distance: cats[0].distance,
       ascent: cats[0].ascent,
       controls: cats[0].controls,
@@ -152,8 +154,8 @@ function defineLegs(categories) {
       var lastControl = 'St';
       
       runner.splits.forEach(function(split) {
-        var control = split[0];
-        var time = split[1];
+        var control = split.code;
+        var time = split.time;
         var code = lastControl + '-' + control;
         if (!legs[code]) {
           legs[code] = {
@@ -235,6 +237,24 @@ export default Ember.Object.extend({
 
       // correct sort order of categories (so sort order is always the same)
       time('fetchEvent.' + id + '.prepare');
+      
+      // transform data structure from wire-optimal to code-optimal
+      data.categories.forEach(function(category) {
+        category.runners.forEach(function(runner) {
+          runner.splits = runner.splits.map(function(split) {
+            return {
+              code: split[0],
+              time: split[1]
+            };
+          });
+          // add split time to finish
+          runner.splits.push({
+            code: 'Zi',
+            time: runner.time
+          });
+        });
+      });    
+      
       data.categories = data.categories.sort(categorySort);
       data.courses = defineCourses(data.categories);
       data.legs = defineLegs(data.categories);

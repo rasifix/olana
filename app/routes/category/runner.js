@@ -13,6 +13,8 @@ export default Ember.Route.extend({
       this.transitionTo('category');
     }
     
+    console.log(runner.splits.map(function(split) { return split.code; }));
+      
     return {
       id: runner.get('id'),
       fullName: runner.get('fullName'),

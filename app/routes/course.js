@@ -11,6 +11,10 @@ export default Ember.Route.extend({
         return course;
       }
     });
+    if (!course) {
+      this.transitionTo('courses');
+      return;
+    }
     return parseRanking(course);
   },
   

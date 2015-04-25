@@ -12,6 +12,10 @@ export default Ember.Route.extend({
         return category;
       }
     });
+    if (!category) {
+      this.transitionTo('categories');
+      return;
+    }
     return parseRanking(category);
   },
   
