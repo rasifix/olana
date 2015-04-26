@@ -3,12 +3,14 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   
   model: function(params) {
+    var runnerId = parseInt(params['runner_id'], 10);
     var course = this.modelFor('course');    
     var runners = course.runners;
-    var runner = runners[parseInt(params['runner_id'], 10)];
+    var runner = runners.find(function(runner) { return runner.id === runnerId; });
     
     if (!runner) {
       this.transitionTo('course');
+      return;
     }
 
     return {
