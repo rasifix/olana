@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
   filteredControls: function() {
     var selection = this.get('selectedCategory');
     var result = this.get('model.controls');
-    if (selection && selection != null && selection !== "null") {
+    if (selection && selection !== null && selection !== "null") {
       result = result.filter(function(control) {
         return control.cats.indexOf(selection) != -1;
       });

@@ -1,7 +1,14 @@
 <div class="grid12">
 
+<div class="pull-right">
+ {{view "select" content=categories
+	                optionLabelPath="content"
+	                optionValuePath="content"
+	                prompt="Category:"
+	                selection=selectedCategory}}
+</div>
 <ul class="event-list">
-{{#each model.legs as |leg|}}
+{{#each filteredLegs as |leg|}}
  <li {{action 'legClicked' leg.id}}>
   {{#link-to 'leg' leg.id}}
   {{leg.id}} 

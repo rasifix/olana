@@ -5,7 +5,8 @@ export default Ember.Route.extend({
   model: function() {
     var event = this.modelFor('event');
     return {
-      legs: event.legs
+      legs: event.legs,
+      categories: event.categories
     };
   },
   
