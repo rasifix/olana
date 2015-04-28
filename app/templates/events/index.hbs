@@ -4,6 +4,7 @@
 	  <li {{action 'eventClicked' event.source event.id}}>
 	    <span class="date">{{event.date}}</span>
 	    {{#link-to 'event' event.source event.id}}{{event.name}}{{/link-to}}
+	    <span class="mute">{{event.subtitle}}</span>
 	    <div class="pull-right">
   	    <span class="mute">{{event.map}}</span>
       </div>
