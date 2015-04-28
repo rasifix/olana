@@ -206,11 +206,18 @@ function timeEnd(name) {
 
 export default Ember.Object.extend({
   
+  cache: null,
+  
   getEvents: function() {
     time('fetchEvents');
+    if (this.cache) {
+      return this.cache;
+    }
+    var that = this;
     return $.get(config.APP.API_HOST + 'api/events').then(function(data) {
       timeEnd('fetchEvents');
-      return data.events;
+      that.cache = data.events;
+      return that.cache;
     });
   },
   
