@@ -1,5 +1,5 @@
 <div class="grid12">
-<ul class="event-list">
+ <ul class="event-list">
   {{#each model.categories as |category|}}
   <li {{action 'categoryClicked' category.name}}>
     {{#link-to 'category' category.name}}
@@ -14,5 +14,5 @@
     </div>
   </li>
   {{/each}}
-</ul>
+ </ul>
 </div>

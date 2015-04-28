@@ -109,7 +109,7 @@ function defineCourses(categories) {
 }
 
 function isValid(value) {
-  return value !== '-' && value !== 's';
+  return value !== '-' && value !== 's' && parseTime(value) !== null;
 }
 
 function controlOrdinal(id) {
@@ -174,22 +174,6 @@ function defineLegs(categories) {
         lastControl = control;
         lastTime = time;
       });
-    
-      if (lastSplit !== null) {
-        var ziCode = lastControl + '-' + 'Zi';
-        if (!legs[ziCode]) {
-          legs[ziCode] = {
-            id: ziCode,
-            categories: { },
-            runners: []
-          };
-        }
-        if (isValid(lastTime) && parseTime(runner.time)) {
-          var ziTime = parseTime(runner.time) - parseTime(lastTime);
-          legs[ziCode].runners.push(createRankingEntry(runner, category.name, ziTime));
-          legs[ziCode].categories[category.name] = true;
-        }
-      }
     });
   });
   

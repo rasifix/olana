@@ -9,12 +9,10 @@ export default Ember.Route.extend({
     var runner = runners.find(function(runner) { return runner.id === id; });
 
     if (!runner) {
-      console.warn('no runner found with id ' + params['runner_id']);
       this.transitionTo('category');
+      return;
     }
-    
-    console.log(runner.splits.map(function(split) { return split.code; }));
-      
+          
     return {
       id: runner.get('id'),
       fullName: runner.get('fullName'),

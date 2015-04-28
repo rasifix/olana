@@ -1,7 +1,4 @@
 <div class="grid12">
- <h3>Bahnen</h3>
- <p>Diese Seite zeigt alle Bahnen an. Dies erlaubt den Vergleich mit Läufern von anderen Kategorien mit der gleichen Bahn.</p>
-
  <ul class="event-list">
  {{#each model.courses as |course|}}
   <li {{action 'courseClicked' course.id}}>
