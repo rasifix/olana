@@ -10,7 +10,12 @@
  </div>
  <ul class="event-list">
   {{#each filteredControls as |control|}}
-    <li {{action 'controlClicked' control.code}}>{{#link-to 'control' control.code}}{{control.code}}{{/link-to}}<div style="position:absolute; left:45px; top:11px"><div {{bind-attr style=control.style}}>&nbsp;</div><span class="mute">{{control.errorFrequency}}%</span></div><span class="pull-right mute">{{control.cats}}</span></li>
+    <li {{action 'controlClicked' control.code}}>{{#link-to 'control' control.code}}{{control.code}}{{/link-to}}<div style="position:absolute; left:45px; top:11px"><div {{bind-attr style=control.style}}>&nbsp;</div><span class="mute">{{control.errorFrequency}}%</span></div>
+     <div class="pull-right">
+      <span class="mute">{{control.cats}}</span>
+      <span class="badge">{{control.runners}}</span>
+     </div>
+    </li>
   {{/each}}
  </ul>
 </div>

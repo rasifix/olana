@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
     var code = this.get('model.code');
     var result = { };
     categories.forEach(function(category) {
-      if (!result[category.to]) {
+      if (!result[category.to] && code !== 'Zi') {
         result[category.to] = { to: category.to, leg: code + '-' + category.to };
       }
     });

@@ -225,9 +225,15 @@ export function parseRanking(json) {
         // no leader for this leg?!
         if (leader) {
           var leaderTime = leader.time;
-          split.overallBehind = formatTime(parseTime(split.time) - parseTime(leaderTime));
-          split.fastestBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].fastestTime));
-          split.idealBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].idealTime));
+          if (parseTime(split.time) !== null) {
+            split.overallBehind = formatTime(parseTime(split.time) - parseTime(leaderTime));
+            split.fastestBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].fastestTime));
+            split.idealBehind = formatTime(parseTime(split.time) - parseTime(result.legs[splitIdx].idealTime));
+          } else {
+            split.overallBehind = '-';
+            split.fastestBehind = '-';
+            split.idealBehind = '-';
+          }
         }
       }
     });

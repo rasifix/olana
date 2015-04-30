@@ -3,6 +3,7 @@ import Ember from 'ember';
 import { parseTime, formatTime } from 'olana/utils/time';
 import { parseRanking } from 'olana/utils/parser';
 import { Rainbow } from 'olana/utils/rainbow';
+import log from 'olana/utils/log';
 
 export default Ember.Route.extend({
   
@@ -20,11 +21,7 @@ export default Ember.Route.extend({
         } else if (idx <= category.runners[0].splits.length - 1) {
           var prev = category.runners[0].splits[idx - 1];
           legs[prev.code + '-' + split.code] = { source: prev.code, target: split.code };
-        } 
-        
-        if (idx === category.runners[0].splits.length - 1) {
-          legs[split.code + '-' + 'Zi'] = { source: split.code, target: 'Zi' };
-        }
+        }         
       });
       
       category.runners.forEach(function(runner) {
@@ -43,7 +40,7 @@ export default Ember.Route.extend({
             control.categories[category.name] = {
               name: category.name,
               from: idx === 0 ? 'St' : runner.splits[idx - 1].code,
-              to: idx === runner.splits.length - 1 ? 'Zi' : runner.splits[idx + 1].code,
+              to: runner.splits[idx].code,
               runners: [ ]
             };
           }
@@ -86,6 +83,7 @@ export default Ember.Route.extend({
           }
         });
       });
+      control.runners = control.categories.map(function(category) { return category.runners.length; }).reduce(function(r1, r2) { return r1 + r2; });
       control.errorFrequency = Math.round(errors / total * 100);
       
       var colors = new Rainbow();
@@ -94,7 +92,7 @@ export default Ember.Route.extend({
         control.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(control.errorFrequency) + '; color:white; text-align:right; width:' + control.errorFrequency * 4 + 'px';
         control.style = control.style.htmlSafe();
       } else {
-        console.log('no error frequency for control ' + code);
+        log('no error frequency for control ' + code);
       }
       control.cats = control.categories.map(function(cat) { return cat.name; }).join(',');
       result.push(control);
@@ -116,7 +114,7 @@ export default Ember.Route.extend({
   
   actions: {
     controlClicked: function(code) {
-      console.log('control clicked: ' + code);
+      
     }
   }
 
