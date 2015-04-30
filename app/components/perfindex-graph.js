@@ -35,7 +35,7 @@ export default Ember.Component.extend({
     var yscale = this.get('yscale');
                 
     var bars = svg.selectAll("rect").data(data);
-    bars.enter().append("rect").on('mouseover', function(entry) { console.log(entry.key + '%'); });
+    //bars.enter().append("rect").on('mouseover', function(entry) { console.log(entry.key + '%'); });
 
     bars.transition()
         .attr("x", function(entry) { return xscale(entry.key); })

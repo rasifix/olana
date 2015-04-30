@@ -9,7 +9,6 @@ export function parseTime(str) {
     return null;
   }
   if (!str.split) {
-    console.error("WTF no string split?!");
     return null;
   }
   var split = str.split(":");

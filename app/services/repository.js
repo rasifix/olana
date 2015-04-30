@@ -193,13 +193,13 @@ function defineLegs(categories) {
 }
 
 function time(name) {
-  if (console.time) {
+  if (typeof console !== 'undefined' && console.time) {
     console.time(name);
   }
 }
 
 function timeEnd(name) {
-  if (console.timeEnd) {
+  if (typeof console !== 'undefined' && console.timeEnd) {
     console.timeEnd(name);
   }
 }

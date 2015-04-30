@@ -9,8 +9,8 @@ export default Ember.Route.extend({
     var runner = category.runners.find(function(runner) { return runner.id === id; });
     
     if (!runner) {
-      console.warn('no runner found with id ' + params['runner_id']);
       this.transitionTo('category');
+      return;
     }
     
     // select box values (all except the current runner)

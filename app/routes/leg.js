@@ -14,7 +14,6 @@ export default Ember.Route.extend({
         return leg;
       }
     });
-    console.log(leg);
     return this.parseData(from, to, leg.runners);
   },
   

@@ -6,6 +6,7 @@ import config from '../../config/environment';
 import { parseKraemer } from 'olana/utils/kraemer';
 import { parseOWare } from 'olana/utils/oware';
 import { formatTime, parseTime } from 'olana/utils/time';
+import log from 'olana/utils/log';
 
 function reverse(s) {
   return s.split("").reverse().join("");
@@ -68,7 +69,6 @@ export default Ember.Controller.extend({
           var splits = runner.splits;
           
           if (controls[0] !== splits[0][0]) {
-            console.log('invalid');
             return;
           }
           
@@ -86,7 +86,6 @@ export default Ember.Controller.extend({
             });
             
             if (!nsplit) {
-              console.log('invalid split');
               return;
             }
             
@@ -160,8 +159,8 @@ export default Ember.Controller.extend({
           that.transitionToRoute('event.index', 'zimaa', id);
         },
         error: function(err) {
-          console.log('ERROR');
-          console.log(err);
+          // TODO: handle error
+          log(err);
         }
       });
     }
