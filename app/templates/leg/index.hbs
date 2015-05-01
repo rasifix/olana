@@ -2,13 +2,13 @@
    <tbody>
     {{#each model.data as |runner|}}
     <tr>
-      <td>{{runner.rank}}.</td>
+      <td>{{runner.splitRank}}.</td>
       <td>{{#link-to 'category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>
       <td>{{runner.yearOfBirth}}</td>
       <td>{{runner.club}}</td>
+      <td>{{runner.city}}</td>
       <td>{{runner.split}}</td>
-      <td>{{runner.behind}}</td>
-      <td>{{runner.timeLoss}}</td>
+      <td>{{runner.splitBehind}}</td>
       <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
     </tr>
     {{/each}}

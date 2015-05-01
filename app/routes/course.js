@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { parseRanking } from 'olana/utils/parser';
+import log from 'olana/utils/log';
 
 export default Ember.Route.extend({
     
@@ -20,7 +21,8 @@ export default Ember.Route.extend({
   
   actions: {
     onlegclick: function(leg) {
-      this.transitionTo('leg', leg.leg);
+      log(leg);
+      //this.transitionTo('leg', leg.leg);
     }
   }
   

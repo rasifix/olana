@@ -21,20 +21,20 @@ export default Ember.Route.extend({
     var fastest = parseTime(ranking[0].split);
     ranking.forEach(function(entry, idx) {
       if (idx > 0) {
-        entry.behind = '+' + formatTime(parseTime(entry.split) - fastest);
+        entry.splitBehind = '+' + formatTime(parseTime(entry.split) - fastest);
       }
     });
     
     // calculate the rank
     ranking.forEach(function(entry, idx) {
       if (idx === 0) {
-        entry.rank = 1;
+        entry.splitRank = 1;
       } else {
         var prev = ranking[idx - 1];
         if (prev.split === entry.split) {
-          entry.rank = prev.rank;
+          entry.splitRank = prev.splitRank;
         } else {
-          entry.rank = idx + 1;
+          entry.splitRank = idx + 1;
         }
       }
     });

@@ -19,9 +19,10 @@ export function parseRanking(json) {
   };
   
   // define the legs
-  result.legs = json.runners[0].splits.map(function(split) {
+  result.legs = json.runners[0].splits.map(function(split, idx, splits) {
+    var from = idx === 0 ? 'St' : splits[idx - 1].code;
     return {
-      code: split.code,
+      code: from + '-' + split.code,
       runners: []
     };
   });
@@ -66,6 +67,10 @@ export function parseRanking(json) {
         result.legs[idx].runners.push({
           id: runner.id,
           fullName: runner.get('fullName'),
+          yearOfBirth: runner.get('yearOfBirth'),
+          club: runner.get('club'),
+          city: runner.get('city'),
+          category: runner.get('category'),
           split: split.split
         });
       }
@@ -89,6 +94,20 @@ export function parseRanking(json) {
     // only if there are valid splits for this leg
     if (leg.runners.length > 0) {
       leg.fastestSplit = parseTime(leg.runners[0].split);
+      leg.runners.slice(1).forEach(function(runner) {
+        runner.splitBehind = '+' + formatTime(parseTime(runner.split) - leg.fastestSplit);
+      });
+      
+      leg.runners[0].splitRank = 1;
+      leg.runners.forEach(function(runner, idx, arr) {
+        if (idx > 0) {
+          if (runner.split === arr[idx - 1].split) {
+            runner.splitRank = arr[idx - 1].splitRank;
+          } else {
+            runner.splitRank = idx + 1;
+          }
+        }
+      });
     }
   });
 
