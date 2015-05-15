@@ -33,6 +33,7 @@ Router.map(function() {
         
       });
     });
+    this.resource('runners', function() { });
   });
 });
 

@@ -1,0 +1,15 @@
+<div class="grid12">
+ <table class="ranking-table">
+  <tbody>
+   {{#each model.runners as |runner|}}
+   <tr>
+    <td>{{#link-to 'category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>
+    <td>{{runner.yearOfBirth}}</td>
+    <td>{{runner.city}}</td>
+    <td>{{runner.club}}</td>
+    <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
+   </tr>
+   {{/each}}
+  </tbody>
+ </table>
+</div>

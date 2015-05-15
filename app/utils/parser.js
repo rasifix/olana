@@ -17,7 +17,7 @@ export function parseRanking(json) {
     ascent: json.ascent,
     controls: json.controls
   };
-  
+
   // define the legs
   result.legs = json.runners[0].splits.map(function(split, idx, splits) {
     var from = idx === 0 ? 'St' : splits[idx - 1].code;
@@ -26,7 +26,7 @@ export function parseRanking(json) {
       runners: []
     };
   });
-      
+  
   result.runners = json.runners.map(function(runner) {
     return Runner.create({
       id: runner.id,
