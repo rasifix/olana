@@ -24,8 +24,7 @@ export default Ember.Route.extend({
           startTime: runner.startTime,
           time: runner.time,
           rank: pos,
-          firstName: runner.firstName,
-          name: runner.name,
+          fullName: runner.fullName,
           sex: runner.sex,          
           category: category.name
         };
