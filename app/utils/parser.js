@@ -49,7 +49,7 @@ export function parseRanking(json) {
             splitTime = formatTime(parseTime(split.time) - parseTime(runner.splits[idx - 1].time));
           }
         }
-
+        
         return Split.create({
           number: idx + 1,
           code: split.code,
