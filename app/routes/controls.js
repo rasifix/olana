@@ -86,9 +86,9 @@ export default Ember.Route.extend({
       control.runners = control.categories.map(function(category) { return category.runners.length; }).reduce(function(r1, r2) { return r1 + r2; });
       control.errorFrequency = Math.round(errors / total * 100);
       
-      var colors = new Rainbow();
-      colors.setSpectrum('green', 'yellow', 'orange', 'red');
       if (control.errorFrequency) {
+        var colors = new Rainbow();
+        colors.setSpectrum('green', 'yellow', 'orange', 'red');
         control.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(control.errorFrequency) + '; color:white; text-align:right; width:' + control.errorFrequency * 4 + 'px';
         control.style = control.style.htmlSafe();
       } else {

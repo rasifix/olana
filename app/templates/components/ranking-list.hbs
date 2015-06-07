@@ -1,5 +1,29 @@
 <tbody>
  {{#each runners as |runner|}}
   {{ranking-entry runner=runner runnerRoute=runnerRoute action="runnerClicked"}}
+
+  {{#if runner.showSplits}}
+  <tr class="split-details">
+   <td>&nbsp;</td>
+   <td colspan="7">
+    <table style="width:100%">
+	  {{#each runner.splits as |split|}}
+     <tr style="border:none">
+      <td align="right">{{split.number}}</td>
+	    <td align="right">{{#link-to 'leg' split.leg}}{{split.code}}{{/link-to}}</td>
+	    <td align="right" title="Laufzeit">{{split.time}}</td>
+	    <td align="right" title="R&uuml;ckstand auf F&uuml;hrenden">{{split.overallBehind}}</td>
+	    <td align="right" title="Rang">{{#if split.overallRank}}({{split.overallRank}}.){{/if}}</td>
+	    <td align="right" title="Abschnitts Zeit">{{split.split}}</td>
+	    <td align="right" {{bind-attr title=split.timeLoss}} {{bind-attr class=view.errorClass}}>{{split.splitBehind}}</td>
+	    <td align="right" title="Abschnitts Rang">{{#if split.splitRank}}({{split.splitRank}}.){{/if}}</td>
+  	  <td align="right" title="Performance Index">{{#if split.perfidx}}{{split.perfidx}}%{{/if}}</td>
+	   </tr>
+	  {{/each}}
+	  </table>
+	 </td>
+  </tr>
+  {{/if}}
+
  {{/each}}
 </tbody>

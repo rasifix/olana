@@ -108,7 +108,7 @@ export function parseRanking(json) {
           }
         }
       });
-    }
+    }    
   });
 
   // calculate the ideal time [s]

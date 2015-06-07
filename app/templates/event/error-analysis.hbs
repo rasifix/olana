@@ -1,0 +1,17 @@
+<div class="content bodybox">
+  <div class="grid12">
+		
+		{{erroranalysis-graph buckets=buckets xdomain=xdomain ydomain=ydomain}}	
+   	
+		<div>
+		  {{#each availableCategories as |category|}}
+        <span style="display:inline-block; width: 60px">{{input type="checkbox" checked=category.checked}} {{category.name}}</span>
+		  {{/each}}
+		
+		  <br />
+		  <a href="javascript:return false;" {{action 'selectAll'}}>alle</a>
+	  	<a href="javascript:return false;" {{action 'selectNone'}}>keine</a>
+    </div>
+  </div>
+	<div class="clear"></div>
+</div>

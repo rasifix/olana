@@ -23,6 +23,10 @@ export default Ember.Route.extend({
     onlegclick: function(leg) {
       // FIXME: leg.leg is undefined (only leg.code exists which is a control)
       this.transitionTo('leg', leg.leg);
+    },
+    runnerClicked: function(runner) {
+      runner.set('showSplits', !runner.get('showSplits'));
+      console.log(runner);
     }
   }
 

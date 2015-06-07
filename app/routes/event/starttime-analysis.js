@@ -25,7 +25,7 @@ export default Ember.Route.extend({
           time: runner.time,
           rank: pos,
           fullName: runner.fullName,
-          sex: runner.sex,          
+          sex: runner.sex,
           category: category.name
         };
         cat.runners.push(point);
@@ -34,7 +34,7 @@ export default Ember.Route.extend({
     });
     
     return result;
-  }, 
+  },
   
   model: function() {
     var event = this.modelFor('event');

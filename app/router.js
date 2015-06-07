@@ -11,6 +11,7 @@ Router.map(function() {
   });
   this.resource('event', { path: '/event/:source/:event_id'}, function() {
     this.route('starttime-analysis');
+    this.route('error-analysis');
     this.resource('categories', function() {
       this.resource('category', { path: ':category_id' }, function() {
         this.route('runner', { path: 'runner/:runner_id' });

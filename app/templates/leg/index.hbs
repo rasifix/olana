@@ -8,7 +8,7 @@
       <td>{{runner.club}}</td>
       <td>{{runner.city}}</td>
       <td>{{runner.split}}</td>
-      <td>{{runner.splitBehind}}</td>
+      <td title={{runner.timeLoss}} {{bind-attr class="runner.timeLoss:error"}}>{{runner.splitBehind}}</td>
       <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
     </tr>
     {{/each}}

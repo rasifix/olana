@@ -2,15 +2,17 @@ var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
 };
 
+var regex = /(-)?[0-9]?[0-9]:[0-9][0-9](:[0-9][0-9])?/;
+
 export function parseTime(str) {
   if (!str) {
     return null;
-  } else if (str === 'Po.fal' || str === 'Po.f.' || str === 'P.fehl' || str === 'aufgeg.' || str === 'fehl') {
+  } else if (typeof str !== 'string') {
+    return null;
+  } else if (!regex.test(str)) {
     return null;
   }
-  if (!str.split) {
-    return null;
-  }
+
   var split = str.split(":");
   var result = null;
   if (split.length === 2) {
@@ -20,6 +22,7 @@ export function parseTime(str) {
   } else if (split.length === 3) {
     result = parseInt(split[0], 10) * 3600 + parseInt(split[1], 10) * 60 + parseInt(split[2], 10);
   }
+  
   return isNaN(result) ? null : result;
 }
 

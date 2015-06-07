@@ -10,9 +10,8 @@
 <ul class="event-list">
 {{#each filteredLegs as |leg|}}
  <li {{action 'legClicked' leg.id}}>
-  {{#link-to 'leg' leg.id}}
-  {{leg.id}} 
-  {{/link-to}}
+  {{#link-to 'leg' leg.id}}{{leg.id}}{{/link-to}}
+  <div style="position:absolute; left:65px; top:11px"><div {{bind-attr style=leg.style}}>&nbsp;</div><span class="mute">{{leg.errorFrequency}}%</span></div>
   <div class="pull-right">
     <span class="mute">{{leg.categories}}</span>
     <span class="badge">{{leg.runners.length}}</span> 

@@ -3,6 +3,7 @@
 import Ember from 'ember';
 import config from '../config/environment';
 import { parseTime, formatTime } from 'olana/utils/time';
+import { Rainbow } from 'olana/utils/rainbow';
 
 var order = [ 'HE', 
             'HAL', 'HAM', 'HAK', 'HB', 
@@ -185,6 +186,17 @@ function defineLegs(categories) {
       return parseTime(s1.split) - parseTime(s2.split);
     });
     leg.categories = Object.keys(leg.categories);
+    leg.errorFrequency = Math.round(100 * 10 / leg.runners.length);
+    
+    var colors = new Rainbow();
+    colors.setSpectrum('green', 'yellow', 'orange', 'red');
+    if (leg.errorFrequency) {
+      leg.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(leg.errorFrequency) + '; color:white; text-align:right; width:' + leg.errorFrequency * 4 + 'px';
+      leg.style = leg.style.htmlSafe();
+    } else {
+      log('no error frequency for leg ' + leg.id);
+    }
+    
     result.push(leg);
   });
   result.sort(legSort);

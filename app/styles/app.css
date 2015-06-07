@@ -23,6 +23,10 @@ tr:hover {
   background-color: rgba(174,167,141,0.5);
 }
 
+tr.split-details:hover {
+  background-color: white;
+}
+
 a {
   color: darkorange;
 }
@@ -321,6 +325,10 @@ li.list-header {
   color: darkorange;
 }
 
+td.error {
+  color: #f44;
+}
+
 span.error {
   color: #f44;
 }
@@ -375,10 +383,6 @@ span.date {
   margin-left: 0px;
   margin-right: 0px;
   border-bottom: 1px solid #aea78d;
-}
-
-.split-entry:hover {
-  background-color: rgba(174,167,141,0.4) !important;
 }
 
 .split-entry-span {
@@ -447,6 +451,13 @@ ul.subnav li a.active {
   margin-right: 10px;
   width: 150px;
   text-align: right;
+}
+
+.slide-out {
+  transition: all 0.2s ease-out;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .row input {
