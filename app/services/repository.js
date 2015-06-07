@@ -243,6 +243,7 @@ export default Ember.Object.extend({
       
       // transform data structure from wire-optimal to code-optimal
       data.categories.forEach(function(category) {
+        var splitCount = category.runners.length > 0 ? category.runners[0].splits.length : 0;
         category.runners.forEach(function(runner) {
           runner.splits = runner.splits.map(function(split) {
             return {
@@ -250,6 +251,15 @@ export default Ember.Object.extend({
               time: split[1]
             };
           });
+          
+          // fix broken data - i.e. missing punches at the end
+          for (var i = runner.splits.length; i < splitCount; i++) {
+            runner.splits.push({
+              code: category.runners[0].splits[i].code,
+              time: '-'
+            });
+          }
+          
           // add split time to finish
           runner.splits.push({
             code: 'Zi',
