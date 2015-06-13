@@ -25,15 +25,15 @@ export default Ember.Object.extend({
   
   getEvents: function() {
     time('fetchEvents');
-    if (cache.events) {
-      timeEnd('fetchEvents from cache');
-      return cache.events;
-    }
     var self = this;
+    if (self.cache.events) {
+      timeEnd('fetchEvents from cache');
+      return self.cache.events;
+    }
     return $.get(config.APP.API_HOST + 'api/events').then(function(data) {
       timeEnd('fetchEvents');
       self.cache.events = data.events;
-      return self.cache;
+      return self.cache.events;
     });
   },
   
