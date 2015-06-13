@@ -3,10 +3,11 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   
   model: function() {
-    var event = this.modelFor('event');
-    return {
-      courses: event.courses
-    };
+    return this.modelFor('event').getCourses().then(function(data) {
+      return {
+        courses: data
+      }
+    });
   },
   
   actions: {

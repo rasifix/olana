@@ -5,12 +5,7 @@ export default Ember.Controller.extend({
   queryParams: ['selectedCategory'],
   
   backRoute: 'categories',
-  
-  categories: function() {
-    var categories = this.get('model.categories');
-    return categories.map(function(category) { return category.name; });
-  }.property('model.categories'),
-  
+    
   filteredLegs: function() {
     var selection = this.get('selectedCategory');
     var result = this.get('model.legs');

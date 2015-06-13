@@ -360,6 +360,11 @@ ul {
   margin-top: 0px;
 }
 
+.mute {
+  color: #aea78d;
+  font-weight: normal;
+}
+
 span.mute {
   color: #aea78d;
   font-size: 75%;

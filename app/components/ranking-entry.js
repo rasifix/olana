@@ -5,7 +5,6 @@ export default Ember.Component.extend({
     
   actions: {
     clicked: function() {
-      console.log('clicked');
       this.sendAction('action', this.get('runner'));
     }
   }
