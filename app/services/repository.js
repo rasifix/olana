@@ -2,9 +2,6 @@
 
 import Ember from 'ember';
 import config from '../config/environment';
-import { parseTime, formatTime } from 'olana/utils/time';
-import { parseRanking } from 'olana/utils/parser';
-import { Rainbow } from 'olana/utils/rainbow';
 import Runner from 'olana/models/runner';
 
 function time(name) {
@@ -26,7 +23,7 @@ export default Ember.Object.extend({
   getEvents: function(year) {
     time('fetchEvents');
     var self = this;
-    if (self.cache.events && self.cache.year == year) {
+    if (self.cache.events && self.cache.year === year) {
       timeEnd('fetchEvents from cache');
       return self.cache.events;
     }

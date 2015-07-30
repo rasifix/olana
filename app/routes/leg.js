@@ -1,7 +1,5 @@
 import Ember from 'ember';
 
-import { parseTime, formatTime } from 'olana/utils/time';
-
 export default Ember.Route.extend({
   
   model: function(params) {        

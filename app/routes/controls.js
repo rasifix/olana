@@ -1,9 +1,6 @@
 import Ember from 'ember';
 
-import { parseTime, formatTime } from 'olana/utils/time';
-import { parseRanking } from 'olana/utils/parser';
 import { Rainbow } from 'olana/utils/rainbow';
-import log from 'olana/utils/log';
 
 export default Ember.Route.extend({
     
@@ -33,8 +30,8 @@ export default Ember.Route.extend({
   },
   
   actions: {
-    controlClicked: function(code) {
-      
+    controlClicked: function() {
+      // what do we do with it?
     }
   }
 

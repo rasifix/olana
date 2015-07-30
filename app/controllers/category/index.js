@@ -129,7 +129,7 @@ export default Ember.Controller.extend({
   
   init: function() {
     var self = this;
-    window.onresize = function(e) {
+    window.onresize = function() {
       self.refreshGraphWidth();
     };
     this.refreshGraphWidth();
@@ -141,7 +141,7 @@ export default Ember.Controller.extend({
     } else if (window.screen.availWidth >= 992) {
       this.set('graphWidth', 940);
     } else if (window.screen.availWidth >= 768) {
-      this.set('graphWidth', 720)
+      this.set('graphWidth', 720);
     } else {
       this.set('graphWidth', window.screen.availWidth - 2 * 15);
     }

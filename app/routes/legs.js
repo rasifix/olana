@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import { Rainbow } from 'olana/utils/rainbow';
 
-import { parseRanking } from 'olana/utils/parser';
-
 export default Ember.Route.extend({
   
   model: function() {
@@ -27,13 +25,8 @@ export default Ember.Route.extend({
       return {
         legs: data,
         categories: categories.sort(function(s1, s2) { return s1.localeCompare(s2); })
-      }
+      };
     });
-        
-    return {
-      legs: event.getLegs(),
-      categories: event.getCategories()
-    };
   },
   
   actions: {

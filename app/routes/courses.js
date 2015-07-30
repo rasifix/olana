@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     return this.modelFor('event').getCourses().then(function(data) {
       return {
         courses: data
-      }
+      };
     });
   },
   
