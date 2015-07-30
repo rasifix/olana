@@ -67,12 +67,10 @@ function defineLegs(category, runners) {
     if (selected.length > 0) {
       leg.idealSplit = Math.round(selected.reduce(sum) / selected.length);
     }
-    
-    //leg.errorFrequency = Math.round(100 * 10 / leg.runners.length);
-    
+        
     result.push(leg);
   });
-  
+
   result.forEach(function(leg) {
     var timeLosses = 0;
     
@@ -80,7 +78,7 @@ function defineLegs(category, runners) {
     var fastest = leg.runners.length > 0 ? parseTime(leg.runners[0].split) : 0;
     
     leg.runners.forEach(function(runner, idx) {
-      var r = runners[runner.id];
+      var r = runners.find(function(candidate) { return candidate.id === runner.id; });
       var s = r.splits.find(function(split) { return leg.id === split.leg; });
       if (s && s.timeLoss) {
         timeLosses += 1;
@@ -128,6 +126,26 @@ function defineLegs(category, runners) {
 export default Ember.Controller.extend({
   
   backRoute: 'categories',
+  
+  init: function() {
+    var self = this;
+    window.onresize = function(e) {
+      self.refreshGraphWidth();
+    };
+    this.refreshGraphWidth();
+  },
+  
+  refreshGraphWidth: function() {
+    if (window.screen.availWidth >= 1200) {
+      this.set('graphWidth', 1140);
+    } else if (window.screen.availWidth >= 992) {
+      this.set('graphWidth', 940);
+    } else if (window.screen.availWidth >= 768) {
+      this.set('graphWidth', 720)
+    } else {
+      this.set('graphWidth', window.screen.availWidth - 2 * 15);
+    }
+  },
     
   checkedRunners: function() {
     var runners = this.get('model.runners');

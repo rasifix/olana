@@ -23,15 +23,16 @@ export default Ember.Object.extend({
   
   cache: { },
   
-  getEvents: function() {
+  getEvents: function(year) {
     time('fetchEvents');
     var self = this;
-    if (self.cache.events) {
+    if (self.cache.events && self.cache.year == year) {
       timeEnd('fetchEvents from cache');
       return self.cache.events;
     }
-    return $.get(config.APP.API_HOST + 'api/events').then(function(data) {
+    return $.get(config.APP.API_HOST + 'api/events?year=' + year).then(function(data) {
       timeEnd('fetchEvents');
+      self.cache.year = year;
       self.cache.events = data.events;
       return self.cache.events;
     });
@@ -59,6 +60,7 @@ export default Ember.Object.extend({
         getCategory: function(categoryId) {
           return $.get(config.APP.API_HOST + 'api/events/' + source + '/' + id + '/categories/' + categoryId).then(function(category) {
             return {
+              name: categoryId,
               runners: category.runners.map(function(runner) {
                 return Runner.create(runner);
               })
@@ -94,6 +96,9 @@ export default Ember.Object.extend({
             return self.cache.event.controls;
           }
           return self.cache.event.controls = $.get(config.APP.API_HOST + 'api/events/' + source + '/' + id + '/controls');
+        },
+        getControl: function(controlId) {
+          return $.get(config.APP.API_HOST + 'api/events/' + source + '/' + id + '/controls/' + controlId);
         },
         getRunners: function() {
           if (self.cache.event.runners) {

@@ -1,15 +1,14 @@
-<div>
-<div class="content">
- <ul class="subnav">
-  <li>{{#link-to 'categories'}}Kategorien{{/link-to}}</li>
-  <li>{{#link-to 'courses'}}Bahnen{{/link-to}}</li>
-  <li>{{#link-to 'legs'}}Strecken{{/link-to}}</li>
-  <li>{{#link-to 'controls'}}Posten{{/link-to}}</li>
-  <li>{{#link-to 'runners'}}L&auml;ufer{{/link-to}}</li>
-  <li>{{#link-to 'event.starttime-analysis'}}Startzeit Analyse{{/link-to}}</li>
- </ul>
- <div class="clear"></div>
-</div>
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="nav nav-pills nav-justified">
+      <li role="presentation">{{#link-to 'categories'}}Kategorien{{/link-to}}</li>
+      <li role="presentation">{{#link-to 'courses'}}Bahnen{{/link-to}}</li>
+      <li role="presentation">{{#link-to 'legs'}}Strecken{{/link-to}}</li>
+      <li role="presentation">{{#link-to 'controls'}}Posten{{/link-to}}</li>
+      <li role="presentation">{{#link-to 'runners'}}L&auml;ufer{{/link-to}}</li>
+      <li role="presentation" class="hidden-xs nowrap">{{#link-to 'event.starttime-analysis'}}Startzeit Analyse{{/link-to}}</li>
+    </ul>
+  </div>
 </div>
 
 {{outlet}}

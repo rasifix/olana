@@ -3,8 +3,8 @@ import { parseTime } from 'olana/utils/time';
 
 export default Ember.Object.extend({
     
-  valid: function() {
-    return parseTime(this.get('time')) !== null;
+  invalid: function() {
+    return parseTime(this.get('time')) === null;
   }.property('time'),
   
   fullNameWithRank: function() {

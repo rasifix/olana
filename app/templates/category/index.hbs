@@ -1,5 +1,9 @@
-<div>{{ranking-list runners=model.runners runnerRoute='category.runner' action="runnerClicked"}}</div>
+{{ranking-list runners=model.runners runnerRoute='category.runner' action="runnerClicked"}}
 
-{{#if checkedRunners}}
-<div>{{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick"}}</div>
-{{/if}}
+<div class="row">
+  {{#if checkedRunners}}
+  <div class="col-xs-12">
+    {{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
+  </div>
+  {{/if}}
+</div>

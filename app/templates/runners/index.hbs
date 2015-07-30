@@ -1,15 +1,13 @@
-<div class="grid12">
- <table class="ranking-table">
-  <tbody>
-   {{#each model.runners as |runner|}}
-   <tr>
-    <td>{{#link-to 'category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>
-    <td>{{runner.yearOfBirth}}</td>
-    <td>{{runner.city}}</td>
-    <td>{{runner.club}}</td>
-    <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
-   </tr>
-   {{/each}}
-  </tbody>
- </table>
+<div class="col-xs-12">
+{{#ember-list items=model.runners height=500 width="100%" rowHeight=41}}
+ <div class="row" style="padding:10px 0px; border-bottom: 1px solid #aaa">
+   <div class="col-xs-9 col-sm-4 nowrap">
+    {{#link-to 'category.runner' category id}}{{fullName}}{{/link-to}}
+   </div>
+   <div class="col-sm-1 hidden-xs nowrap">{{yearOfBirth}}</div>
+   <div class="col-sm-3 hidden-xs nowrap">{{city}}</div>
+   <div class="col-sm-3 hidden-xs nowrap">{{club}}</div>
+   <div class="col-xs-3 col-sm-1">{{#link-to 'category' category}}{{category}}{{/link-to}}</div>
+ </div>
+{{/ember-list}}
 </div>

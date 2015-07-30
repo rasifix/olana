@@ -1,27 +1,9 @@
-<div>{{ranking-list runners=model.runners runnerRoute='course.runner' action="runnerClicked"}}</div>
+{{ranking-list runners=model.runners runnerRoute='course.runner' action="runnerClicked"}}
 
-{{#if checkedRunners}}
-<div>{{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick"}}</div>
-{{/if}}
-
-{{#if selectedLeg}}
-<h3>{{selectedLeg.code}}</h3>
-
-<!-- TODO: use splits-list component & flip graph? or just link to leg? -->
-<table class="ranking-table">
- <tbody>
- {{#each selectedLeg.runners as |runner|}}
-  <tr>
-   <td>{{runner.splitRank}}.</td>
-   <td>{{#link-to 'course.runner' runner.id}}{{runner.fullName}}{{/link-to}}</td>
-   <td>{{runner.yearOfBirth}}</td>
-   <td>{{runner.club}}</td>
-   <td>{{runner.city}}</td>
-   <td>{{runner.split}}</td>
-   <td>{{runner.splitBehind}}</td>
-   <td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>
-  </tr>
- {{/each}}
- </tbody>
-</table>
-{{/if}}
+<div class="row">
+  {{#if checkedRunners}}
+  <div class="col-xs-12">
+    {{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
+  </div>
+  {{/if}}
+</div>

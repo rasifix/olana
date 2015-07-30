@@ -20,7 +20,7 @@ export default Ember.Route.extend({
       colors.setSpectrum('green', 'yellow', 'orange', 'red');
       
       data.forEach(function(leg) {
-        leg.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(leg.errorFrequency) + '; color:white; text-align:right; width:' + leg.errorFrequency * 4 + 'px';
+        leg.style = 'display:inline-block; margin-right:5px; background-color:#' + colors.colourAt(leg.errorFrequency) + '; color:white; text-align:right; width:' + leg.errorFrequency + '%';
         leg.style = leg.style.htmlSafe();
       });
       

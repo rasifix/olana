@@ -20,7 +20,7 @@ export default Ember.Component.extend({
   classNames: [ "h2h-graph" ],
   
   // total width of component
-  width: 758,
+  width: 700,
   
   // height of individual bar
   barheight: 24,
@@ -102,7 +102,7 @@ export default Ember.Component.extend({
         .attr("y", function(leg, idx) { return idx * (barheight + 1) + 16; })
         .text(function(leg) { return leg.number; });
     
-  }.observes('legs'),
+  }.observes('legs', 'width'),
   
   xscale: function() {
     var maxdiff = d3.max(this.get('legs'), function(leg) {
@@ -110,6 +110,6 @@ export default Ember.Component.extend({
     });
     var padding = 50;
     return d3.time.scale().range([0, (this.get('width') - this.get('offset')) / 2 - padding]).domain([0, maxdiff]);
-  }.property('legs')
+  }.property('legs', 'width')
 
 });

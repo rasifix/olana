@@ -1,3 +1,11 @@
-{{model.runner.fullName}} ({{model.runner.rank}}) - {{view "select" content=model.opponents optionValuePath='content.id' optionLabelPath='content.fullNameWithRank' value=model.selectedOpponent}}
+<div class="row">
+ <div class="col-xs-12">
+  {{model.runner.fullName}} ({{model.runner.rank}}) - {{view "select" content=model.opponents optionValuePath='content.id' optionLabelPath='content.fullNameWithRank' value=model.selectedOpponent}}
+ </div>
+</div>
 
-{{h2h-component legs=selectedDiff}}
+<div class="row">
+ <div class="col-xs-12">
+  {{h2h-component legs=selectedDiff width=graphWidth}}
+ </div>
+</div>

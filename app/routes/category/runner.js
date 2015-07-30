@@ -12,10 +12,14 @@ export default Ember.Route.extend({
       this.transitionTo('category');
       return;
     }
-          
+
     return {
       id: runner.get('id'),
       fullName: runner.get('fullName'),
+      yearOfBirth: runner.get('yearOfBirth'),
+      city: runner.get('city'),
+      club: runner.get('club'),
+      category: category.name,
       time: runner.get('time'),
       errorTime: runner.get('errorTime'),
       splits: runner.splits.map(function(split) { 
