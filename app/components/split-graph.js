@@ -23,7 +23,6 @@ export default Ember.Component.extend({
   classNames: [ 'split-graph' ],
   
   width: 758,
-  height: 600,
   
   padding: {
     left: 50,
@@ -39,6 +38,10 @@ export default Ember.Component.extend({
       height: this.get('height') - padding.top - padding.bottom
     };
   }.property('padding', 'width', 'height'),
+  
+  height: function() {
+    return this.get('width') * 3 / 8;
+  }.property('width'),
   
   didInsertElement: function() {  
     this.refresh();
@@ -72,6 +75,17 @@ export default Ember.Component.extend({
            self.sendAction('leghover', leg);
          });
     
+    hover.transition()
+        .attr("x", function(leg, idx) { return idx === 0 ? x(0) : x(legs[idx - 1].position); })
+        .attr("y", padding.top)
+        .attr("width", function(leg, idx) { 
+          var start = idx === 0 ? x(0) : x(legs[idx - 1].position);
+          var w = x(leg.position) - start;
+          return w;
+        })
+        .attr("height", this.get('area').height);
+    
+    // x-axis labels
     var labels = grid.selectAll("text.xaxis").data(legs.filter(function(d, idx) { return idx % 2 === 1; }));
     labels.enter()
           .append("text")
@@ -79,10 +93,14 @@ export default Ember.Component.extend({
           .attr("x", function(d) { return x(d.position); })
           .attr("y", this.get('height') - this.get('padding').bottom + 10)
           .text(function(d, idx) { return (idx + 1) * 2; });
+          
+    labels.transition()
+          .attr('x', function(d) { return x(d.position); })
+          .attr('y', this.get('height') - this.get('padding').bottom + 10);
     
     this.updateSplitLines();
     this.updateHGrid();        
-  }.observes('runners.[]', 'active'),
+  }.observes('runners.[]', 'active', 'width', 'height', 'area'),
   
   updateSplitLines: function() {
     var svg = d3.select(this.get('element'));
@@ -135,6 +153,8 @@ export default Ember.Component.extend({
        .attr("stroke", "#aaa");
         
     hline.transition().duration(500).attr("opacity", 1)
+         .attr("x1", x(0))
+         .attr("x2", x(1))
          .attr("y1", function(d) { return crisp(y(d)); })
          .attr("y2", function(d) { return crisp(y(d)); })
          .attr("opacity", 1);
@@ -142,7 +162,7 @@ export default Ember.Component.extend({
     hline.exit().transition().duration(500).attr("opacity", 0).remove();
     
     var htext = svg.select("g#hgrid").selectAll("text").data(y.ticks().slice(1), function(d) { return d.getTime(); });
-    
+
     htext.enter()
        .append("text")
        .attr("x", 45)
@@ -159,7 +179,6 @@ export default Ember.Component.extend({
     htext.exit().transition().duration(500).attr("opacity", 0).remove();
   },
   
-  // TODO: make timelines dependent on active mode
   timelines: function() {
     var runners = this.get('runners');
     var x = this.get('xScale');
@@ -182,7 +201,7 @@ export default Ember.Component.extend({
     var legs = this.get('legs');
     var x = this.get('xScale');
     var path = ['M0,0'];
-    
+        
     for (var i = 0; i < legs.length; i++) {
       var leg = legs[i];
       var xpos = x(leg.position);
@@ -190,24 +209,12 @@ export default Ember.Component.extend({
       path.push('M', xpos, ',', this.get('padding').top, 'V', this.get('height') - this.get('padding').bottom);
     }
     return path.join('');
-  }.property("legs"),
+  }.property('legs', 'xScale', 'height'),
   
   xScale: function() {
     return d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right]);
-  }.property(),
-  
-  hgrid: function() {    
-    var y = this.get('yScale');
-    var path = ['M0,0'];
-            
-    var ticks = y.ticks();
-    for (var i = 0; i < ticks.length; i++) {
-      var tick = ticks[i];
-      path.push('M', 0, ',', y(tick), 'H', this.get('width'));
-    }
-    
-    return path.join('');    
-  },
+  }.property('width'),
+
 
   yScale: function() {
     var runners = this.get('runners');
@@ -225,6 +232,6 @@ export default Ember.Component.extend({
     times.push(0);
     
     return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain(d3.extent(times));
-  }.property('runners')
+  }.property('runners', 'height')
 
 });

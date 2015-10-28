@@ -1,22 +1,24 @@
 import Ember from 'ember';
 
-import { parseRanking } from 'olana/utils/parser';
+import { parseTime } from 'olana/utils/time';
 
 export default Ember.Route.extend({
   
   model: function(params) {
+    var self = this;
+    
     var event = this.modelFor('event');
     var id = params['category_id'];
-    var category = event.categories.find(function(category) {
-      if (category.name === id) {
-        return category;
-      }
+    var category = event.getCategory(id);
+    category.fail(function() {
+      self.transitionTo('categories');
+    }).then(function(category) {
+      category.runners.forEach(function(runner) {
+        runner.valid = parseTime(runner.time) !== null;
+      });
     });
-    if (!category) {
-      this.transitionTo('categories');
-      return;
-    }
-    return parseRanking(category);
+        
+    return category;
   },
   
   actions: {
@@ -26,7 +28,6 @@ export default Ember.Route.extend({
     },
     runnerClicked: function(runner) {
       runner.set('showSplits', !runner.get('showSplits'));
-      console.log(runner);
     }
   }
 

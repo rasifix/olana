@@ -16,6 +16,10 @@ export default Ember.Route.extend({
     return {
       id: runner.get('id'),
       fullName: runner.get('fullName'),
+      yearOfBirth: runner.get('yearOfBirth'),
+      city: runner.get('city'),
+      club: runner.get('club'),
+      category: runner.get('category'),
       time: runner.get('time'),
       errorTime: runner.get('errorTime'),
       splits: runner.splits.map(function(split) { 

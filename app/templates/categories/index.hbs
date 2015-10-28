@@ -1,18 +1,20 @@
-<div class="grid12">
+<div class="row">
+ <div class="col-xs-12">
  <ul class="event-list">
   {{#each model.categories as |category|}}
   <li {{action 'categoryClicked' category.name}}>
-    {{#link-to 'category' category.name}}
-    {{category.name}}
-    {{/link-to}}
+    {{#link-to 'category' category.name}}{{category.name}}{{/link-to}}
 
     <div class="pull-right">
-      <span class="mute">{{category.distance}}m</span>
-      <span class="mute">{{category.ascent}}m</span>
-      <span class="mute">{{category.controls}} Posten</span>
-      <span class="badge">{{category.runners.length}}</span> 
+      <span class="text-muted">
+        <small>{{category.distance}}m</small> / 
+        <small>{{category.ascent}}m</small> /
+        <small>{{category.controls}} Posten</small>
+      </span>
+      <span class="badge">{{category.runners}}</span> 
     </div>
   </li>
   {{/each}}
  </ul>
+ </div>
 </div>

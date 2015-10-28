@@ -1,9 +1,0 @@
-<td style="color:gray; font-size:0.8em" {{action 'clicked' runner}}>{{#if runner.showSplits}}&#9660;{{else}}&#9654;{{/if}}</td>
-<td width="20">{{#if runner.valid}}{{input type="checkbox" checked=runner.checked}}{{/if}}</td>
-<td width="20" align="right">{{#if runner.rank}}{{runner.rank}}.{{/if}}</td>
-<td>{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</td>
-<td {{action 'clicked' runner}}>{{runner.yearOfBirth}}</td>
-<td>{{runner.city}}</td>
-<td>{{runner.club}}</td>
-<td>{{runner.time}}</td>
-{{#if runner.category}}<td>{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</td>{{/if}}

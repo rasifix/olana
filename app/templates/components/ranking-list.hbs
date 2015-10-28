@@ -1,29 +1,39 @@
-<tbody>
+<div class="col-xs-12">
+ <ul class="ranking-list">
  {{#each runners as |runner|}}
-  {{ranking-entry runner=runner runnerRoute=runnerRoute action="runnerClicked"}}
+  <li {{action 'runnerClicked' runner}}>
+  	<div class="hidden-xs" style="float:left; padding:0px 4px; width:25px; color:gray; font-size:0.8em">
+      {{#if runner.showSplits}}&#9660;{{else}}&#9654;{{/if}}
+    </div>
+  	<div class="hidden-xs col-fixed-50">
+      {{view "custom-checkbox" checked=runner.checked disabled=runner.invalid}}
+    </div>
+  	<div class="col-fixed-50 align-right">{{#if runner.rank}}{{runner.rank}}.{{else}}&nbsp;{{/if}}</div>
+  	<div class="col-xs-6 col-sm-3 nowrap">{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</div>
+  	<div class="hidden-xs hidden-sm col-md-1 nowrap">{{runner.yearOfBirth}}</div>  
+  	<div class="col-sm-2 hidden-xs nowrap">{{runner.city}}</div>
+  	<div class="hidden-xs hidden-sm col-md-2 nowrap">{{runner.club}}</div>
+  	<div class="col-xs-3 col-sm-2 col-md-1 align-right pull-right"><small>{{runner.time}}</small></div>
+  	<div class="hidden-xs col-sm-1">{{#link-to 'category' runner.category}}{{runner.category}}{{/link-to}}</div>
+  </li>
 
   {{#if runner.showSplits}}
-  <tr class="split-details">
-   <td>&nbsp;</td>
-   <td colspan="7">
-    <table style="width:100%">
-	  {{#each runner.splits as |split|}}
-     <tr style="border:none">
-      <td align="right">{{split.number}}</td>
-	    <td align="right">{{#link-to 'leg' split.leg}}{{split.code}}{{/link-to}}</td>
-	    <td align="right" title="Laufzeit">{{split.time}}</td>
-	    <td align="right" title="R&uuml;ckstand auf F&uuml;hrenden">{{split.overallBehind}}</td>
-	    <td align="right" title="Rang">{{#if split.overallRank}}({{split.overallRank}}.){{/if}}</td>
-	    <td align="right" title="Abschnitts Zeit">{{split.split}}</td>
-	    <td align="right" {{bind-attr title=split.timeLoss}} {{bind-attr class=view.errorClass}}>{{split.splitBehind}}</td>
-	    <td align="right" title="Abschnitts Rang">{{#if split.splitRank}}({{split.splitRank}}.){{/if}}</td>
-  	  <td align="right" title="Performance Index">{{#if split.perfidx}}{{split.perfidx}}%{{/if}}</td>
-	   </tr>
-	  {{/each}}
-	  </table>
-	 </td>
-  </tr>
+	 {{#each runner.splits as |split|}}
+	  <li>
+	    <div class="hidden-xs col-sm-1 align-right">{{split.number}}</div>
+	    <div class="col-xs-3  col-sm-1 align-right">{{#link-to 'leg' split.leg}}{{split.code}}{{/link-to}}</div>
+	    <div class="col-xs-3  col-sm-1 align-right" title="Laufzeit">{{split.time}}</div>
+	    <div class="col-xs-3  col-sm-1 align-right" title="R&uuml;ckstand auf F&uuml;hrenden">{{split.overallBehind}}</div>
+	    <div class="col-xs-3  col-sm-1 align-right" title="Rang">{{#if split.overallRank}}({{split.overallRank}}.){{/if}}</div>
+	    <div class="col-xs-3  col-xs-offset-3 col-sm-offset-0 col-sm-1 align-right" title="Abschnitts Zeit">{{split.split}}</div>
+	    <div class="col-xs-3 col-sm-1 align-right" title=split.timeLoss>{{split.splitBehind}}</div>
+	    <div class="col-xs-3 col-sm-1 align-right" title="Abschnitts Rang">{{#if split.splitRank}}({{split.splitRank}}.){{/if}}</div>
+  	  <div class="hidden-xs col-sm-1 align-right" title="Performance Index">{{#if split.perfidx}}{{split.perfidx}}%{{/if}}</div>
+      <div class="clear"></div>
+		</li>
+	 {{/each}}
   {{/if}}
 
  {{/each}}
-</tbody>
+ </ul>
+</div>

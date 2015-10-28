@@ -1,7 +1,6 @@
 /* global d3 */
 
 import Ember from 'ember';
-import { parseTime } from 'olana/utils/time';
 
 export default Ember.Controller.extend({
   
@@ -35,7 +34,6 @@ export default Ember.Controller.extend({
     var checkedCategories = this.get('checkedCategories');
     timeLosses.filter(function(timeLoss) { return checkedCategories.indexOf(timeLoss.category) !== -1; }).forEach(function(timeLoss) {
       var bucketIndex = Math.round(timeLoss.position * 20);
-      var bucket = buckets[bucketIndex];
       buckets[bucketIndex] += 1;
     });
     return buckets;

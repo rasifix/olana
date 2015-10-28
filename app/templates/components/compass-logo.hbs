@@ -1,0 +1,6 @@
+<circle {{bind-attr cx=cx}} {{bind-attr cy=cy}} {{bind-attr r=outerRadius}} class="logo-outer-circle"></circle>
+<circle {{bind-attr cx=cx}} {{bind-attr cy=cy}} {{bind-attr r=innerRadius}} class="logo-inner-circle"></circle>
+<g {{bind-attr transform=transform}}>
+ <path {{bind-attr d=needlePath}} class="logo-needle north"></path>
+ <path {{bind-attr d=needlePath}} {{bind-attr transform=southNeedleTransform}} class="logo-needle"></path>
+</g>

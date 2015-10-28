@@ -1,5 +1,5 @@
-var pad = function(str) {
-  return str.length === 1 ? "0" + str : str;
+var pad = function(value) {
+  return value < 10 ? '0' + value : value;
 };
 
 var regex = /(-)?[0-9]?[0-9]:[0-9][0-9](:[0-9][0-9])?/;
@@ -28,8 +28,11 @@ export function parseTime(str) {
 
 export function formatTime(seconds) {
   if (seconds >= 0) {
-    return Math.floor(seconds / 60) + ":" + pad("" + seconds % 60);
+    if (seconds >= 3600) {
+      return Math.floor(seconds / 3600) + ":" + pad(Math.floor(seconds / 60) % 60) + ":" + pad(seconds % 60);
+    }
+    return Math.floor(seconds / 60) + ":" + pad(seconds % 60);
   } else {
-    return "-" + Math.floor(-seconds / 60) + ":" + pad("" + -seconds % 60);
+    return "-" + Math.floor(-seconds / 60) + ":" + pad(-seconds % 60);
   }
 }

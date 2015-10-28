@@ -2,10 +2,6 @@
 
 import Ember from 'ember';
 
-var crisp = function(value) {
-  return Math.round(value - 0.5) + 0.5;
-};
-
 export default Ember.Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height', 'xmlns'],
