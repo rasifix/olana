@@ -1,9 +1,9 @@
   <span class="split-entry-span">{{split.number}}</span>
   <span class="split-entry-span">{{#link-to 'leg' split.leg}}{{split.code}}{{/link-to}}</span>
   <span class="split-entry-span" title="Laufzeit">{{split.time}}</span>
-  <span class="split-entry-span" title="R&uuml;ckstand auf F&uuml;hrenden">{{split.overallBehind}}</span>
+  <span class="split-entry-span" title="R&uuml;ckstand auf F&uuml;hrenden">+ {{split.overallBehind}}</span>
   <span class="split-entry-span" title="Rang">{{#if split.overallRank}}({{split.overallRank}}.){{/if}}</span>
   <span class="split-entry-span" title="Abschnitts Zeit">{{split.split}}</span>
-  <span {{bind-attr title=split.timeLoss}} {{bind-attr class=view.errorClass}}>{{split.splitBehind}}</span>
+  <span {{bind-attr title=split.timeLoss}} {{bind-attr class=view.errorClass}}>+ {{split.splitBehind}}</span>
   <span class="split-entry-span" title="Abschnitts Rang">{{#if split.splitRank}}({{split.splitRank}}.){{/if}}</span>
   <span class="split-entry-span" title="Performance Index">{{#if split.perfidx}}{{split.perfidx}}%{{/if}}</span>
