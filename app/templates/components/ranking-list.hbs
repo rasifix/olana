@@ -10,7 +10,7 @@
     </div>
   	<div class="col-fixed-50 align-right">{{#if runner.rank}}{{runner.rank}}.{{else}}&nbsp;{{/if}}</div>
   	<div class="col-xs-6 col-sm-3 nowrap">{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</div>
-  	<div class="hidden-xs hidden-sm col-md-1 nowrap">{{runner.yearOfBirth}}</div>  
+  	<div class="hidden-xs hidden-sm col-md-1 nowrap">{{runner.yearOfBirth}}</div>
   	<div class="col-sm-2 hidden-xs nowrap">{{runner.city}}</div>
   	<div class="hidden-xs hidden-sm col-md-2 nowrap">{{runner.club}}</div>
   	<div class="col-xs-3 col-sm-2 col-md-1 align-right pull-right"><small>{{runner.time}}</small></div>
@@ -23,10 +23,10 @@
 	    <div class="hidden-xs col-sm-1 align-right">{{split.number}}</div>
 	    <div class="col-xs-3  col-sm-1 align-right">{{#link-to 'leg' split.leg}}{{split.code}}{{/link-to}}</div>
 	    <div class="col-xs-3  col-sm-1 align-right" title="Laufzeit">{{split.time}}</div>
-	    <div class="col-xs-3  col-sm-1 align-right" title="R&uuml;ckstand auf F&uuml;hrenden">{{split.overallBehind}}</div>
+	    <div class="col-xs-3  col-sm-1 align-right" title="R&uuml;ckstand auf F&uuml;hrenden">+{{split.overallBehind}}</div>
 	    <div class="col-xs-3  col-sm-1 align-right" title="Rang">{{#if split.overallRank}}({{split.overallRank}}.){{/if}}</div>
 	    <div class="col-xs-3  col-xs-offset-3 col-sm-offset-0 col-sm-1 align-right" title="Abschnitts Zeit">{{split.split}}</div>
-	    <div class="col-xs-3 col-sm-1 align-right" title=split.timeLoss>{{split.splitBehind}}</div>
+	    <div class="col-xs-3 col-sm-1 align-right" title=split.timeLoss>+{{split.splitBehind}}</div>
 	    <div class="col-xs-3 col-sm-1 align-right" title="Abschnitts Rang">{{#if split.splitRank}}({{split.splitRank}}.){{/if}}</div>
   	  <div class="hidden-xs col-sm-1 align-right" title="Performance Index">{{#if split.perfidx}}{{split.perfidx}}%{{/if}}</div>
       <div class="clear"></div>
