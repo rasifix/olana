@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'courses',
   
-  name: function() {
-    return this.get('model.name');
-  }.property('model.name')
+  name: computed('model.name', () => this.get('model.name'))
   
 });

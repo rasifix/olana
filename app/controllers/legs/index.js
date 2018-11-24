@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   queryParams: ['selectedCategory'],
   
   backRoute: 'categories',
     
-  filteredLegs: function() {
+  filteredLegs: computed('model.legs', 'selectedCategory',function() {
     var selection = this.get('selectedCategory');
     var result = this.get('model.legs');
     if (selection && selection !== null && selection !== "null") {
@@ -15,6 +16,6 @@ export default Ember.Controller.extend({
       });
     }
     return result;
-  }.property('model.legs', 'selectedCategory'),
+  }),
   
 });

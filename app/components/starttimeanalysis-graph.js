@@ -1,15 +1,16 @@
 /* global d3 */
 
-import Ember from 'ember';
+import Component from '@ember/Component';
 import { parseTime } from 'olana/utils/time';
 import { groupBy } from 'olana/utils/statistics';
+import { computed, observer } from '@ember/object';
 
 
 var crisp = function(value) {
   return Math.round(value - 0.5) + 0.5;
 };
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height', 'xmlns'],
   classNames: [ "startimerank-graph" ],
@@ -28,21 +29,26 @@ export default Ember.Component.extend({
   groupBy: 15,
   
   // paddings for graph area
-  padding: {
-    left: 20,
-    top: 5,
-    right: 0,
-    bottom: 15
+  padding: null,
+
+  init() {
+    this._super(...arguments);
+    this.padding = {
+      left: 20,
+      top: 5,
+      right: 0,
+      bottom: 15
+    };
   },
   
-  area: function() {
+  area: computed('width', 'height', function() {
     return {
       x: this.get('padding.left'),
       y: this.get('padding.top'),
       width: this.get('width') - this.get('padding.left') - this.get('padding.right'),
       height: this.get('height') - this.get('padding.top') - this.get('padding.bottom')
     };
-  }.property('width', 'height'),
+  }),
   
   hover: null,
   
@@ -55,7 +61,7 @@ export default Ember.Component.extend({
     this.refresh();
   },
   
-  refresh: function() {    
+  refresh: observer('data', 'hover', 'trendlinePercentile', 'groupFactor', function() {    
     var data = this.get('data');    
     var svg = d3.select(this.get('element'));
 
@@ -103,12 +109,12 @@ export default Ember.Component.extend({
     dots.transition().duration(10)
         .attr("cx", function(point) { return xscale(parseTime(point.startTime)); })
         .attr("cy", function(point) { return yscale(point.perfidx * 100); })
-        .attr("opacity", function(point) { return point.category === self.get('hover.category') ? '1.0' : '0.5'; })
-        .attr('r', function(point) { return point.category === self.get('hover.category') ? 4 : 2; });
+        .attr("opacity", function(point) { return point.category === self.get('hover.category') ? '1.0' : '0.5'; })
+        .attr('r', (point) => point.category === self.get('hover.category') ? 4 : 2);
     
     dots.exit().remove().transition().duration(10).attr('opacity', 0).attr('r', 0);
         
-  }.observes('data', 'hover', 'trendlinePercentile', 'groupFactor'),
+  }),
   
   updateVGrid: function(svg) {
     var xscale = this.get('xscale');
@@ -163,7 +169,7 @@ export default Ember.Component.extend({
        .text(function(d) { return d; });    
   },
   
-  trendline: function() {
+  trendline: computed('data', 'trendlinePercentile', 'groupFactor', function() {
     var datapoints = this.get('data');
     
     var groupFactor = this.get('groupFactor');
@@ -194,24 +200,24 @@ export default Ember.Component.extend({
     });
         
     return trendline;
-  }.property('data', 'trendlinePercentile', 'groupFactor'),
+  }),
   
-  xscale: function() {
+  xscale: computed('xdomain', function() {
     var padding = this.get('padding.left') + 2;
     return d3.scale.linear().range([padding, this.get('width') - padding]).domain(this.get('xdomain'));
-  }.property('xdomain'),
+  }),
   
-  yscale: function() {
+  yscale: computed('ydomain', function() {
     var padding = this.get('padding.top') + this.get('padding.bottom');
     return d3.scale.linear().range([this.get('height') - padding, padding]).domain(this.get('ydomain'));
-  }.property('ydomain'),
+  }),
   
-  groupFactor: function() {
+  groupFactor: computed('groupBy', function() {
     var groupBy = this.get('groupBy');
     return groupBy * 60;
-  }.property('groupBy'),
+  }),
   
-  groups: function() {
+  groups: computed('xdomain', 'groupFactor', function() {
     var domain = this.get('xdomain');
     var s = domain[0];
     var e = domain[1];
@@ -228,7 +234,7 @@ export default Ember.Component.extend({
     }
     
     return result;
-  }.property('xdomain', 'groupFactor')
+  })
   
   
 });

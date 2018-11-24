@@ -1,8 +1,9 @@
 /* global d3 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
   classNames: [ "perfindex-graph" ],
@@ -14,18 +15,23 @@ export default Ember.Component.extend({
   height: 400,
   
   // paddings for graph area
-  padding: {
-    left: 50,
-    top: 5,
-    right: 5,
-    bottom: 40
+  padding: null,
+
+  init() {
+    this._super(...arguments);
+    this.padding = {
+      left: 50,
+      top: 5,
+      right: 5,
+      bottom: 40
+    };
   },
   
   didInsertElement: function() {
     this.refresh();
   },
   
-  refresh: function() {    
+  refresh: observer('data', function() {    
     var data = this.get('data');
         
     var svg = d3.select(this.get('element'));
@@ -45,18 +51,18 @@ export default Ember.Component.extend({
         .attr("fill", "red");
     
     bars.exit().remove();    
-  }.observes('data'),
+  }),
   
-  xscale: function() {
+  xscale: computed('data', function() {
     var padding = this.get('padding.left');
     return d3.scale.linear().range([padding, this.get('width') - padding]).domain([20, 160]);
-  }.property('data'),
+  }),
   
-  yscale: function() {
+  yscale: computed('data', function() {
     var max = d3.max(this.get('data'), function(entry) {
       return entry.value;
     });
     return d3.time.scale().range([0, this.get('height')]).domain([0, max]);
-  }.property('data')
+  })
 
 });

@@ -1,18 +1,20 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'categories.index',
   
   graphWidth: 700,
   
-  selectedDiff: function() {
+  selectedDiff: computed('model.{diffs,selectedOpponent}', function() {
     var diffs = this.get('model.diffs');
     var selectedOpponent = this.get('model.selectedOpponent');
     return diffs[selectedOpponent];
-  }.property('model.diffs', 'model.selectedOpponent'),
+  }),
   
-  init: function() {
+  init() {
+    this._super(...arguments);
     var self = this;
     window.onresize = function() {
       self.refreshGraphWidth();

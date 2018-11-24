@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import { Rainbow } from 'olana/utils/rainbow';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   model: function(params) {
     var code = params['control_id'];

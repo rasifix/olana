@@ -1,7 +1,17 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
-  name: 'Resultate'
+  name: 'Resultate',
+  
+  years: computed(function() {
+    var year = new Date().getFullYear();
+    var result = [];
+    for (var i = 0; i < 5; i++) {
+      result.push(year - i);
+    }
+    return result;
+  })
     
 });

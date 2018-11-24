@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+
 import { Rainbow } from 'olana/utils/rainbow';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   model: function() {
     return this.modelFor('event').getLegs().then(function(data) {

@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'legs',
   
-  name: function() {
-    return 'Strecke ' + this.get('model.id');
-  }.property('model.id')
+  name: computed('model.id', () => 'Strecke ' + this.get('model.id'))
   
 });

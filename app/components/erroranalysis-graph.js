@@ -1,8 +1,9 @@
 /* global d3 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height', 'xmlns'],
   classNames: [ "erroranalysis-graph" ],
@@ -15,28 +16,33 @@ export default Ember.Component.extend({
   height: 400,
   
   // paddings for graph area
-  padding: {
-    left: 20,
-    top: 5,
-    right: 0,
-    bottom: 15
+  padding: null,
+
+  init() {
+    this._super(...arguments);
+    this.padding = {
+      left: 20,
+      top: 5,
+      right: 0,
+      bottom: 15
+    };
   },
   
-  area: function() {
+  area: computed('width', 'height', function () {
     return {
       x: this.get('padding.left'),
       y: this.get('padding.top'),
       width: this.get('width') - this.get('padding.left') - this.get('padding.right'),
       height: this.get('height') - this.get('padding.top') - this.get('padding.bottom')
     };
-  }.property('width', 'height'),
+  }),
   
   didInsertElement: function() {
     d3.select(this.get('element')).append('g').attr('class', 'y');
     this.refresh();
   },
   
-  refresh: function() {    
+  refresh: observer('buckets', function() {    
     var buckets = this.get('buckets');    
     var svg = d3.select(this.get('element'));
 
@@ -69,16 +75,16 @@ export default Ember.Component.extend({
        .attr("transform", "translate(30, 0)")
        .call(yAxis);
     
-  }.observes('buckets'),
+  }),
     
-  xscale: function() {
+  xscale: computed('xdomain', function() {
     var padding = this.get('padding.left') + 2;
     return d3.scale.linear().range([padding, this.get('width') - padding]).domain(this.get('xdomain'));
-  }.property('xdomain'),
+  }),
   
-  yscale: function() {
+  yscale: computed('ydomain', function() {
     var padding = this.get('padding.top') + this.get('padding.bottom');
     return d3.scale.linear().range([this.get('height') - padding, padding]).domain(this.get('ydomain'));
-  }.property('ydomain')
+  })
   
 });

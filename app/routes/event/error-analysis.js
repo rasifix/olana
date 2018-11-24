@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import { parseTime } from 'olana/utils/time';
 import { parseRanking } from 'olana/utils/parser';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   parseData: function(event) {
     var result = {

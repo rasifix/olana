@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 function deg2rad(deg) {
   return deg * Math.PI / 180;
@@ -25,7 +26,7 @@ function ease(pos) {
   return 1 + Math.sin((pos - 0.8) / 0.2 * Math.PI) * 0.1;
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   
   tagName: 'svg',
   
@@ -39,30 +40,20 @@ export default Ember.Component.extend({
   
   rotation: 300,
   
-  width: function() {
-    return this.get('radius') * 2 + 4;
-  }.property('radius'),
+  width: computed('radius', () => this.get('radius') * 2 + 4),
   
-  height: function() {
-    return this.get('radius') * 2 + 4;
-  }.property('radius'),
+  height: computed('radius', () => this.get('radius') * 2 + 4),
   
-  cx: function() {
-    return this.get('width') / 2;
-  }.property('width'),
+  cx: computed('width', () => this.get('width') / 2),
   
-  cy: function() {
-    return this.get('height') / 2;
-  }.property('height'),
+  cy: computed('height', () => this.get('height') / 2),
   
-  outerRadius: function() {
-    return this.get('radius');
-  }.property('radius'),
+  outerRadius: computed('radius', () => this.get('radius')),
   
   innerRadius: 3,
   needleInnerRadius: 5,
   
-  needlePath: function() {
+  needlePath: computed('radius', 'cx', 'cy', function() {
     var cx = this.get('cx');
     var cy = this.get('cy');
     var radius = this.get('needleInnerRadius');
@@ -82,17 +73,17 @@ export default Ember.Component.extend({
     var ty = cy;
     
     return move(sx, sy) + ' ' + arc(radius, radius, 0, 0, 1, ex, ey) + ' ' + line(tx, ty);
-  }.property('radius', 'cx', 'cy'),
+  }),
   
-  southNeedleTransform: function() {
+  southNeedleTransform: computed('cx', 'cy', function() {
     return 'rotate(180,' + this.get('cx') + ',' + this.get('cy') + ')';
-  }.property('cx', 'cy'),
+  }),
   
-  transform: function() {
+  transform: computed('cx', 'cy', 'rotation', function() {
     var cx = this.get('cx');
     var cy = this.get('cy');
     return 'translate(' + cx + ',' + cy + ') rotate(' + this.rotation + ') translate(-' + cx + ',-' + cy + ')';
-  }.property('cx', 'cy', 'rotation'),
+  }),
   
   mouseEnter: function() {
     if (this.timer) {

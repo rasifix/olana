@@ -1,6 +1,6 @@
 /* global $ */
 
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import config from '../config/environment';
 import Runner from 'olana/models/runner';
 
@@ -16,9 +16,14 @@ function timeEnd(name) {
   }
 }
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
   
-  cache: { },
+  cache: null,
+
+  init() {
+    this._super(...arguments);
+    this.cache = { };
+  },
   
   getEvents: function(year) {
     time('fetchEvents');

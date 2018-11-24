@@ -102,8 +102,8 @@ function ColourGradient()
 	this.colourAt = function (number)
 	{
 		return calcHex(number, startColour.substring(0,2), endColour.substring(0,2)) + 
-		    calcHex(number, startColour.substring(2,4), endColour.substring(2,4)) + 
-		    calcHex(number, startColour.substring(4,6), endColour.substring(4,6));
+			calcHex(number, startColour.substring(2,4), endColour.substring(2,4)) + 
+			calcHex(number, startColour.substring(4,6), endColour.substring(4,6));
 	};
 	
 	function calcHex(number, channelStart_Base16, channelEnd_Base16)

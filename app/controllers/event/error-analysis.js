@@ -1,20 +1,22 @@
 /* global d3 */
 
-import Ember from 'ember';
+import { set } from '@ember/object';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'event',
   
-  checkedCategories: function() {
+  checkedCategories: computed('availableCategories.@each.checked', function() {
     return this.get('availableCategories').filter(function(category) {
       return category.checked;
     }).map(function(category) {
       return category.name;
     });
-  }.property('availableCategories.@each.checked'),
+  }),
   
-  availableCategories: function() {
+  availableCategories: computed('model.categories', function() {
     var categories = this.get('model.categories');
     return categories.map(function(category) {
       return {
@@ -22,9 +24,9 @@ export default Ember.Controller.extend({
         checked: true
       };
     }); 
-  }.property('model.categories'),
+  }),
   
-  buckets: function() {
+  buckets: computed('model.timeLosses', 'checkedCategories', function() {
     var buckets = [];
     for (var i = 0; i <= 20; i++) {
       buckets[i] = 0;
@@ -37,26 +39,21 @@ export default Ember.Controller.extend({
       buckets[bucketIndex] += 1;
     });
     return buckets;
-  }.property('model.timeLosses', 'checkedCategories'),
+  }),
   
-  xdomain: function() {
-    var data = this.get('buckets');
-    return [0, data.length];
-  }.property('buckets'),
+  xdomain: computed('buckets', () => [0, this.get('buckets').length]),
   
-  ydomain: function() {
-    return [0, d3.max(this.get('buckets'))];
-  }.property('buckets'),
+  ydomain: computed('buckets', () => [0, d3.max(this.get('buckets'))]),
   
   actions: {
     selectAll: function() {
       this.get('availableCategories').forEach(function(cat) {
-        Ember.set(cat, 'checked', true);
+        set(cat, 'checked', true);
       });
     },
     selectNone: function() {
       this.get('availableCategories').forEach(function(cat) {
-        Ember.set(cat, 'checked', false);
+        set(cat, 'checked', false);
       });
     }
   }

@@ -14,20 +14,20 @@ function parseRunner(row) {
 	
 	var splits = [];
 	for (i = headerLength; i < row.length; i += 2) {
-		splits.push([row[i], row[i + 1]]);
+		splits.push({ 'code': row[i], 'time': row[i + 1] });
 	}
 	
 	// split cleanup - detect two following splits with identical time
 	// --> control not working properly; set 's' as split time (substitute)
 	// going from back to front to catch several not working controls
 	for (i = splits.length - 1;  i > 0; i--) {
-	  if (splits[i][1] === splits[i - 1][1] && splits[i][1] !== '-') {
-	    splits[i][1] = 's';
-	  }
+		if (splits[i].time === splits[i - 1].time && splits[i].time !== '-') {
+			splits[i].time = 's';
+		}
 	}
 			
 	return {
-    fullName: row[2] + ' ' + row[1],
+		fullName: row[2] + ' ' + row[1],
 		yearOfBirth: row[3],
 		sex: row[4],
 		club: row[8],
@@ -37,7 +37,7 @@ function parseRunner(row) {
 		startTime: row[13],
 		ecard: row[11],
 		splits: splits,
-		course: splits.map(function(split) { return split[0]; }).join(',')
+		course: splits.map(split => split.code).join(',')
 	};
 }
 
@@ -58,16 +58,16 @@ export function parseOWare(lines) {
   // throw a way the now parsed header
   lines = lines.splice(1);
   
-  var category = null;
+	var category = null;
 	
 	lines.forEach(function(line) {
-	  var cols = line.split(';');
-	  if (cols.length === 4) {
-	    category = parseCategory(cols);
-	    event.categories.push(category);
-	  } else {
-	    category.runners.push(parseRunner(cols));
-	  }
+		var cols = line.split(';');
+		if (cols.length === 4) {
+			category = parseCategory(cols);
+			event.categories.push(category);
+		} else {
+			category.runners.push(parseRunner(cols));
+		}
 	});	
   
   return event;

@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   queryParams: {
     year: {
@@ -9,8 +9,9 @@ export default Ember.Route.extend({
   },
   
   model: function(params) {
-    var repository = this.get('repository');    
-    return repository.getEvents(params.year || new Date().getFullYear());
+    var repository = this.get('repository');
+    console.log(params.year);
+    return repository.getEvents(params.year || new Date().getFullYear());
   },
   
   actions: {

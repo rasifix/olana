@@ -1,14 +1,11 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { parseTime } from 'olana/utils/time';
+import { computed } from '@ember/object';
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
     
-  invalid: function() {
-    return parseTime(this.get('time')) === null;
-  }.property('time'),
+  invalid: computed('time', () => parseTime(this.get('time')) === null),
   
-  fullNameWithRank: function() {
-    return this.get('fullName') + ' (' + this.get('rank') + ')';
-  }.property('fullName', 'rank')
+  fullNameWithRank: computed('fullName', 'rank', () => this.get('fullName') + ' (' + this.get('rank') + ')')
   
 });

@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   queryParams: ['selectedCategory'],
   
   backRoute: 'categories',
   
-  filteredControls: function() {
+  filteredControls: computed('model.controls', 'selectedCategory', function() {
     var selection = this.get('selectedCategory');
     var result = this.get('model.controls');
     if (selection && selection !== null && selection !== "null") {
@@ -15,7 +16,7 @@ export default Ember.Controller.extend({
       });
     }
     return result;
-  }.property('model.controls', 'selectedCategory'),
+  }),
   
   actions: {
     controlClicked: function(code) {

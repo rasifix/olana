@@ -1,5 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { parseTime, formatTime } from 'olana/utils/time';
+import { computed } from '@ember/object';
 
 function isValid(value) {
   return value !== '-' && value !== 's' && parseTime(value) !== null;
@@ -24,7 +25,6 @@ function defineLegs(category, runners) {
   };
   
   var legs = { };
-  var lastSplit = null;
   runners.forEach(function(runner) {
     var lastTime = null;
     var lastControl = 'St';
@@ -41,10 +41,9 @@ function defineLegs(category, runners) {
           runners: []
         };
       }
-      if (isValid(time) && (lastTime == null || isValid(lastTime))) {
+      if (isValid(time) && (lastTime == null || isValid(lastTime))) {
         var splitTime = lastTime !== null ? parseTime(time) - parseTime(lastTime) : parseTime(time);
         legs[code].runners.push(createRankingEntry(runner, category, splitTime));
-        lastSplit = split;
       }
       
       lastControl = control;
@@ -78,8 +77,8 @@ function defineLegs(category, runners) {
     var fastest = leg.runners.length > 0 ? parseTime(leg.runners[0].split) : 0;
     
     leg.runners.forEach(function(runner, idx) {
-      var r = runners.find(function(candidate) { return candidate.id === runner.id; });
-      var s = r.splits.find(function(split) { return leg.id === split.leg; });
+      var r = runners.find(candidate => candidate.id === runner.id);
+      var s = r.splits.find(split => leg.id === split.leg);
       if (s && s.timeLoss) {
         timeLosses += 1;
         runner.timeLoss = s.timeLoss;
@@ -123,11 +122,12 @@ function defineLegs(category, runners) {
   return result;
 }
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'categories',
   
   init: function() {
+    this._super(...arguments);
     var self = this;
     window.onresize = function() {
       self.refreshGraphWidth();
@@ -140,20 +140,15 @@ export default Ember.Controller.extend({
       this.set('graphWidth', 1140);
     } else if (window.screen.availWidth >= 992) {
       this.set('graphWidth', 940);
-    } else if (window.screen.availWidth >= 768) {
+    } else if (window.screen.availWidth >= 768) {
       this.set('graphWidth', 720);
     } else {
       this.set('graphWidth', window.screen.availWidth - 2 * 15);
     }
   },
     
-  checkedRunners: function() {
-    var runners = this.get('model.runners');
-    return runners.filter(function(d) { return d.checked; });
-  }.property('model.runners.@each.checked'),
+  checkedRunners: computed('model.runners.@each.checked', () => this.get('model.runners').filter(function(d) { return d.checked; })),
   
-  legs: function() {
-    return defineLegs(this.get('model.name'), this.get('model.runners'));
-  }.property('model.runners')
+  legs: computed('model.runners', () => defineLegs(this.get('model.name'), this.get('model.runners')))
   
 });

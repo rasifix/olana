@@ -1,9 +1,12 @@
 /* global d3 */
 
-import Ember from 'ember';
+import Set from '@ember/set';
+import Controller from '@ember/controller';
 import { parseTime } from 'olana/utils/time';
+import { set } from '@ember/object';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'event',
   
@@ -11,22 +14,22 @@ export default Ember.Controller.extend({
   
   groupBy: 30,
   
-  selectedData: function() {
-    var categories = new Ember.Set(this.get('checkedCategories'));
+  selectedData: computed('checkedCategories', 'datapoints', function() {
+    var categories = new Set(this.get('checkedCategories'));
     return this.get('datapoints').filter(function(point) {
       return categories.contains(point.category);
     });
-  }.property('checkedCategories', 'datapoints'),
+  }),
   
-  checkedCategories: function() {
+  checkedCategories: computed('availableCategories.@each.checked', function() {
     return this.get('availableCategories').filter(function(category) {
       return category.checked;
     }).map(function(category) {
       return category.name;
     });
-  }.property('availableCategories.@each.checked'),
+  }),
   
-  datapoints: function() {
+  datapoints: computed('categories', function() {
     var result = [];
     var categories = this.get('model.categories');
     categories.forEach(function(category) {
@@ -39,12 +42,12 @@ export default Ember.Controller.extend({
       });
     });
     return result;
-  }.property('categories'),
+  }),
   
-  availableCategories: function() {
+  availableCategories: computed('datapoints', function() {
     var datapoints = this.get('datapoints');
         
-    var categories = new Ember.Set();
+    var categories = new Set();
     datapoints.forEach(function(point) {
       categories.add(point.category);
     });
@@ -54,26 +57,26 @@ export default Ember.Controller.extend({
         checked: true
       };
     });
-  }.property('datapoints'),
+  }),
   
-  xdomain: function() {
+  xdomain: computed('datapoints', function() {
     var data = this.get('datapoints');
     return d3.extent(data.map(function(point) { return parseTime(point.startTime); }));
-  }.property('datapoints'),
+  }),
   
-  ydomain: function() {
+  ydomain: computed('datapoints', function() {
     return d3.extent(this.get('datapoints').map(function(datapoint) { return datapoint.perfidx * 100; }));
-  }.property('datapoints'),
+  }),
   
   actions: {
     selectAll: function() {
       this.get('availableCategories').forEach(function(cat) {
-        Ember.set(cat, 'checked', true);
+        set(cat, 'checked', true);
       });
     },
     selectNone: function() {
       this.get('availableCategories').forEach(function(cat) {
-        Ember.set(cat, 'checked', false);
+        set(cat, 'checked', false);
       });
     }
   }

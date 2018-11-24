@@ -257,7 +257,7 @@ export function parseRanking(json) {
       }
     });
     
-    var perfindices = runner.splits.map(function(split) { return split.perfidx; }).sort(function(s1, s2) { return s1 - s2; });
+    var perfindices = runner.splits.map(split => split.perfidx).sort(function(s1, s2) { return s1 - s2; });
     var middle = null;
     if (perfindices.length % 2 === 1) {
       middle = perfindices[Math.floor(perfindices.length / 2)];

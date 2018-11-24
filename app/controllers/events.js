@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.ArrayController.extend({
+export default Controller.extend({
   
   queryParams: ['year'],
   
-  year: 2015
+  year: new Date().getFullYear(),
   
 });

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
 import { parseTime } from 'olana/utils/time';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   model: function(params) {
     var self = this;

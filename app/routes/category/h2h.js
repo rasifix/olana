@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import { parseTime } from 'olana/utils/time';
 
-export default Ember.Route.extend({
+export default Route.extend({
   
   model: function(params) {
     var id = parseInt(params["runner_id"], 10);
@@ -14,7 +14,7 @@ export default Ember.Route.extend({
     }
     
     // select box values (all except the current runner)
-    var opponents = category.runners.map(function(r) { return r; }).removeObject(runner);
+    var opponents = category.runners.map(r =>r).removeObject(runner);
     var opponent = opponents[0];
     
     var diffs = { };

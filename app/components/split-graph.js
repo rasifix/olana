@@ -1,7 +1,7 @@
 /*global d3, Rainbow */
-import Ember from 'ember';
+import Component from '@ember/component';
 import { parseTime } from 'olana/utils/time';
-import { Rainbow } from 'olana/utils/rainbow';
+import { computed, observer } from '@ember/object';
 
 var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
@@ -17,37 +17,40 @@ var lineFunction = d3.svg.line().x(function(d) { return d.x; })
 
 var colors = new Rainbow();
     
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
   classNames: [ 'split-graph' ],
   
   width: 758,
   
-  padding: {
-    left: 50,
-    top: 5,
-    right: 5,
-    bottom: 40
+  padding: null,
+
+  init() {
+    this._super(...arguments);
+    this.padding = {
+      left: 50,
+      top: 5,
+      right: 5,
+      bottom: 40
+    };
   },
   
-  area: function() {
+  area: computed('padding', 'width', 'height', function() {
     var padding = this.get('padding');
     return {
       width: this.get('width') - padding.left - padding.right,
       height: this.get('height') - padding.top - padding.bottom
     };
-  }.property('padding', 'width', 'height'),
+  }),
   
-  height: function() {
-    return this.get('width') * 3 / 8;
-  }.property('width'),
+  height: computed('width', () => this.get('width') * 3 / 8),
   
   didInsertElement: function() {  
     this.refresh();
   },
   
-  refresh: function() {
+  refresh: observer('runners.[]', 'active', 'width', 'height', 'area', function() {
     var self = this;
     var grid = d3.select(this.get('element')).select("#grid");
     var legs = this.get('legs');
@@ -100,7 +103,7 @@ export default Ember.Component.extend({
     
     this.updateSplitLines();
     this.updateHGrid();        
-  }.observes('runners.[]', 'active', 'width', 'height', 'area'),
+  }),
   
   updateSplitLines: function() {
     var svg = d3.select(this.get('element'));
@@ -161,7 +164,7 @@ export default Ember.Component.extend({
     
     hline.exit().transition().duration(500).attr("opacity", 0).remove();
     
-    var htext = svg.select("g#hgrid").selectAll("text").data(y.ticks().slice(1), function(d) { return d.getTime(); });
+    var htext = svg.select("g#hgrid").selectAll("text").data(y.ticks().slice(1), d => d.getTime());
 
     htext.enter()
        .append("text")
@@ -197,7 +200,7 @@ export default Ember.Component.extend({
     return timelines;
   },
   
-  vgrid: function() {
+  vgrid: computed('legs', 'xScale', 'height', function() {
     var legs = this.get('legs');
     var x = this.get('xScale');
     var path = ['M0,0'];
@@ -209,14 +212,11 @@ export default Ember.Component.extend({
       path.push('M', xpos, ',', this.get('padding').top, 'V', this.get('height') - this.get('padding').bottom);
     }
     return path.join('');
-  }.property('legs', 'xScale', 'height'),
+  }),
   
-  xScale: function() {
-    return d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right]);
-  }.property('width'),
+  xScale: computed('width', () => d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right])),
 
-
-  yScale: function() {
+  yScale: computed('runners', 'height', function() {
     var runners = this.get('runners');
     
     var times = flatten(runners.map(function(runner) {
@@ -232,6 +232,6 @@ export default Ember.Component.extend({
     times.push(0);
     
     return d3.time.scale().range([this.get('padding').top, this.get('height') - this.get('padding').bottom]).domain(d3.extent(times));
-  }.property('runners', 'height')
+  })
 
 });

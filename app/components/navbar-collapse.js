@@ -1,8 +1,7 @@
-/* global $ */
+import Component from '@ember/component';
+import $ from 'jquery';
 
-import Ember from 'ember';
-
-export default Ember.Component.extend({
+export default Component.extend({
 
   tagName: 'button',
   

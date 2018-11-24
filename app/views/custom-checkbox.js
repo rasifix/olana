@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Checkbox from '@ember/component/checkbox';
 
-export default Ember.Checkbox.extend({
+export default Checkbox.extend({
   
   click: function (e) {
     e.stopPropagation();

@@ -1,8 +1,10 @@
 /*global d3 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import Set from '@ember/set';
+import { computed, observer } from '@ember/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
   classNames: ['control-network'],
@@ -16,7 +18,7 @@ export default Ember.Component.extend({
     this.refresh();
   },
   
-  refresh: function() {
+  refresh: observer('visibleControls.[]', 'currentControl', function() {
     var svg = d3.select(this.get('element'));
     
     var width = this.get('width');
@@ -65,9 +67,9 @@ export default Ember.Component.extend({
         .attr('fill', function(d) { return selected && selected.code === d.code ? 'magenta' : 'none'; });
     }
 
-  }.observes('visibleControls.[]', 'currentControl'),
+  }),
   
-  links: function() {
+  links: computed('legs', 'controls', function() {
     var legs = this.get('legs');
     var controls = this.get('controls');
     var result = [];
@@ -79,13 +81,11 @@ export default Ember.Component.extend({
       }
     });
     return result;
-  }.property('legs', 'controls'),
+  }),
   
-  nodes: function() {
-    return this.get('controls');
-  }.property('controls'),
+  nodes: computed('controls', () => this.get('controls')),
   
-  visibleControls: function() {
+  visibleControls: computed('controls.[]', 'currentControl', function() {
     var controls = this.get('controls');
     
     var all = [];
@@ -96,8 +96,8 @@ export default Ember.Component.extend({
     var current = controls.find(function(control) { return control.code === currentCode; });
     var result = [ { xpos:1, ypos:0.5, code:current.code } ];
     
-    var incoming = new Ember.Set();
-    var outgoing = new Ember.Set();
+    var incoming = new Set();
+    var outgoing = new Set();
     current.categories.forEach(function(category) {
       if (category.from) {
         incoming.push(category.from);
@@ -116,6 +116,6 @@ export default Ember.Component.extend({
     });
     
     return result;
-  }.property('controls.[]', 'currentControl')
+  })
   
 });

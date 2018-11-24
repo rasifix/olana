@@ -1,5 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { parseTime, formatTime } from 'olana/utils/time';
+import { computed } from '@ember/object';
 
 function isValid(value) {
   return value !== '-' && value !== 's' && parseTime(value) !== null;
@@ -24,7 +25,6 @@ function defineLegs(category, runners) {
   };
   
   var legs = { };
-  var lastSplit = null;
   runners.forEach(function(runner) {
     var lastTime = null;
     var lastControl = 'St';
@@ -41,10 +41,9 @@ function defineLegs(category, runners) {
           runners: []
         };
       }
-      if (isValid(time) && (lastTime == null || isValid(lastTime))) {
+      if (isValid(time) && (lastTime == null || isValid(lastTime))) {
         var splitTime = lastTime !== null ? parseTime(time) - parseTime(lastTime) : parseTime(time);
         legs[code].runners.push(createRankingEntry(runner, category, splitTime));
-        lastSplit = split;
       }
       
       lastControl = control;
@@ -125,18 +124,13 @@ function defineLegs(category, runners) {
   return result;
 }
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   
   backRoute: 'courses',
 
-  checkedRunners: function() {
-    var runners = this.get('model.runners');
-    return runners.filter(function(d) { return d.checked; });
-  }.property('model.runners.@each.checked'),
+  checkedRunners: computed('model.runners.@each.checked',() => this.get('model.runners').filter(function(d) { return d.checked; })),
   
-  legs: function() {
-    return defineLegs(this.get('model.name'), this.get('model.runners'));
-  }.property('model.runners'),
+  legs: computed('model.runners', () => defineLegs(this.get('model.name'), this.get('model.runners'))),
   
   actions: {
     onlegclick: function(leg) {

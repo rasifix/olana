@@ -1,6 +1,7 @@
 /* global d3 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
 
 var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
@@ -14,7 +15,7 @@ var formatTime = function(seconds) {
   }
 };
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'svg',
   attributeBindings: ['width', 'height'],
   classNames: [ "h2h-graph" ],
@@ -28,19 +29,15 @@ export default Ember.Component.extend({
   // offset for leg number on the left side
   offset: 40,
   
-  height: function() {
-    return this.get('legs').length * (this.get('barheight') + 1);
-  }.property('legs'),
+  height: computed('legs', () => this.get('legs').length * (this.get('barheight') + 1)),
   
-  center: function() {
-    return this.get('width') / 2 - 0.5;
-  }.property('width'),
+  center: computed('width', () => this.get('width') / 2 - 0.5),
   
   didInsertElement: function() {
     this.refresh();
   },
   
-  refresh: function() {    
+  refresh: observer('legs', 'width', function() {    
     var legs = this.get('legs');
     
     function linearGradient(defs, id) {
@@ -102,14 +99,14 @@ export default Ember.Component.extend({
         .attr("y", function(leg, idx) { return idx * (barheight + 1) + 16; })
         .text(function(leg) { return leg.number; });
     
-  }.observes('legs', 'width'),
+  }),
   
-  xscale: function() {
+  xscale: computed('legs', 'width', function() {
     var maxdiff = d3.max(this.get('legs'), function(leg) {
       return leg.diff < 0 ? -leg.diff : leg.diff;
     });
     var padding = 50;
     return d3.time.scale().range([0, (this.get('width') - this.get('offset')) / 2 - padding]).domain([0, maxdiff]);
-  }.property('legs', 'width')
+  })
 
 });
