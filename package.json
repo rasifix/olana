@@ -1,23 +1,22 @@
 {
   "name": "olana",
   "version": "0.0.0",
-  "description": "Small description for olana goes here",
   "private": true,
+  "description": "Small description for olana goes here",
+  "repository": "",
+  "license": "MIT",
+  "author": "",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server",
     "build": "ember build",
-    "test": "ember test"
+    "start": "ember serve",
+    "test": "ember test",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint ."
   },
-  "repository": "",
-  "engines": {
-    "node": "6.* || 8.* || >= 10.*"
-  },
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
@@ -45,5 +44,8 @@
     "eslint-plugin-ember": "^5.2.0",
     "loader.js": "^4.7.0",
     "qunit-dom": "^0.8.0"
+  },
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
   }
 }
