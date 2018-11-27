@@ -1,14 +1,11 @@
 /* global d3 */
 
-import Set from '@ember/set';
 import Controller from '@ember/controller';
 import { parseTime } from 'olana/utils/time';
 import { set } from '@ember/object';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
-  
-  backRoute: 'event',
   
   trendlinePercentile: 25,
   
@@ -17,7 +14,7 @@ export default Controller.extend({
   selectedData: computed('checkedCategories', 'datapoints', function() {
     var categories = new Set(this.get('checkedCategories'));
     return this.get('datapoints').filter(function(point) {
-      return categories.contains(point.category);
+      return categories.has(point.category);
     });
   }),
   
@@ -51,7 +48,7 @@ export default Controller.extend({
     datapoints.forEach(function(point) {
       categories.add(point.category);
     });
-    return categories.toArray().map(function(category) {
+    return [...categories].map(function(category) {
       return {
         name: category,
         checked: true

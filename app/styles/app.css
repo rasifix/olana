@@ -1,9 +1,7 @@
 /* -- bootstrap overrides -- */
 .badge {
-  background-color: #888;
   min-width: 40px;
   font-size: 0.8em;
-  font-weight: normal;
   margin-left: 5px;
 }
 
@@ -250,6 +248,7 @@ rect.positive {
 body {
   padding-top: 70px;
   margin: 0px;
+  font-size: 90% !important
 }
 
 .navbar-default .navbar-nav > li > a.active {
@@ -328,12 +327,17 @@ li.list-header {
 }
 
 ul.nav.nav-pills li a.active {
-  background-color: darkorange;
-  color: white;
+  background-color: white;
+  color: darkorange;
+  font-weight: bold;
+  border-radius: 0px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid darkorange;
 }
 
-ul.nav.nav-pills li {
+ul.nav.nav-pills li a {
   border-radius: 0px;
+  padding-bottom: 15px;
 }
 
 ul.nav.nav-pills {

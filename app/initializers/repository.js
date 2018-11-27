@@ -1,6 +1,6 @@
 export default {
   name: 'repository',
-  initialize: function(container, app) {
+  initialize: function(app) {
     app.inject('route', 'repository', 'service:repository');
   }
 };

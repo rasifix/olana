@@ -3,8 +3,8 @@ import { computed } from '@ember/object';
 
 export default Controller.extend({
   
-  backRoute: 'categories',
-  
-  name: computed('model.name', () => this.get('model.name'))
+  name: computed('model.name', function() {
+    return this.get('model.name');
+  })
   
 });

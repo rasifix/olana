@@ -1,0 +1,25 @@
+<div class="row">
+ <div class="col-12">
+
+ <div class="float-right">
+    <select>
+        {{#each categories as |category|}}
+        <option value={{category}} selected={{eq selectedCategory category}}>{{category}}</option>
+        {{/each}}
+    </select>
+ </div>
+ <ul class="event-list">
+ {{#each filteredLegs as |leg|}}
+  <li {{action 'legClicked' leg.id}}>
+   {{#link-to 'event.legs.leg' leg.id}}{{leg.id}}{{/link-to}}
+   <div class="error-frequency-wrapper" style="position:absolute; left:70px"><div style={{leg.style}}>&nbsp;</div><span class="hidden-xs text-muted"><small>{{leg.errorFrequency}}%</small></span></div>
+   <div class="float-right">
+     <span class="hidden-xs text-muted"><small>{{leg.categories}}</small></span>
+     <span class="badge badge-pill badge-primary">{{leg.runners}}</span> 
+   </div>
+  </li>
+ {{/each}}
+ </ul>
+
+ </div>
+</div>

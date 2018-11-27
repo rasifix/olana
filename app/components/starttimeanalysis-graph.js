@@ -1,6 +1,6 @@
 /* global d3 */
 
-import Component from '@ember/Component';
+import Component from '@ember/component';
 import { parseTime } from 'olana/utils/time';
 import { groupBy } from 'olana/utils/statistics';
 import { computed, observer } from '@ember/object';

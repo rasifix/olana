@@ -1,0 +1,9 @@
+{{ranking-list runners=model.runners runnerRoute='event.categories.category.runner' action="runnerClicked"}}
+
+<div class="row">
+  {{#if checkedRunners}}
+  <div class="col-12">
+    {{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
+  </div>
+  {{/if}}
+</div>

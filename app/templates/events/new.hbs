@@ -36,11 +36,11 @@
   </div>
   <div class="row">
     <label>Encoding:</label>
-	  {{view Ember.Select
-	         content=encodings
-	         value=selectedEncoding
-	         optionValuePath="content.value"
-	         optionLabelPath="content.label"}}
+    <select>
+      {{#each encodings as |encoding|}}
+      <option value=encoding.value>{{encoding.label}}</option>
+      {{/each}}
+    </select>
   </div>
   <div class="row">
     <label>Umorganisiert:</label>
@@ -67,5 +67,5 @@
   </div>
   <div class="row">
     <label></label>
-    <input type="button" {{action "submit"}} value="Speichern" {{bind-attr disabled=submitDisabled}}>
+    <input type="button" {{action "submit"}} value="Speichern" disabled={{submitDisabled}}>
   </div>

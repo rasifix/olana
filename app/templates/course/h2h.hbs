@@ -1,5 +1,0 @@
-<div class="col-xs-12">
-  {{model.runner.fullName}} ({{model.runner.rank}}) - {{view "select" content=model.opponents optionValuePath='content.id' optionLabelPath='content.fullNameWithRank' value=model.selectedOpponent}}
-
-  {{h2h-component legs=selectedDiff}}
-</div>

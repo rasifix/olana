@@ -29,9 +29,13 @@ export default Component.extend({
   // offset for leg number on the left side
   offset: 40,
   
-  height: computed('legs', () => this.get('legs').length * (this.get('barheight') + 1)),
+  height: computed('legs', function() {
+    return this.get('legs').length * (this.get('barheight') + 1);
+  }),
   
-  center: computed('width', () => this.get('width') / 2 - 0.5),
+  center: computed('width', function() {
+    return this.get('width') / 2 - 0.5;
+  }),
   
   didInsertElement: function() {
     this.refresh();

@@ -11,10 +11,10 @@ export default Route.extend({
   
   actions: {
     categoryClicked: function(name) {
-      this.transitionTo('category', name);
+      this.transitionTo('event.categories.category', name);
     },
     legClicked: function(name) {
-      this.transitionTo('leg', name);
+      this.transitionTo('event.legs.leg', name);
     }
   }
 

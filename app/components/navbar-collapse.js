@@ -5,16 +5,17 @@ export default Component.extend({
 
   tagName: 'button',
   
-  classNames: ['navbar-toggle'],
+  classNames: ['navbar-toggler'],
   
   type: 'button',
+
+  "data-toggle": 'collapse',
   
-  attributeBindings: ['type'],
+  attributeBindings: ['type', 'data-toggle'],
   
   target: '#navbar-collapse',
   
   click: function() {
-    console.log('gotta click');
     $(this.get('target')).toggleClass('in');
   }
   

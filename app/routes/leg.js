@@ -6,7 +6,7 @@ export default Route.extend({
     var event = this.modelFor('event');
     return event.getLeg(params['leg_id']).then(function(leg) {
       if (!leg) {
-        this.transitionTo('legs');
+        this.transitionTo('event.legs');
       }    
       return leg;
     });

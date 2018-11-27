@@ -8,7 +8,7 @@ export default Route.extend({
   
   actions: {
     runnerClicked: function(runner) {
-      this.transitionTo('category.runner', runner.category, runner.id);
+      this.transitionTo('event.categories.category.runner', runner.category, runner.id);
     },
     runnerOver: function(runner) {
       this.get('controller').set('hoverRunner', runner);

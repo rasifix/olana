@@ -1,0 +1,26 @@
+<div class="row">
+ <div class="col-12">
+  <h4>Strecke {{model.id}} <small>Fehlerh&auml;ufigkeit {{model.errorFrequency}}%</small></h4>
+ </div>
+</div>
+
+<div class="row">
+ <div class="col-12">
+  <table class="ranking-table">
+   <tbody>
+    {{#each model.runners as |runner|}}
+    <tr>
+      <td align="right">{{runner.splitRank}}.</td>
+      <td>{{#link-to 'event.categories.category.runner' runner.category runner.id}}{{runner.fullName}}{{/link-to}}</td>
+      <td class="hidden-xs-down">{{runner.yearOfBirth}}</td>
+      <td class="hidden-xs-down">{{runner.club}}</td>
+      <td class="hidden-xs-down">{{runner.city}}</td>
+      <td>{{runner.split}}</td>
+      <td title={{runner.timeLoss}} class={{runner.timeLoss:error}}>{{runner.splitBehind}}</td>
+      <td class="hidden-xs-down">{{#link-to 'event.categories.category' runner.category}}{{runner.category}}{{/link-to}}</td>
+    </tr>
+    {{/each}}
+   </tbody>
+  </table>
+ </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-12">
+    
+ <p>Diese Seite zeigt alle Posten an und sortiert sie aufgrund der Fehlerh&auml;ufigkeit. Damit ist erkennbar, welche
+    Posten grosse Probleme gemacht haben und welche eher einfacher waren.</p>
+ <div class="float-right">
+  <select>
+    {{#each model.categories as |category|}}
+    <option value=category>{{category}}</option>
+    {{/each}}
+  </select>
+ </div>
+ <ul class="event-list">
+  {{#each filteredControls as |control|}}
+    <li {{action 'controlClicked' control.code}}>
+     {{#link-to 'event.controls.control' control.code}}{{control.code}}{{/link-to}}
+     <div class="error-frequency-wrapper" style="left:55px"><div style={{control.style}}>&nbsp;</div><span class="hidden-xs text-muted"><small>{{control.errorFrequency}}%</small></span></div>
+     <div class="float-right">
+      <span class="text-muted hidden-xs"><small>{{control.categories}}</small></span>
+      <span class="badge badge-pills badge-primary">{{control.runners}}</span>
+     </div>
+    </li>
+  {{/each}}
+ </ul>
+
+  </div>
+</div>

@@ -1,9 +1,0 @@
-{{ranking-list runners=model.runners runnerRoute='course.runner' action="runnerClicked"}}
-
-<div class="row">
-  {{#if checkedRunners}}
-  <div class="col-xs-12">
-    {{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
-  </div>
-  {{/if}}
-</div>

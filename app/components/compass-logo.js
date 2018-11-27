@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
+
 function deg2rad(deg) {
   return deg * Math.PI / 180;
 }
@@ -40,39 +41,49 @@ export default Component.extend({
   
   rotation: 300,
   
-  width: computed('radius', () => this.get('radius') * 2 + 4),
+  width: computed('radius', function() {
+    return this.get('radius') * 2 + 4;
+  }),
   
-  height: computed('radius', () => this.get('radius') * 2 + 4),
+  height: computed('radius', function() {
+    return this.get('radius') * 2 + 4;
+  }),
   
-  cx: computed('width', () => this.get('width') / 2),
+  cx: computed('width', function() {
+    return this.get('width') / 2;
+  }),
   
-  cy: computed('height', () => this.get('height') / 2),
+  cy: computed('height', function() {
+    return this.get('height') / 2;
+  }),
   
-  outerRadius: computed('radius', () => this.get('radius')),
+  outerRadius: computed('radius', function() {
+    return this.get('radius');
+  }),
   
   innerRadius: 3,
   needleInnerRadius: 5,
   
-  needlePath: computed('radius', 'cx', 'cy', function() {
-    var cx = this.get('cx');
-    var cy = this.get('cy');
-    var radius = this.get('needleInnerRadius');
-    
+  needlePath: computed('needleInnerRadius', 'radius', 'cx', 'cy', function() {
+    let cx = this.get('cx');
+    let cy = this.get('cy');
+    let needleInnerRadius = this.get('needleInnerRadius');
+
     var angle = deg2rad(45);
     
     // arc start
-    var sx = cx + Math.sin(angle) * radius;
-    var sy = cy - Math.cos(angle) * radius;
+    var sx = cx + Math.sin(angle) * needleInnerRadius;
+    var sy = cy - Math.cos(angle) * needleInnerRadius;
     
     // arc end
     var ex = sx;
-    var ey = cy + Math.cos(angle) * radius;
+    var ey = cy + Math.cos(angle) * needleInnerRadius;
     
     // tip of needle
     var tx = cx + this.get('radius') - 2;
     var ty = cy;
     
-    return move(sx, sy) + ' ' + arc(radius, radius, 0, 0, 1, ex, ey) + ' ' + line(tx, ty);
+    return move(sx, sy) + ' ' + arc(needleInnerRadius, needleInnerRadius, 0, 0, 1, ex, ey) + ' ' + line(tx, ty);
   }),
   
   southNeedleTransform: computed('cx', 'cy', function() {
@@ -80,25 +91,26 @@ export default Component.extend({
   }),
   
   transform: computed('cx', 'cy', 'rotation', function() {
-    var cx = this.get('cx');
-    var cy = this.get('cy');
-    return 'translate(' + cx + ',' + cy + ') rotate(' + this.rotation + ') translate(-' + cx + ',-' + cy + ')';
+    const cx = this.get('cx');
+    const cy = this.get('cy');
+    const rotation = this.get('rotation');
+    return 'translate(' + cx + ',' + cy + ') rotate(' + rotation + ') translate(-' + cx + ',-' + cy + ')';
   }),
   
-  mouseEnter: function() {
+  mouseEnter() {
     if (this.timer) {
       window.clearInterval(this.timer);
     }
   },
   
-  mouseMove: function(e) {
+  mouseMove(e) {
     var deltaX = e.offsetX - this.get('width') / 2;
     var deltaY = -(e.offsetY - this.get('height') / 2);
     var angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
     this.set('rotation', 360 - angle);
   },
   
-  mouseLeave: function() {
+  mouseLeave() {
     var self = this;
     var startRotation = this.get('rotation');
     startRotation = startRotation >= 360 ? startRotation - 360 : startRotation;

@@ -1,0 +1,21 @@
+<div class="row">
+ <div class="col-12">
+  <ul class="event-list">
+  {{#each model.courses as |course|}}
+   <li {{action 'courseClicked' course.id}}>
+    {{#link-to 'event.courses.course' course.id}}
+    <span class="limit-75">{{course.id}}</span>
+    {{/link-to}}
+    <div class="float-right">
+      <span class="text-muted hidden-xs">
+        <small>{{course.distance}}m</small> / 
+        <small>{{course.ascent}}m</small> /
+        <small>{{course.controls}} Posten</small>
+      </span>
+      <span class="badge badge-pills badge-primary">{{course.runners}}</span> 
+    </div>
+   </li>
+  {{/each}}
+  </ul>
+ </div>
+</div>
