@@ -1,71 +1,69 @@
-  <div class="row" style="border-bottom:1px solid #aaa; margin-bottom: 20px">
-    <h3>Resultate hochladen</h3>
-    <p>Zuerst sollte die Datei ausgew&auml;hlt werden. Unterst&uuml;tzte Formate sind Kraemer CSV (Datei beginnt mit OE2014)
-       und ORware. Das ist die gleiche Datei, die an SOLV geschickt wird. </p>
+<div class="row">
+  <div class="col-2">&nbsp;</div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">Resultate hochladen</div>
+      <div class="card-body">
+        <p class="card-text">Oware oder Kraemer Datei ausw&auml;hlen und dann hochladen.</p>
 
-    <h4>ORware</h4>
-    <p>Im ORware Format sind der Wettkampfname, die Karte,
-       das Datum und die Nullzeit fix eingetragen und werden in die weiteren Formularfelder eingef&uuml;gt. Sie k&ouml;nnen
-       auch angepasst werden. Es bleibt nur noch den "Speichern" Knopf zu dr&uuml;cken. Sollte der Knopf deaktiviert
-       sein, ist etwas schief gelaufen. Schick ein Mail mit der Datei an
-       <a href="mailto:raess.simon@gmail.com">mich</a> und ich schaue das Problem so rasch als m&ouml;glich an.</p>
-
-    <h4>Kraemer</h4>
-    <p>Die Kraemer Datei enth&auml;lt keinen Wettkampfnamen, keine Karte, kein Datum und auch kein Nullzeitpunkt. Diese Daten
-       m&uuml;ssen eingegeben werden. Sobald das gemacht ist, "Speichern" klicken.</p>
-  </div>
-  <div class="row">
-    <label>Datei:</label>
-    {{view "file-upload" name="file" encoding=encoding text=text}}
-  </div>
-  <div class="row">
-    <label>Wettkampf:</label>
-    {{input type="text" value=title}}
-  </div>
-  <div class="row">
-    <label>Karte:</label>
-    {{input type="text" value=map}}
-  </div>
-  <div class="row">
-    <label>Datum:</label>
-    {{input type="date" value=date}}
-  </div>
-  <div class="row">
-    <label>Startzeit:</label>
-    {{input type="text" value=startTime}}
-  </div>
-  <div class="row">
+  <div class="form-group">
     <label>Encoding:</label>
-    <select>
+    <select class="form-control">
       {{#each encodings as |encoding|}}
-      <option value=encoding.value>{{encoding.label}}</option>
+      <option value={{encoding.value}}>{{encoding.label}}</option>
       {{/each}}
     </select>
   </div>
-  <div class="row">
-    <label>Umorganisiert:</label>
-    {{input type="checkbox" readonly="readonly" checked=reorganized}}
+
+        <p class="card-text"><input type="file" name="file" encoding={{encoding}} text={{text}} onchange={{action 'fileChanged'}}></p>
+        <p class="card-text">Bei Fragen oder Problemen kontaktiere mich per e-Mail.</p>
+        <hr>
+  
+  {{#if event}}
+
+  <div class="form-group">
+    <label>Wettkampf:</label>
+    <input type="text" value={{event.name}} class="form-control">
   </div>
-  <div class="row">
+
+  <div class="form-group">
+    <label>Karte:</label>
+    <input type="text" value={{event.map}}  class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Datum:</label>
+    <input type="date" value={{event.date}} class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Startzeit:</label>
+    <input type="text" value={{event.startTime}} class="form-control">
+  </div>
+
+  <div class="form-group">
     <label>Inhalt:</label>
-    {{textarea readonly="readonly" value=cleanContent}}
+    <textarea readonly="readonly" value={{text}} class="form-control" style="min-height: 300px"/>
   </div>
-  <div class="row">
-    <label>Kategorien:</label>
+
+  <div class="form-group">
+    <label>Kategorien {{event.categories.length}}:</label>
     <ul style="display:inline-block; list-style:none">
-    {{#each category in categories}}
-      <li>
-        <div>{{category.name}}</div>
-        <ul style="list-style:none">
-          {{#each runner in category.runners}}
-          <li>{{runner.firstName}} {{runner.name}}</li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
+      {{#each event.categories as |category|}}
+      <li>{{category.name}} - {{category.runners.length}} Läufer</li>
+      {{/each}}
     </ul>
   </div>
-  <div class="row">
-    <label></label>
-    <input type="button" {{action "submit"}} value="Speichern" disabled={{submitDisabled}}>
+  {{/if}}
+
+      </div>
+      {{#if event}}
+      <div class="card-footer text-right">
+        <input type="button" {{action "submit"}} value="Speichern" disabled={{submitDisabled}} class="btn btn-primary"/>
+      </div>
+      {{/if}}
+    </div>
   </div>
+  <div class="col-2">&nbsp;</div>
+</div>
+

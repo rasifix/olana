@@ -1,7 +1,8 @@
-/*global d3, Rainbow */
+/*global d3 */
 import Component from '@ember/component';
 import { parseTime } from 'olana/utils/time';
 import { computed, observer } from '@ember/object';
+import { Rainbow } from 'olana/utils/rainbow';
 
 var pad = function(str) {
   return str.length === 1 ? "0" + str : str;
@@ -44,7 +45,9 @@ export default Component.extend({
     };
   }),
   
-  height: computed('width', () => this.get('width') * 3 / 8),
+  height: computed('width', function() {
+    return this.get('width') * 3 / 8;
+  }),
   
   didInsertElement: function() {  
     this.refresh();
@@ -214,7 +217,9 @@ export default Component.extend({
     return path.join('');
   }),
   
-  xScale: computed('width', () => d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right])),
+  xScale: computed('width', function() {
+    return d3.scale.linear().domain([0, 1]).range([this.get('padding').left, this.get('width') - this.get('padding').right]);
+  }),
 
   yScale: computed('runners', 'height', function() {
     var runners = this.get('runners');

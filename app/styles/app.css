@@ -368,6 +368,17 @@ span.error {
   padding: 5px;
 }
 
+.badge-orange {
+  color: white;
+  background-color: #ff8500
+}
+
+textarea {
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+}
+
 span.text-muted {
   max-width: 300px;
   text-overflow: ellipsis;

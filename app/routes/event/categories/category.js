@@ -6,7 +6,6 @@ export default Route.extend({
   
   model: function(params) {
     var self = this;
-    console.log('model hook of category');
     var event = this.modelFor('event');
     var id = params['category_id'];
     var category = event.getCategory(id);

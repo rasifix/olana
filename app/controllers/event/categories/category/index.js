@@ -118,6 +118,8 @@ function defineLegs(category, runners) {
       }
     });
   }
+
+  console.log('category', result);
     
   return result;
 }
@@ -150,7 +152,9 @@ export default Controller.extend({
   }),
   
   legs: computed('model.runners', function() {
-    defineLegs(this.get('model.name'), this.get('model.runners'))
+    let legs = defineLegs(this.get('model.name'), this.get('model.runners'));
+    console.log('defined legs as', legs);
+    return legs;
   })
   
 });

@@ -15,7 +15,7 @@ export default Route.extend({
     
     // select box values (all except the current runner)
     var opponents = category.runners.map(r => r).removeObject(runner);
-    opponents.forEach(o => o.id = "" + o.id);
+    opponents.forEach(o => o.set('id', "" + o.id));
     var opponent = opponents[0];
     
     var diffs = { };

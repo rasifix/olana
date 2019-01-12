@@ -1,13 +1,13 @@
 <div class="col-12">
  <ul class="ranking-list">
  {{#each runners as |runner|}}
-  <li {{action 'runnerClicked' runner}}>
+  <li>
 		<div class="row">
-  		<div class="hidden-xs-down" style="float:left; padding:0px 4px; width:25px; color:gray; font-size:0.8em">
+  		<div class="hidden-xs-down" style="float:left; padding:0px 4px; width:25px; color:gray; font-size:0.8em" {{action 'runnerClicked' runner}}>
       	{{#if runner.showSplits}}&#9660;{{else}}&#9654;{{/if}}
     	</div>
   		<div class="hidden-xs-down col-fixed-50">
-				<input type="checkbox" checked={{runner.checked}} disabled={{runner.invalid}}>
+			{{input type="checkbox" checked=runner.checked disabled=runner.invalid}}
     	</div>
   		<div class="col-fixed-50 align-right">{{#if runner.rank}}{{runner.rank}}.{{else}}&nbsp;{{/if}}</div>
   		<div class="col-6 col-sm-3 nowrap">{{#link-to runnerRoute runner.id}}{{runner.fullName}}{{/link-to}}</div>

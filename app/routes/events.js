@@ -10,7 +10,6 @@ export default Route.extend({
   
   model: function(params) {
     var repository = this.get('repository');
-    console.log(params.year);
     return repository.getEvents(params.year || new Date().getFullYear());
   },
   
