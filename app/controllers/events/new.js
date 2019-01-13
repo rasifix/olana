@@ -101,7 +101,7 @@ export default Controller.extend({
           xhr.setRequestHeader ("Authorization", "Basic " + btoa("fluffy:stuffy"));
         },
         success: function() {
-          that.transitionToRoute('event.index', 'zimaa', id);
+          that.transitionToRoute('event.index', 'local', id);
         },
         error: function(err) {
           // TODO: handle error
