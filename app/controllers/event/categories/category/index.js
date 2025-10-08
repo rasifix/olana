@@ -118,8 +118,6 @@ function defineLegs(category, runners) {
       }
     });
   }
-
-  console.log('category', result);
     
   return result;
 }
@@ -136,6 +134,7 @@ export default Controller.extend({
   },
   
   refreshGraphWidth: function() {
+    console.log('refresh graph width', window.screen.availWidth);
     if (window.screen.availWidth >= 1200) {
       this.set('graphWidth', 1140);
     } else if (window.screen.availWidth >= 992) {

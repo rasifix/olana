@@ -3,7 +3,7 @@
 <div class="row">
   {{#if checkedRunners}}
   <div class="col-12">
-    {{split-graph runners=controller.checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
+    {{split-graph runners=checkedRunners legs=legs legclick="onlegclick" width=controller.graphWidth}}
   </div>
   {{/if}}
 </div>

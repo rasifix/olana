@@ -189,13 +189,16 @@ export default Component.extend({
     var runners = this.get('runners');
     var x = this.get('xScale');
     var y = this.get('yScale');
+    console.log("runners for timelines", runners);
     
     var timelines = [];
     runners.forEach(function(runner) {
       var points = [ { x: x(0), y: y(0) }];
       points.key = runner.get('fullName');
       runner.get('splits').forEach(function(split) {
-        points.push({ x: x(split.position), y: y(parseTime(split.idealBehind) * 1000) });
+        let xpos = x(split.position);
+        let ypos = y(parseTime(split.idealBehind) * 1000);
+        points.push({ x: xpos, y: ypos });
       });
       timelines.addObject(points);
     });
@@ -223,7 +226,7 @@ export default Component.extend({
 
   yScale: computed('runners', 'height', function() {
     var runners = this.get('runners');
-    
+
     var times = flatten(runners.map(function(runner) {
       return runner.splits.map(function(split) {
         if (split.idealBehind) {

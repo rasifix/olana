@@ -26,7 +26,7 @@ export default Route.extend({
           console.error(e);
         }
       });
-      
+
       return {
         legs: data,
         categories: categories.sort(function(s1, s2) { return s1.localeCompare(s2); })

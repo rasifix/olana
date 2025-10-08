@@ -9,13 +9,19 @@ export default Route.extend({
     var runner = course.runners.find(function(runner) { return runner.id === id; });
     
     if (!runner) {
-      this.transitionTo('event.categories.category');
+      this.transitionTo('event.courses.course');
       return;
     }
     
     // select box values (all except the current runner)
     var opponents = course.runners.map(r => r).removeObject(runner);
-    opponents.forEach(o => o.id = "" + o.id);
+    opponents.forEach(o => o.set('id', "" + o.id));
+
+    if (opponents.length === 0) {
+      this.transitionTo('event.courses.course');
+      return;
+    }
+
     var opponent = opponents[0];
     
     var diffs = { };

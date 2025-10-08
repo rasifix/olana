@@ -54,7 +54,6 @@ export default EmberObject.extend({
         id: id,
         
         getCategories: function() {
-          console.log('getting categories');
           if (self.cache.event.categories) {
             return self.cache.event.categories;
           }

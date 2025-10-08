@@ -2,10 +2,11 @@
  <div class="col-12">
 
  <div class="float-right">
-    <select>
-        {{#each categories as |category|}}
-        <option value={{category}} selected={{eq selectedCategory category}}>{{category}}</option>
-        {{/each}}
+    <select onchange={{action (mut selectedCategory) value="target.value"}}>
+      <option value="">-</option>
+      {{#each model.categories as |category|}}
+      <option value={{category}} selected={{eq selectedCategory category}}>{{category}}</option>
+      {{/each}}
     </select>
  </div>
  <ul class="event-list">
