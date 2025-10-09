@@ -50,7 +50,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.APP.API_HOST = 'https://api.zimaa.ch/api/events';
+    ENV.APP.API_HOST = 'https://api.zimaa.ch/';
   }
 
   return ENV;
