@@ -5,6 +5,7 @@
 
 # compiled output
 /dist/
+/dist-prod/
 /tmp/
 
 # dependencies
