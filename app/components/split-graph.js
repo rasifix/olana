@@ -189,7 +189,6 @@ export default Component.extend({
     var runners = this.get('runners');
     var x = this.get('xScale');
     var y = this.get('yScale');
-    console.log("runners for timelines", runners);
     
     var timelines = [];
     runners.forEach(function(runner) {

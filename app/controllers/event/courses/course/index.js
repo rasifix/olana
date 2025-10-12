@@ -79,7 +79,7 @@ function defineLegs(category, runners) {
     var fastest = leg.runners.length > 0 ? parseTime(leg.runners[0].split) : 0;
     
     leg.runners.forEach(function(runner, idx) {
-      var r = runners[runner.id];
+      var r = runners.find(function(r) { return r.id === runner.id });
       var s = r.splits.find(function(split) { return leg.id === split.leg; });
       if (s && s.timeLoss) {
         timeLosses += 1;
